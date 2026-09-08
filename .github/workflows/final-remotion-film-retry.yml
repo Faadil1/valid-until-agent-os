@@ -1,0 +1,103 @@
+name: Final Remotion Evidence Film Retry
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/final-remotion-film-retry.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Reuse canonical Remotion scaffold from first pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet pyyaml
+          python3 - <<'PY'
+          import yaml
+          p='.github/workflows/final-remotion-film.yml'
+          with open(p,encoding='utf-8') as f:
+              data=yaml.safe_load(f)
+          steps=data['jobs']['render']['steps']
+          step=next(s for s in steps if s.get('name')=='Scaffold isolated Remotion packaging workspace')
+          with open('/tmp/remotion-scaffold.sh','w',encoding='utf-8') as f:
+              f.write(step['run'])
+          PY
+          bash /tmp/remotion-scaffold.sh
+
+      - name: Install video dependencies
+        working-directory: video/final-film
+        run: npm install --no-audit --no-fund
+
+      - name: Install Chromium and ffmpeg
+        shell: bash
+        working-directory: video/final-film
+        run: |
+          set -euo pipefail
+          npx playwright install --with-deps chromium
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+
+      - name: Capture current deployed evidence surfaces
+        working-directory: video/final-film
+        run: npm run capture
+
+      - name: Generate and normalize English judge voiceover
+        shell: bash
+        working-directory: video/final-film
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet edge-tts
+          edge-tts --voice en-US-GuyNeural --rate='+2%' --file voiceover.txt --write-media public/voiceover-raw.mp3
+          RAW_DURATION=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 public/voiceover-raw.mp3)
+          TEMPO=$(python3 - <<PY
+          d=float('${RAW_DURATION}')
+          target=59.2
+          print(max(0.85,min(1.18,d/target)))
+          PY
+          )
+          ffmpeg -y -loglevel error -i public/voiceover-raw.mp3 -filter:a "atempo=${TEMPO},loudnorm=I=-16:TP=-1.5:LRA=11" public/voiceover.mp3
+          echo "RAW_VOICEOVER_SECONDS=${RAW_DURATION}"
+          echo "VOICEOVER_TEMPO=${TEMPO}"
+          echo -n "NORMALIZED_VOICEOVER_SECONDS="
+          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 public/voiceover.mp3
+
+      - name: Render 1080p final evidence film
+        working-directory: video/final-film
+        run: npm run render
+
+      - name: Inspect encoded artifact
+        shell: bash
+        working-directory: video/final-film
+        run: |
+          set -euo pipefail
+          ffprobe -v error -show_entries format=duration,size,bit_rate -of json out/valid-until-final.mp4 | tee out/ffprobe.json
+          test -s out/valid-until-final.mp4
+
+      - name: Upload final film and live capture package
+        uses: actions/upload-artifact@v4
+        with:
+          name: valid-until-final-remotion-film
+          path: |
+            video/final-film/out/valid-until-final.mp4
+            video/final-film/out/ffprobe.json
+            video/final-film/public/hero.jpg
+            video/final-film/public/stage-before.jpg
+            video/final-film/public/stage-after.jpg
+            video/final-film/public/evaluations.jpg
+            video/final-film/public/live-proof.jpg
+          if-no-files-found: error
+          retention-days: 30
