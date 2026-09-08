@@ -2,7 +2,7 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: BUILD_ACTIVE
-current_stage: PRE_DEPLOYMENT_EVALUATION_COMPLETE
+current_stage: TRACE_GATE_6_5_PREVIEW_EVIDENCE_REQUIRED
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
 secondary_thesis: A demo is not trust.
@@ -20,6 +20,22 @@ safety_constraints:
   - no_account_funding
   - no_geo_bypass
   - no_api_secrets_in_repo
+
+lifecycle:
+  global_policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
+  coverage_manifest: product/LIFECYCLE-COVERAGE.yaml
+  terminal_completeness_allowed: false
+  current_owner: PBPD
+  living_prd: product/PRD.md
+  prd_status: RETROSPECTIVE_CURRENT_STATE_PRD
+  prototype_killer: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
+  spec_kit: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
+  winning_intelligence: SATISFIED_WITH_OPEN_RUNTIME_GAPS
+  trace: IN_PROGRESS_GATE_6_5
+  pbpd_post_build_reconciliation: PENDING_AFTER_TRACE_RUNTIME
+  project_finisher: NOT_YET_ELIGIBLE
+  protected_submission_owner: HUMAN
+
 proof_status:
   core_deterministic_tests: PASS_7_OF_7
   challenge_suite: PASS_6_OF_6
@@ -45,25 +61,46 @@ proof_status:
   live_artifact_digest: 'sha256:51b23c621e487be68c81138bd3a24e6c264e4fb00a0c315b88addf8080e6b370'
   public_repo: PUBLISHED_FAADIL1_VALID_UNTIL_AGENT_OS
   ci_invariants: PASS
-  judge_ui: INTERACTIVE_EXECUTION_VALIDITY_REPLAY_V2
+  latest_ci_run: 34230726113
+  latest_ci_head: adc5cbb089721a114580700d0025852975ceb660
+  latest_ci_result: SUCCESS
+  judge_ui: INTERACTIVE_EXECUTION_VALIDITY_REPLAY_V2_TRACE_REWORK_APPLIED
   evaluations_ui: WEB_EVALUATIONS_6_CASES
   evaluations_route: /evaluations
   deployment: NOT_YET_DEPLOYED
   submission: NOT_YET_SUBMITTED
+
+trace_gate_6_5:
+  adapter: Faadil1/trace-design-workflow/adapters/valid-until.yaml
+  state: Faadil1/trace-design-workflow/state/projects/valid-until/CURRENT.yaml
+  entry_mode: LATE_ENTRY_POST_BUILD_ASSURANCE
+  retroactive_trace_gate_claims_allowed: false
+  resolved:
+    - TRACE_VU_001_AGENT_OS_ROLE_ABOVE_FOLD
+    - TRACE_VU_002_EVALUATIONS_REACHABLE_FROM_HERO
+  open:
+    - TRACE_VU_003_DEPLOYED_DESKTOP_MOBILE_REDUCED_MOTION_RUNTIME_EVIDENCE
+  next_required_output: DEPLOYED_URL_PLUS_GATE_6_5_RUNTIME_EVIDENCE
+
 experience_positioning:
   contrast: 'Most agents ask: Should I trade? Valid Until asks: Is this exact action still valid?'
+  agent_os_architecture_line: 'AI agent interprets + proposes -> Binance Agent OS supplies fresh observations + capabilities -> Valid Until deterministically authorizes the exact action.'
   hero_interaction: 'Replay proof animates 0 -> 35.47 bps across a 20 bps validity boundary and ends NO LONGER VALID.'
-  evaluation_interaction: 'Six deterministic cases show one clean ALLOW and five distinct BLOCK failure classes.'
+  evaluation_interaction: 'Six deterministic cases show one clean ALLOW and five distinct BLOCK failure classes; reachable directly from the hero.'
   live_proof_role: 'Supporting authenticity proof, visually separated from the controlled hero replay.'
   design_direction: 'Editorial execution-instrument aesthetic; warm paper, acid validity band, orange failure state; no generic dark AI dashboard.'
+
 trust_model:
   source_inspiration: 'CFA Institute roundtable on agentic AI workflows, governance and trust, 2026-09-01.'
   architecture: 'skills + MCP -> autonomy; sealed deterministic boundary -> control; adversarial cases -> red-team; repeatable receipts/tests -> evidence; repeated evidence -> trust.'
   authority_rule: 'The LLM may interpret and propose. It cannot authorize its own consequential action.'
+
 next_actions:
-  - verify latest CI head is green with core + challenge suite
-  - deploy judge web view
-  - verify / and /evaluations on desktop and mobile
-  - record 45-75 second demo using hero replay plus evaluation surface
-  - include live Binance proof run as supporting evidence
-  - publish X submission and complete survey
+  - deploy current canonical source only as preview/evidence
+  - capture and verify / plus /evaluations on deployed desktop/mobile/reduced-motion paths
+  - return runtime evidence to TRACE Gate 6.5 and obtain verdict
+  - rerun Winning Intelligence judge-path assessment on deployed evidence
+  - perform PBPD PRD-to-build-to-evidence reconciliation
+  - hand BUILD_CANDIDATE_READY or WITH_LIMITATIONS to Project Finisher
+  - only after Finisher terminal assurance, record 45-75 second final demo package
+  - human performs protected X submission and official survey
