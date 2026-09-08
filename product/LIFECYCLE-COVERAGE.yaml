@@ -3,8 +3,8 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: HUMAN_VERCEL_SECRET_BOUNDARY
-current_stage: LIVE_PROOF_LAB_V0_4_CODE_COMPLETE_WAITING_VERCEL_DEPLOY_AND_SECRETS
+current_owner: VERCEL_PLATFORM_DEPLOYMENT_BOUNDARY
+current_stage: LIVE_PROOF_LAB_V0_4_SECRETS_CONFIGURED_WAITING_VERCEL_DEPLOY
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -116,15 +116,15 @@ capabilities:
 
   - capability: live_proof_lab_v0_4_vercel_secret_configuration
     owner: human
-    status: MISSING
+    status: SATISFIED
     evidence_pointer: docs/VERCEL-LIVE-PROOF-LAB-ENV.md
-    note: human has not yet confirmed Vercel Sensitive Production variables BINANCE_TESTNET_API_KEY and BINANCE_TESTNET_API_SECRET
+    note: human confirmed BINANCE_TESTNET_API_KEY and BINANCE_TESTNET_API_SECRET are configured as Production environment values; assistant did not read or receive the values
 
   - capability: live_proof_lab_v0_4_runtime_deployment
     owner: PBPD + Vercel platform
     status: MISSING
     evidence_pointer: null
-    note: latest GitHub commit Vercel status failed due Hobby build-rate-limit; stable /lab currently 404 and must not be claimed live yet
+    note: deployment retry after secret confirmation still failed immediately at Vercel Hobby build-rate-limit; stable /lab must not be claimed live yet
 
   - capability: pbpd_runtime_evidence_reconciliation_after_v0_4
     owner: PBPD
@@ -167,7 +167,6 @@ capabilities:
     not_applicable_reason: project has not yet been officially submitted and no official outcome exists
 
 missing:
-  - live_proof_lab_v0_4_vercel_secret_configuration
   - live_proof_lab_v0_4_runtime_deployment
   - pbpd_runtime_evidence_reconciliation_after_v0_4
   - trace_delta_after_live_testnet_and_v0_4_scope
@@ -180,7 +179,6 @@ missing:
 unknown: []
 
 triggered_but_unresolved:
-  - HUMAN_VERCEL_SENSITIVE_SECRET_CONFIGURATION
   - VERCEL_DEPLOYMENT_AFTER_HOBBY_BUILD_RATE_LIMIT_RESET
   - PBPD_RUNTIME_EVIDENCE_RECONCILIATION_AFTER_V0_4
   - TRACE_DELTA_AFTER_LIVE_TESTNET_AND_LIVE_PROOF_LAB_SCOPE
@@ -204,8 +202,9 @@ current_evidence:
   v0_4_ci_run: 34256450643
   v0_4_ci_result: SUCCESS
   v0_4_ci_head: 13d71b62cdbb77d24c4468176bcf8afdef0a5369
-  v0_4_vercel_commit_status: FAILURE_BUILD_RATE_LIMIT
-  v0_4_stable_lab_status: 404_NOT_DEPLOYED_YET
+  v0_4_vercel_secrets: HUMAN_CONFIRMED_PRODUCTION_VALUES_PRESENT_VALUES_NOT_READ_BY_ASSISTANT
+  v0_4_vercel_commit_status_after_confirmation: FAILURE_BUILD_RATE_LIMIT
+  v0_4_stable_lab_status_last_verified: 404_NOT_DEPLOYED_YET
 
 non_bypass_rules_reaffirmed:
   - no_cloud_region_hopping
@@ -218,10 +217,9 @@ non_bypass_rules_reaffirmed:
   - do_not_rerun_successful_testnet_order
 
 next_valid_handoff:
-  from: PBPD_IMPLEMENTATION
-  to: HUMAN_VERCEL_SECRET_BOUNDARY
-  required_output: VERCEL_SENSITIVE_PRODUCTION_SECRETS_CONFIGURED_WITHOUT_DISCLOSURE
+  from: VERCEL_PLATFORM_DEPLOYMENT_BOUNDARY
+  to: PBPD_RUNTIME_VERIFICATION
+  required_output: VERIFIED_V0_4_PRODUCTION_RUNTIME_FOR_ALL_STATIC_AND_API_SURFACES
 
 resume_rule: >-
-  v0.4 code is CI-green but not yet deployed. Add the two Vercel Sensitive Production variables, then trigger a fresh deployment only after the Hobby build-rate limit resets.
-  Verify /, /lab, /live-proof, /evaluations, /api/live-market and /api/order-status before PBPD reconciliation and TRACE.
+  v0.4 code is CI-green and both required Vercel Production secrets are human-confirmed configured without disclosure. The only current blocker is Vercel Hobby build-rate-limit. Do not create more deployment-trigger commits merely to poll the limit. Once Vercel accepts a production build, verify /, /lab, /live-proof, /evaluations, /api/live-market and /api/order-status before PBPD reconciliation and TRACE.
