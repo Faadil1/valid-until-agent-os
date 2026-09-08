@@ -12,15 +12,15 @@ lifecycle_governance:
   project_manifest: product/LIFECYCLE-COVERAGE.yaml
   terminal_completeness_allowed: false
   rule: >-
-    Continue construction only through the next valid owner/handoff. No specialist PASS, CI run,
-    deployment, demo or deadline may substitute for another system's owned gate.
+    Continue only through the next valid owner/handoff. No specialist PASS, CI run,
+    deployment, demo, deadline or human enthusiasm may substitute for another system's owned gate.
 
 historical_reconciliation:
   problem_worthiness:
     status: SATISFIED
     evidence: evidence/problem-discovery/COUNCIL.md
   authorization:
-    status: CURRENT_AUTHORIZATION_RECORDED
+    status: SATISFIED_CURRENT_AUTHORIZATION
     evidence: product/AUTHORIZATION.md
     historical_prebuild_claim: false
   prototype_killer:
@@ -28,7 +28,9 @@ historical_reconciliation:
     evidence: product/PROTOTYPE-KILLER.md
   living_prd:
     status: RETROSPECTIVE_CURRENT_STATE_PRD
-    evidence: product/PRD.md
+    product_source: product/PRD.md
+    evidence_reconciliation: product/POST-BUILD-RECONCILIATION.md
+    changelog: product/PRD-CHANGELOG.md
     role_now: authoritative product baseline for future material changes
   spec_kit:
     status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
@@ -36,84 +38,98 @@ historical_reconciliation:
     authority: NONE
     derives_from: product/PRD.md
   winning_intelligence:
-    status: SATISFIED_WITH_OPEN_RUNTIME_GAPS
+    status: SATISFIED
     evidence: product/WINNER-INTELLIGENCE-PRE-SUBMISSION.md
-    next_recheck: after TRACE deployed runtime evidence
-  trace:
-    status: IN_PROGRESS_GATE_6_5
-    adapter: Faadil1/trace-design-workflow/adapters/valid-until.yaml
-    state: Faadil1/trace-design-workflow/state/projects/valid-until/CURRENT.yaml
-    retroactive_gate_claims_allowed: false
-  pbpd_post_build_reconciliation: PENDING_AFTER_TRACE_RUNTIME
-  project_finisher: NOT_YET_ELIGIBLE
-  protected_submission_owner: HUMAN
+    runtime_recheck: COMPLETE
+    remaining_gap_owned_elsewhere: FINAL_VIDEO_TRACE_6_75_PLUS_PROTECTED_DELIVERABLES
+  trace_gate_6_5:
+    status: SATISFIED
+    verdict: PASS
+    evidence: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_EVALUATION_CAPTURE_PASS_001.md
+  trace_gate_6_75:
+    status: MISSING
+    contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_001.md
+    reason: actual final encoded video has not yet been reviewed
+  pbpd_post_build_reconciliation:
+    status: SATISFIED
+    evidence: product/POST-BUILD-RECONCILIATION.md
+  pbpd_candidate_handoff:
+    status: MISSING
+    blocked_by: TRACE_GATE_6_75
+  project_finisher:
+    status: MISSING_NOT_YET_ELIGIBLE
+    prerequisite: PBPD_CANDIDATE_HANDOFF
+  protected_submission:
+    owner: HUMAN
+    status: MISSING_NOT_YET_AUTHORIZED_BY_TERMINAL_SEQUENCE
 
-thesis: >-
-  Freeze user execution constraints before reading the market, bind a decision to
-  the exact Binance state that justified it, and require deterministic pre-action
-  revalidation so stale reasoning cannot become a consequential action.
-
-architecture:
+product_contract:
+  thesis: >-
+    Freeze user execution constraints before reading the market, bind a decision to the exact Binance state
+    that justified it, and require deterministic pre-action revalidation so stale reasoning cannot become
+    a consequential action.
   human_role: define/accept policy and retain protected external authority
   agent_role: interpret intent and propose action; never self-authorize execution
   agent_os_role: supply fresh Binance observations and capabilities to the agent workflow
   valid_until_role: deterministically authorize whether the exact proposed action is still valid
-  policy_commitment: SHA-256 canonical policy hash created before market read
-  market_source: official binance-cli against public Binance market-data-only endpoints
-  receipt: Ed25519 signed decision receipt bound to policy hash + snapshot hash + validity window
-  revalidation: signature + policy + freshness + mid-price drift + current market checks + exact action symbol/notional
-  terminal_states: [ALLOW, BLOCK]
   execution_adapter: intentionally_not_implemented
+  terminal_states: [ALLOW, BLOCK]
 
-verified:
-  - core deterministic tests => PASS 7/7
-  - Challenge Suite => PASS 6/6
-  - controlled replay => initial ELIGIBLE
-  - controlled replay => final BLOCK at 35.47 bps drift vs 20 bps policy
-  - official Binance CLI v2.1.1 installed and verified in GitHub Actions
-  - live BTCUSDT public Binance capture => GitHub Actions run 34225133745 SUCCESS
-  - live proof artifact => id 10055364283
-  - live proof artifact digest => sha256:51b23c621e487be68c81138bd3a24e6c264e4fb00a0c315b88addf8080e6b370
-  - live result => BLOCK, fail-closed on real market state
-  - public GitHub repo => Faadil1/valid-until-agent-os
-  - TRACE bounded source rework => Agent OS role explicit above fold
-  - TRACE bounded source rework => /evaluations reachable from hero
-  - post-TRACE source CI => run 34230726113 SUCCESS
-  - runtime evidence harness source CI => run 34231363290 SUCCESS
+verified_product_evidence:
+  core_tests: PASS_7_OF_7
+  challenge_suite: PASS_6_OF_6
+  controlled_replay: ELIGIBLE_TO_BLOCK_AT_35_47_BPS_VS_20_BPS
+  live_binance_cli:
+    version: '2.1.1'
+    run: 34225133745
+    result: BLOCK_FAIL_CLOSED
+    artifact: 10055364283
+    digest: sha256:51b23c621e487be68c81138bd3a24e6c264e4fb00a0c315b88addf8080e6b370
+  public_repo: Faadil1/valid-until-agent-os
 
-trace_gate_6_5:
-  resolved:
-    - TRACE_VU_001_AGENT_OS_ROLE_ABOVE_FOLD
-    - TRACE_VU_002_EVALUATIONS_REACHABLE_FROM_HERO
-  open:
-    - TRACE_VU_003_DEPLOYED_DESKTOP_MOBILE_REDUCED_MOTION_RUNTIME_EVIDENCE
-  runtime_harness:
-    workflow: .github/workflows/trace-runtime-evidence.yml
-    script: scripts/capture-judge-runtime.mjs
-    url_trigger: config/judge-url.txt
-    current_url_state: PENDING
-    captures:
-      - desktop_1440x900_motion
-      - mobile_390x844_motion
-      - desktop_1440x900_reduced_motion
-      - mobile_390x844_reduced_motion
-    checks:
-      - root_http_200
-      - evaluations_http_200
-      - thesis_visible
-      - Binance_Agent_OS_role_visible
-      - Replay_proof_visible
-      - six_case_red_team_link_visible
-      - replay_ends_NO_LONGER_VALID
-      - evaluation_surface_visible
-      - no_browser_console_errors
+production_judge_surface:
+  stable_url: https://valid-until-agent-os.vercel.app
+  validated_deployment: dpl_HC9j3Y8nCAfw1PdHNpAhNjrVdo8G
+  validated_source_head: f6184bf7b7c8e2b93fc712f48fe0d0b081c7e3f3
+  root_http: 200
+  evaluations_http: 200
+  demo_json_http: 200
+  challenges_json_http: 200
+  incident_note: >-
+    The initial Vercel deployment reported READY but served 404 at root/evaluations. PBPD repaired only deployment
+    routing by serving web/ as the build output. TRACE evidence was not captured until the stable alias served 200.
 
-live_proof_interpretation: >-
-  The real capture is supporting proof of the Binance-native read-only path and
-  deterministic fail-closed enforcement. The captured market was already ineligible
-  at T0 because top-5 ask depth was below the demo threshold, and receipt age also
-  exceeded the strict 5-second threshold at revalidation. Therefore the controlled
-  replay, not this live capture, remains the canonical VALID -> NO LONGER VALID hero case.
+trace_gate_6_5_evidence:
+  run: 34231934516
+  artifact: 10058192480
+  digest: sha256:4f0ba722100568c2a320ade6eda2ce3ba81e4040026c1c946ee71ccc661b66f1
+  automated_cases:
+    desktop_1440x900_motion: PASS
+    mobile_390x844_motion: PASS
+    desktop_1440x900_reduced_motion: PASS
+    mobile_390x844_reduced_motion: PASS
+  browser_console_errors: NONE
+  design_review:
+    judge_video_readability: PASS
+    domain_native_anti_slop: PASS
+    proof_path_visibility: PASS
+    reduced_motion_runtime: PASS
+  closed_findings:
+    - TRACE_VU_001
+    - TRACE_VU_002
+    - TRACE_VU_003
+
+pbpd_reconciliation:
+  artifact: product/POST-BUILD-RECONCILIATION.md
+  prd_must: PASS_11_OF_11
+  prd_should: PASS_4_OF_4
+  prd_must_not: PASS_5_OF_5
+  spec_kit: PASS_RECONCILED
+  technical_proof: OBTAINED
+  behavior_proof: OBTAINED_FOR_REPRESENTATIVE_JUDGE_WORKFLOW
+  outcome_proof: NOT_OBTAINED_NOT_CLAIMED
+  production_evidence: NOT_OBTAINED_NOT_CLAIMED
+  build_candidate_ready: NOT_EMITTED
 
 claim_boundaries:
   - no profitable-trading claim
@@ -122,34 +138,31 @@ claim_boundaries:
   - live proof is authentic public Binance market data, not a trade
   - Ed25519 is supporting proof, not the headline value proposition
   - no API key, account credential, order placement or funding action was used
-  - TECHNICAL_PROOF does not imply OUTCOME_PROOF or PRODUCTION_EVIDENCE
+  - judge-workflow behavior proof is not customer/outcome/production evidence
 
-completed_in_current_reconciliation:
-  - global lifecycle policy added and enforced in faadil-agent-system
-  - current authorization artifact
-  - Prototype Killer record
-  - retrospective current-state living PRD
-  - PRD changelog
-  - Spec Kit spec/plan/tasks derived from PRD
-  - Winning Intelligence v1.1 pre-submission assessment
-  - lifecycle coverage manifest
-  - TRACE post-build adapter and project runtime state
-  - TRACE P1 bounded source reworks
-  - automated deployed browser evidence harness
+trace_gate_6_75_contract:
+  artifact: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_001.md
+  target_seconds: 60
+  allowed_window_seconds: '58-65'
+  required_sequence: >-
+    problem -> Agent OS role -> exact validity contract -> STILL VALID -> Replay proof ->
+    35.47 bps crosses 20 bps -> NO LONGER VALID -> six-case red team 6/6 -> live Binance authenticity -> bounded close
+  actual_final_video: MISSING
+  gate_7_authorized: false
 
-current_blocker:
-  type: MANUAL_INITIAL_VERCEL_GITHUB_IMPORT_REQUIRED
-  reason: >-
-    Vercel connector lists no valid-until-agent-os project and its exposed direct deploy action
-    cannot currently supply the hidden required name/target/files arguments. No deployment is being fabricated.
+current_state:
+  stage: TRACE_GATE_6_75_FINAL_VIDEO_REQUIRED
+  current_owner: TRACE
+  terminal_completeness_allowed: false
+  exact_blocker: FINAL_ENCODED_VIDEO_NOT_YET_REVIEWED
 
-next_gate: TRACE_GATE_6_5_PREVIEW_DEPLOYMENT_AND_RUNTIME_CAPTURE
-next_owner: PBPD_THEN_TRACE
-next_action: >-
-  Import Faadil1/valid-until-agent-os into Vercel as the preview/evidence deployment with root directory at repo root,
-  no environment variables, and existing vercel.json. Once the deployed HTTPS URL exists, record it in
-  config/judge-url.txt. That push automatically runs TRACE Gate 6.5 Playwright evidence. TRACE then issues the
-  runtime verdict. If TRACE passes or requests bounded rework, route findings back to PBPD. After TRACE closes,
-  rerun Winning Intelligence judge-path checks, perform PBPD PRD-to-build-to-evidence reconciliation, then hand
-  BUILD_CANDIDATE_READY or BUILD_CANDIDATE_READY_WITH_LIMITATIONS to Project Finisher. Only after Project Finisher
-  terminal assurance may the human perform the protected X/survey submission actions.
+next_valid_handoff:
+  from: PBPD / human recording boundary
+  to: TRACE
+  required_output: FINAL_ENCODED_58_TO_65_SECOND_DEMO_FOR_GATE_6_75_REVIEW
+
+resume_rule: >-
+  Do not redeploy/reopen TRACE Gate 6.5 or rerun broad product ideation unless concrete new evidence creates a conflict.
+  The next material artifact is the actual final encoded demo. Once provided, TRACE reviews Gate 6.75. Only a PASS
+  permits PBPD final delta reconciliation and candidate handoff. Project Finisher runs after that. Human protected
+  X/repost/reply-or-quote and survey actions remain last.
