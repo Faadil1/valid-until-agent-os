@@ -1,0 +1,25 @@
+name: proof
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run deterministic invariants
+        run: npm test
+      - name: Rebuild judge data
+        run: npm run build:web
+      - name: Verify generated judge data is current
+        run: git diff --exit-code -- web/demo.json
