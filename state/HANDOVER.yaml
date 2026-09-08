@@ -36,6 +36,10 @@ completed:
     evidence: evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md
     result: PASS
     financial_write: false
+  native_local_path_ci:
+    run_id: 34252867490
+    conclusion: SUCCESS
+    head: f00d9e24c48d234cd72b554908c3beeb01e88c94
 
 hosted_write_attempt:
   run_id: 34248954040
@@ -76,7 +80,7 @@ current_evidence:
   local_mcp: PASS_5_OF_5
   mcp_observation: PASS_4_OF_4
   testnet_execution_boundary: PASS_7_OF_7
-  native_transport_tests: ADDED_TO_TEST_ALL
+  native_transport_tests: PASS_IN_TEST_ALL
   actual_location_access: PASS
   successful_testnet_order: NOT_YET_OBTAINED
   same_order_verification: NOT_YET_OBTAINED
