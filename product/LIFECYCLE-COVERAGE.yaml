@@ -3,8 +3,8 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
-current_stage: TRACE_BC_DELTA_IMPLEMENTED_AWAITING_RUNTIME_REVIEW
+current_owner: WINNING_INTELLIGENCE_FINAL_RECHECK
+current_stage: TRACE_V0_4_DELTA_PASS_AWAITING_WINNING_INTELLIGENCE_FINAL
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -29,7 +29,7 @@ capabilities:
     owner: hackathon-opportunity-intelligence
     status: SATISFIED
     evidence_pointer: product/WINNER-INTELLIGENCE-RERUN-004-X-API.md
-    note: final recheck remains required after the current TRACE delta
+    note: historical/rerun capability satisfied; prescribed final recheck is still separately open
 
   - capability: project_authorization
     owner: human / chief-of-staff authority boundary
@@ -118,12 +118,13 @@ capabilities:
     owner: PBPD
     status: SATISFIED
     evidence_pointer: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
-    note: v0.4 acceptance PASS; no PRD increment required; next gate TRACE delta
+    note: v0.4 acceptance PASS; no PRD increment required
 
   - capability: trace_delta_after_live_testnet_and_v0_4_scope
     owner: TRACE
-    status: MISSING
-    evidence_pointer: null
+    status: SATISFIED
+    evidence_pointer: product/TRACE-DELTA-BC-001.md
+    note: specialist PASS recorded in Faadil1/trace-design-workflow; runtime run 34274047494 PASS desktop/mobile and normal/reduced-motion; B+C surface frozen pending WI final
 
   - capability: winning_intelligence_final_recheck
     owner: hackathon-opportunity-intelligence
@@ -133,7 +134,8 @@ capabilities:
   - capability: trace_gate_6_75_demo_narrative_evidence_film
     owner: TRACE
     status: MISSING
-    evidence_pointer: docs/DEMO-SCRIPT.md
+    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
+    note: updated current-truth film contract exists; actual final encoded video still required after WI final
 
   - capability: pbpd_candidate_handoff
     owner: PBPD
@@ -156,7 +158,6 @@ capabilities:
     not_applicable_reason: project has not yet been officially submitted and no official outcome exists
 
 missing:
-  - trace_delta_after_live_testnet_and_v0_4_scope
   - winning_intelligence_final_recheck
   - trace_gate_6_75_demo_narrative_evidence_film
   - pbpd_candidate_handoff
@@ -166,7 +167,6 @@ missing:
 unknown: []
 
 triggered_but_unresolved:
-  - TRACE_DELTA_AFTER_LIVE_TESTNET_AND_LIVE_PROOF_LAB_SCOPE
   - WINNING_INTELLIGENCE_FINAL_RECHECK
   - TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
   - PBPD_CANDIDATE_HANDOFF
@@ -176,13 +176,17 @@ triggered_but_unresolved:
 human_overrides: []
 
 current_evidence:
-  vercel_runtime_url: https://valid-until-agent-os-plum.vercel.app
-  vercel_runtime_commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
-  vercel_static_routes_http_200: true
-  vercel_live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
-  vercel_signed_read_status: VENUE_ELIGIBILITY_UNAVAILABLE
+  primary_trace_runtime_url: https://valid-until-agent-os-plum.vercel.app
+  trace_visual_delta_merge_head: 370e6039f60c41a0e3211666bb44627d494cca85
+  trace_runtime_harness_head: dd5cf611b8ac9efd60443741a7247c373c6dc67d
+  trace_proof_ci_run: 34274047464
+  trace_runtime_run: 34274047494
+  trace_runtime_result: SUCCESS
+  trace_runtime_artifact_id: 10074995345
+  trace_runtime_artifact_digest: sha256:0d93d791857166854c81a0a085b87abb6ca191744d460bfb8ef9c2b12606e603
+  trace_desktop_mobile_reduced_motion: PASS_4_OF_4
+  trace_delta_verdict: PASS
   cloudflare_runtime_url: https://valid-until-agent-os.pages.dev
-  cloudflare_live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
   cloudflare_signed_read_status: LIVE_SIGNED_READ_VERIFIED
   testnet_order_id: 13634770
   testnet_client_order_id: vu-mtswxiik-ecb6b093
@@ -190,11 +194,7 @@ current_evidence:
   same_order_verified: true
   production: false
   real_funds: false
-  financial_write_invoked_during_runtime_verification: false
   canonical_trade_rerun: false
-  runtime_handoff_commit: 0f9ec86b2fce6dc300a6dba5b52f93b1b3fb4f73
-  runtime_handoff_ci_run: 34267650642
-  pbpd_runtime_reconciliation: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
   v0_4_acceptance: PASS
 
 non_bypass_rules_reaffirmed:
@@ -210,22 +210,9 @@ non_bypass_rules_reaffirmed:
   - no_cloudflare_or_vercel_placement_manipulation_for_venue_bypass
 
 next_valid_handoff:
-  from: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
-  to: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE_REQUIRED
-  required_output: TRACE_VERDICT_ON_CURRENT_V0_3_EXECUTION_PROOF_AND_V0_4_RUNTIME_DELTA
+  from: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
+  to: WINNING_INTELLIGENCE_FINAL_RECHECK
+  required_output: FINAL_COLLISION_JUDGE_STRATEGY_AND_FREEZE_VERDICT_ON_TRACE_APPROVED_BUILD
 
 resume_rule: >-
-  PBPD runtime reconciliation is complete. PRD v0.4 acceptance is PASS and the historical bounded Testnet proof remains unchanged. Vercel is truthfully fail-closed on venue eligibility; Cloudflare re-verifies the fixed historical order via signed GET. Resume at TRACE delta only. Do not skip to Winning Intelligence, Gate 6.75, candidate handoff, Project Finisher or protected submission.
-
-trace_bc_delta:
-  direction: B_EDITORIAL_STRUCTURE_PLUS_C_TEMPORAL_DISPLACEMENT
-  human_selection: APPROVED_IN_CHAT
-  artifact: product/TRACE-DELTA-BC-001.md
-  verdict: HOLD_PENDING_CI_DEPLOYMENT_AND_RUNTIME_REVIEW
-  owner_retained: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
-  financial_write: false
-  downstream_progression: FORBIDDEN_THIS_WORKSTREAM
-  first_delta_commit: 7ad9f5c9d12b3e7c2db6a258c7d8e72c9a21d468
-  first_delta_ci_run: 34272109934
-  first_delta_ci: PASS
-  runtime_capture_target: https://valid-until-agent-os-plum.vercel.app
+  TRACE v0.4/B+C delta is SATISFIED. The current surface is visually/runtime verified and should remain frozen unless Winning Intelligence finds a concrete material collision or claim issue. Run the final WI recheck next, then return to TRACE for Gate 6.75 encoded-film review. No new Binance order or protected submission action is permitted.
