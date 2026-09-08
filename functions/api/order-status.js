@@ -6,7 +6,8 @@ const KNOWN_ORDER = Object.freeze({
 });
 
 export async function onRequest(context) {
-  const { request, env = {} } = context;
+  const request = context.request;
+  const env = context.env || {};
   if (request.method !== 'GET') {
     return json({ status: 'METHOD_NOT_ALLOWED' }, 405, { Allow: 'GET' });
   }
