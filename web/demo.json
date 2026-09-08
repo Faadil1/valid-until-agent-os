@@ -1,0 +1,76 @@
+{
+  "policy": {
+    "policy_id": "valid-until-demo-v1",
+    "symbol": "BTCUSDT",
+    "max_snapshot_age_ms": 5000,
+    "max_spread_bps": 8,
+    "max_mid_drift_bps": 20,
+    "max_notional_usdt": 100,
+    "max_1m_return_abs_bps": 80,
+    "min_top5_depth_usdt": 50000
+  },
+  "policyHash": "dfb6d0f1fdbe0b817a78763466fb4a7c5ba5ae4f2c673db8001eb5193fdb5578",
+  "initial": {
+    "snapshot_version": "valid-until.market.v1",
+    "symbol": "BTCUSDT",
+    "server_time_ms": 1788810000000,
+    "best_bid": 80200,
+    "best_ask": 80202,
+    "mid": 80201,
+    "spread_bps": 0.25,
+    "top5_bid_depth_usdt": 185000,
+    "top5_ask_depth_usdt": 177000,
+    "last_1m_return_bps": 12.4,
+    "source": "CONTROLLED FIXTURE shaped like Binance Agent OS market data"
+  },
+  "receipt": {
+    "receipt_version": "valid-until.receipt.v1",
+    "decision_id": "a0392e67-5705-402e-84a5-30061593048a",
+    "policy_id": "valid-until-demo-v1",
+    "policy_hash": "dfb6d0f1fdbe0b817a78763466fb4a7c5ba5ae4f2c673db8001eb5193fdb5578",
+    "snapshot_hash": "8e2dce792fa8330d2f6fc2b9ef7cafd4c8fdb01b959127d17b9dd5712d0ca97a",
+    "symbol": "BTCUSDT",
+    "status": "ELIGIBLE",
+    "evaluated_at_ms": 1788810000000,
+    "valid_until_ms": 1788810005000,
+    "max_notional_usdt": 100,
+    "checks": [
+      {"name":"spread_bps","actual":0.25,"op":"<=","limit":8,"pass":true},
+      {"name":"abs_1m_return_bps","actual":12.4,"op":"<=","limit":80,"pass":true},
+      {"name":"top5_bid_depth_usdt","actual":185000,"op":">=","limit":50000,"pass":true},
+      {"name":"top5_ask_depth_usdt","actual":177000,"op":">=","limit":50000,"pass":true}
+    ],
+    "revalidation_required": true,
+    "source": "CONTROLLED FIXTURE shaped like Binance Agent OS market data",
+    "signature_alg": "Ed25519",
+    "signature": "sw1kwxEg0zWDTo2-xNBnbFBp-u1jtYUTYvek2CaAwxgbA5XC2L_65JQcQO5WFuetNLvNVeukry4PEK4E_qOHBw"
+  },
+  "current": {
+    "snapshot_version": "valid-until.market.v1",
+    "symbol": "BTCUSDT",
+    "server_time_ms": 1788810003000,
+    "best_bid": 80484,
+    "best_ask": 80487,
+    "mid": 80485.5,
+    "spread_bps": 0.37,
+    "top5_bid_depth_usdt": 171000,
+    "top5_ask_depth_usdt": 168000,
+    "last_1m_return_bps": 47.2,
+    "source": "CONTROLLED FIXTURE shaped like Binance Agent OS market data"
+  },
+  "validityResult": {
+    "status": "BLOCK",
+    "checks": [
+      {"name":"receipt_signature_valid","actual":true,"op":"==","limit":true,"pass":true},
+      {"name":"policy_hash_match","actual":"dfb6d0f1fdbe0b817a78763466fb4a7c5ba5ae4f2c673db8001eb5193fdb5578","op":"==","limit":"dfb6d0f1fdbe0b817a78763466fb4a7c5ba5ae4f2c673db8001eb5193fdb5578","pass":true},
+      {"name":"receipt_age_ms","actual":3000,"op":"<=","limit":5000,"pass":true},
+      {"name":"mid_drift_bps","actual":35.47,"op":"<=","limit":20,"pass":false},
+      {"name":"current_spread_bps","actual":0.37,"op":"<=","limit":8,"pass":true},
+      {"name":"current_abs_1m_return_bps","actual":47.2,"op":"<=","limit":80,"pass":true},
+      {"name":"current_top5_bid_depth_usdt","actual":171000,"op":">=","limit":50000,"pass":true},
+      {"name":"current_top5_ask_depth_usdt","actual":168000,"op":">=","limit":50000,"pass":true}
+    ],
+    "drift_bps": 35.47,
+    "age_ms": 3000
+  }
+}
