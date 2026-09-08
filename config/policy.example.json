@@ -1,0 +1,10 @@
+{
+  "policy_id": "valid-until-demo-v1",
+  "symbol": "BTCUSDT",
+  "max_snapshot_age_ms": 5000,
+  "max_spread_bps": 8,
+  "max_mid_drift_bps": 20,
+  "max_notional_usdt": 100,
+  "max_1m_return_abs_bps": 80,
+  "min_top5_depth_usdt": 50000
+}
