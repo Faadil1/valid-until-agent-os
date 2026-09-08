@@ -24,12 +24,12 @@
       <div class="cell"><label>Valid Until</label><strong id="decision">—</strong><small id="nextState">—</small></div>
       <div class="cell"><label>Execution</label><strong id="execution">—</strong><small id="orderId">—</small></div>
       <div class="cell"><label>Same-order verification</label><strong id="verified">—</strong><small id="clientId">—</small></div>
-      <div class="cell"><label>GitHub proof run</label><strong id="run">—</strong><small id="sourceSha">—</small></div>
+      <div class="cell"><label>Capture source</label><strong id="run">—</strong><small id="sourceSha">—</small></div>
     </div>
     <div class="verdict"><h2 id="verdictTitle">Loading proof…</h2><p id="statement">The public artifact is being read.</p></div>
     <div class="boundary" id="boundary">NON-PRODUCTION TESTNET · NO REAL FUNDS</div>
   </section>
-  <div class="footer">Public data on this page is deliberately sanitized. API keys, secrets, authorization headers, account credentials and raw profile files are never published to Vercel.</div>
+  <div class="footer">Public data on this page is deliberately sanitized. API keys, secrets, authorization headers, account credentials and raw capture files are never published to Vercel.</div>
 </div>
 <script>
 (async()=>{
@@ -51,8 +51,9 @@
   document.getElementById('orderId').textContent=sent?`Testnet orderId ${p.execution?.order?.orderId??'—'}`:'No Binance write occurred';
   document.getElementById('verified').textContent=verified?'VERIFIED':'—';
   document.getElementById('clientId').textContent=sent?`clientOrderId ${p.execution?.client_order_id??'—'}`:'—';
-  document.getElementById('run').textContent=p.workflow?.run_id?`#${p.workflow.run_id}`:'PENDING';
-  document.getElementById('sourceSha').textContent=p.workflow?.source_sha?`source ${p.workflow.source_sha.slice(0,12)}…`:'—';
+  const local=p.capture?.local_actual_location===true;
+  document.getElementById('run').textContent=p.workflow?.run_id?`GitHub #${p.workflow.run_id}`:local?'LOCAL ACTUAL-LOCATION':'PENDING';
+  document.getElementById('sourceSha').textContent=p.workflow?.source_sha?`source ${p.workflow.source_sha.slice(0,12)}…`:(p.capture?.source||'—');
   document.getElementById('statement').textContent=p.evidence?.statement||'—';
   document.getElementById('boundary').textContent=p.evidence?.boundary||'NON-PRODUCTION TESTNET · NO REAL FUNDS';
   document.getElementById('verdictTitle').textContent=status==='ALLOW'&&verified?'ALLOW → BINANCE TESTNET → VERIFIED':status==='BLOCK'?'BLOCK → ZERO WRITE':'Authenticated proof pending';
