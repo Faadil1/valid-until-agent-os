@@ -13,19 +13,19 @@ handover_discipline:
   chat_memory_is_not_authority: true
   rule: read_both_files_first_then_resume_exact_gate
 
-current_stage: TRACE_BC_DELTA_IMPLEMENTED_AWAITING_RUNTIME_REVIEW
-current_owner: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
+current_stage: TRACE_V0_4_DELTA_PASS_AWAITING_WINNING_INTELLIGENCE_FINAL
+current_owner: WINNING_INTELLIGENCE_FINAL_RECHECK
 terminal_completeness_allowed: false
 
 material_scope_state:
   living_prd_version: '0.4'
   living_prd: product/PRD.md + v0.3 + v0.4 addenda
-  prd_changelog: product/PRD-CHANGELOG.md
   runtime_reconciliation: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
-  post_build_reconciliation: product/POST-BUILD-RECONCILIATION.md
-  code_status: COMPLETE_CI_VERIFIED
+  trace_delta_artifact: product/TRACE-DELTA-BC-001.md
+  trace_specialist_verdict: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_DELTA_RECHECK_LIVE_TESTNET_V0_4_003.md
   runtime_status: VERIFIED_AND_PBPD_RECONCILED
-  scope_expansion_from_runtime_repair: NONE
+  trace_delta_status: PASS
+  product_scope_expansion: NONE
 
 preserved_verified_execution:
   proof_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
@@ -40,10 +40,8 @@ preserved_verified_execution:
   rerun_without_new_authorization: FORBIDDEN
 
 runtime_evidence:
-  verified_at_utc: '2026-09-08T19:12:00Z'
   vercel:
     url: https://valid-until-agent-os-plum.vercel.app
-    deployment_commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
     status: READY
     static_routes_http_200: true
     live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
@@ -60,23 +58,33 @@ runtime_evidence:
   no_secret_values_read_or_returned: true
   no_financial_write_invoked: true
   historical_testnet_trade_rerun: false
-  handoff_commit: 0f9ec86b2fce6dc300a6dba5b52f93b1b3fb4f73
-  ci_run: 34267650642
-  ci_result: SUCCESS
 
-pbpd_reconciliation_verdict:
-  status: COMPLETE
-  v0_4_acceptance: PASS
-  prd_version: '0.4'
-  prd_increment_required: false
-  historical_proof_integrity: PRESERVED
-  build_candidate_ready: false
-  terminal_completeness_allowed: false
+trace_delta:
+  direction: B_EDITORIAL_EXECUTION_INSTRUMENT_PLUS_C_TEMPORAL_DISPLACEMENT
+  human_selection: APPROVED_IN_CHAT
+  verdict: PASS
+  visual_delta_merge_head: 370e6039f60c41a0e3211666bb44627d494cca85
+  runtime_harness_head: dd5cf611b8ac9efd60443741a7247c373c6dc67d
+  proof_ci_run: 34274047464
+  proof_ci: SUCCESS
+  runtime_run: 34274047494
+  runtime_result: SUCCESS
+  runtime_artifact_id: 10074995345
+  runtime_artifact_digest: sha256:0d93d791857166854c81a0a085b87abb6ca191744d460bfb8ef9c2b12606e603
+  desktop_1440x900_motion: PASS
+  mobile_390x844_motion: PASS
+  desktop_1440x900_reduced_motion: PASS
+  mobile_390x844_reduced_motion: PASS
+  visual_review: PASS
+  anti_slop_domain_specificity: PASS
+  cross_time_signature: PASS
+  further_visual_rework_required: false
 
 truth_boundaries:
-  - deployed_web_runtime_is_not_production_financial_control
-  - testnet_execution_is_not_real_funds_execution
+  - controlled_replay_is_synthetic_and_creates_no_order
+  - historical_testnet_execution_is_real_nonproduction_evidence
   - signed_get_is_not_new_order
+  - deployed_web_runtime_is_not_production_financial_control
   - venue_eligibility_failure_is_not_valid_until_block
   - no_outcome_or_profitability_claim
   - no_mainnet
@@ -84,30 +92,16 @@ truth_boundaries:
   - no_public_write_route
 
 next_valid_handoff:
-  from: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
-  to: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE_REQUIRED
+  from: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
+  to: WINNING_INTELLIGENCE_FINAL_RECHECK
   required_output: >-
-    Review the current product delta introduced since historical TRACE Gate 6.5: receipt-v2 exact-action contract as currently surfaced, authenticated bounded Spot Testnet execution evidence, v0.4 four-surface Live Proof Lab, evidence-class separation, Vercel venue fail-closed diagnostics, Cloudflare signed-read verification, current judge readability and implications for the final encoded demo. Return an explicit PASS/HOLD/FAIL style TRACE delta verdict with bounded rework if needed. Do not perform human submission.
+    Perform the final same-event collision and judge-strategy recheck against the TRACE-approved B+C build, authenticated historical Spot Testnet evidence, receipt-v2 exact-action contract, dual-MCP composition and current v0.4 evidence classes. Return an explicit freeze/rework/kill-style strategic verdict. Do not substitute for TRACE Gate 6.75 and do not authorize submission.
 
 then:
-  - WINNING_INTELLIGENCE_FINAL_RECHECK
-  - TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
+  - TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW using GATE_6_75_DEMO_NARRATIVE_003.md
   - PBPD_CANDIDATE_HANDOFF
   - PROJECT_FINISHER
   - HUMAN_PROTECTED_SUBMISSION
 
 resume_rule: >-
-  PBPD v0.4 runtime reconciliation is closed. The next owner is TRACE for the current v0.3/v0.4 delta. Historical Gate 6.5 PASS is not sufficient for the new runtime/proof state. No new Binance order is permitted. Do not jump directly to Winning Intelligence, Gate 6.75, candidate handoff, Project Finisher or submission.
-
-trace_bc_delta:
-  direction: B_EDITORIAL_STRUCTURE_PLUS_C_TEMPORAL_DISPLACEMENT
-  human_selection: APPROVED_IN_CHAT
-  artifact: product/TRACE-DELTA-BC-001.md
-  verdict: HOLD_PENDING_CI_DEPLOYMENT_AND_RUNTIME_REVIEW
-  owner_retained: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
-  financial_write: false
-  downstream_progression: FORBIDDEN_THIS_WORKSTREAM
-  first_delta_commit: 7ad9f5c9d12b3e7c2db6a258c7d8e72c9a21d468
-  first_delta_ci_run: 34272109934
-  first_delta_ci: PASS
-  runtime_capture_target: https://valid-until-agent-os-plum.vercel.app
+  TRACE v0.4/B+C delta is closed PASS. Winning Intelligence now owns the final competitive/judge recheck. The build should remain frozen unless WI identifies a concrete material collision or claim issue. After WI closes, return to TRACE for the actual encoded video. No new Binance order, mainnet action, secret exposure or geo bypass is permitted.
