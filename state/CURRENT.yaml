@@ -2,7 +2,7 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PBPD_RUNTIME_RECONCILIATION_COMPLETE
-current_stage: PBPD_RUNTIME_EVIDENCE_RECONCILED_AWAITING_TRACE_DELTA
+current_stage: TRACE_BC_DELTA_IMPLEMENTED_AWAITING_RUNTIME_REVIEW
 current_owner: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
@@ -107,3 +107,12 @@ then:
 
 resume_rule: >-
   PBPD runtime evidence reconciliation is complete and PRD v0.4 acceptance is PASS. The historical authenticated Spot Testnet proof is preserved unchanged; no new order occurred during runtime verification. Vercel is a truthful venue-fail-closed runtime and Cloudflare re-verifies the fixed historical order by signed GET. Resume only at the required TRACE delta. Do not skip to Winning Intelligence, Gate 6.75, candidate handoff, Project Finisher or submission.
+
+trace_bc_delta:
+  direction: B_EDITORIAL_STRUCTURE_PLUS_C_TEMPORAL_DISPLACEMENT
+  human_selection: APPROVED_IN_CHAT
+  artifact: product/TRACE-DELTA-BC-001.md
+  verdict: HOLD_PENDING_CI_DEPLOYMENT_AND_RUNTIME_REVIEW
+  owner_retained: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
+  financial_write: false
+  downstream_progression: FORBIDDEN_THIS_WORKSTREAM

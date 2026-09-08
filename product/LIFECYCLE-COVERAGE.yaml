@@ -4,7 +4,7 @@ profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
 current_owner: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
-current_stage: PBPD_RUNTIME_EVIDENCE_RECONCILED_AWAITING_TRACE_DELTA
+current_stage: TRACE_BC_DELTA_IMPLEMENTED_AWAITING_RUNTIME_REVIEW
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -216,3 +216,12 @@ next_valid_handoff:
 
 resume_rule: >-
   PBPD runtime reconciliation is complete. PRD v0.4 acceptance is PASS and the historical bounded Testnet proof remains unchanged. Vercel is truthfully fail-closed on venue eligibility; Cloudflare re-verifies the fixed historical order via signed GET. Resume at TRACE delta only. Do not skip to Winning Intelligence, Gate 6.75, candidate handoff, Project Finisher or protected submission.
+
+trace_bc_delta:
+  direction: B_EDITORIAL_STRUCTURE_PLUS_C_TEMPORAL_DISPLACEMENT
+  human_selection: APPROVED_IN_CHAT
+  artifact: product/TRACE-DELTA-BC-001.md
+  verdict: HOLD_PENDING_CI_DEPLOYMENT_AND_RUNTIME_REVIEW
+  owner_retained: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
+  financial_write: false
+  downstream_progression: FORBIDDEN_THIS_WORKSTREAM
