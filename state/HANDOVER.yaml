@@ -13,8 +13,8 @@ handover_discipline:
   chat_memory_is_not_authority: true
   rule: read_both_files_first_then_resume_exact_gate
 
-current_stage: LIVE_PROOF_LAB_V0_4_IMPLEMENTATION_ACTIVE
-current_owner: PBPD
+current_stage: LIVE_PROOF_LAB_V0_4_CODE_COMPLETE_WAITING_VERCEL_DEPLOY_AND_SECRETS
+current_owner: HUMAN_VERCEL_SECRET_BOUNDARY
 terminal_completeness_allowed: false
 
 material_scope_state:
@@ -23,99 +23,124 @@ material_scope_state:
   living_prd_version: '0.4'
   living_prd_addendum: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
   spec_kit_delta: product/specs/001-execution-validity/LIVE-PROOF-LAB-DELTA-0.4.md
-  scope_reconciliation_status: AUTHORIZED_READY_TO_IMPLEMENT
+  code_status: COMPLETE_CI_VERIFIED
+  runtime_status: BLOCKED_BY_VERCEL_HOBBY_BUILD_RATE_LIMIT
 
 preserved_verified_execution:
-  public_proof_file: web/live-testnet-proof.json
   proof_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
-  endpoint: https://testnet.binance.vision
   order_id: 13634770
   client_order_id: vu-mtswxiik-ecb6b093
   status: FILLED
   same_order_verified: true
+  production: false
   real_funds: false
   rerun_without_new_authorization: FORBIDDEN
 
 v0_4_frontend:
-  routes:
-    - '/'
-    - '/lab'
-    - '/live-proof'
-    - '/evaluations'
-  strongest_paths:
-    primary: '/lab'
-    secondary: '/live-proof'
+  home: '/'
+  live_lab: '/lab'
+  verified_execution: '/live-proof'
+  evaluations: '/evaluations'
+  home_build_navigation_injection: src/build-web-data.mjs
+  live_lab_file: web/lab.html
+  live_proof_file: web/live-proof.html
+  evaluations_file: web/evaluations.html
 
-v0_4_server_endpoints:
+v0_4_live_lab:
+  evidence_classes:
+    - LIVE
+    - CONTROLLED
+    - VERIFIED_EXECUTION
+  scenarios:
+    - CLEAN_ALLOW
+    - MARKET_DRIFT_35_47_BPS_GT_20
+    - EXACT_ACTION_MUTATION_50_TO_75_UNDER_100_CAP
+    - TTL_EXPIRY
+    - RECEIPT_TAMPER
+    - POLICY_MISMATCH
+  financial_write: false
+
+v0_4_server:
   live_market:
+    file: api/live-market.mjs
     route: '/api/live-market'
     auth: NONE
+    target: https://testnet.binance.vision
     write: false
-    endpoint: https://testnet.binance.vision
   signed_known_order_refresh:
+    file: api/order-status.mjs
     route: '/api/order-status'
-    auth_source: VERCEL_SENSITIVE_ENV
+    auth: VERCEL_SENSITIVE_ENV_ONLY
     secret_names:
       - BINANCE_TESTNET_API_KEY
       - BINANCE_TESTNET_API_SECRET
+    fixed_symbol: BTCUSDT
+    fixed_order_id: 13634770
+    fixed_client_order_id: vu-mtswxiik-ecb6b093
     write: false
-    fixed_target:
-      symbol: BTCUSDT
-      order_id: 13634770
-      client_order_id: vu-mtswxiik-ecb6b093
+    arbitrary_order_target_from_browser: forbidden
+
+assurance:
+  full_ci_run: 34256450643
+  conclusion: SUCCESS
+  head: 13d71b62cdbb77d24c4468176bcf8afdef0a5369
+  vercel_proof_api_unit_tests: PASS_6_OF_6
+  live_lab_route_assertions: PASS
+  browser_secret_boundary: PASS
+  signed_refresh_read_only_assertion: PASS
+  existing_full_test_suite: PASS
+
+vercel_blocker:
+  project_id: prj_G4gsIiXTRxOTLhXf8ZMqqVDRJSYs
+  stable_domain: https://valid-until-agent-os.vercel.app
+  github_commit_status_for_13d71b6:
+    context: Vercel
+    state: failure
+    target: https://vercel.com/faadil1s-projects?upgradeToPro=build-rate-limit
+  blocker: HOBBY_BUILD_RATE_LIMIT
+  latest_successful_deployment: dpl_HYcUki7UJgFBYFrMt7Fm541qF8yN
+  latest_successful_deployment_commit: 90cf6c3441e48f7ad916d476639d00544ad1db3e
+  current_lab_route: 404
+  product_interpretation: CODE_READY_NOT_YET_DEPLOYED
+
+human_secret_action:
+  guide: docs/VERCEL-LIVE-PROOF-LAB-ENV.md
+  project: valid-until-agent-os
+  environment: Production
+  variable_type: Sensitive
+  variables:
+    - BINANCE_TESTNET_API_KEY
+    - BINANCE_TESTNET_API_SECRET
+  values_source: existing_Binance_Spot_Testnet_HMAC_pair
+  share_values_in_chat: forbidden
 
 security_boundary:
-  secrets_browser_exposure: FORBIDDEN
-  public_env_prefixes_for_binance_secrets: FORBIDDEN
-  raw_account_payload_return: FORBIDDEN
-  raw_auth_headers_logging: FORBIDDEN
-  mainnet: FORBIDDEN
-  geographic_bypass: FORBIDDEN
-  public_unrestricted_write_button: FORBIDDEN
-  new_vercel_write_route: NOT_IN_INITIAL_V0_4_IMPLEMENTATION
-  future_vercel_write_route_rule: REQUIRES_SEPARATE_OWNER_ARMED_FAIL_CLOSED_DELTA
-
-implementation_requirements:
-  - build /lab with LIVE, CONTROLLED and VERIFIED EXECUTION labels
-  - implement six deterministic scenarios
-  - implement live public Spot Testnet market snapshot endpoint
-  - implement server-side signed GET refresh for the known verified order
-  - add global navigation to all judge surfaces
-  - preserve existing execution receipt unchanged
-  - add CI assertions for secret/browser separation and no POST order route
-  - deploy and verify stable Vercel routes and API behavior
-
-unresolved_lifecycle_in_order:
-  1_v0_4_implementation:
-    owner: PBPD
-    status: ACTIVE
-  2_pbpd_runtime_evidence_reconciliation:
-    owner: PBPD
-    status: MISSING
-  3_trace_delta:
-    owner: TRACE
-    status: MISSING
-  4_winning_intelligence_final_recheck:
-    owner: hackathon-opportunity-intelligence
-    status: MISSING
-  5_trace_gate_6_75_video:
-    owner: TRACE
-    status: MISSING
-  6_pbpd_candidate_handoff:
-    owner: PBPD
-    status: MISSING
-  7_project_finisher:
-    owner: Project Finisher
-    status: MISSING
-  8_human_submission:
-    owner: HUMAN
-    status: MISSING
+  public_unrestricted_write_button: forbidden
+  initial_v0_4_vercel_write_route: absent
+  future_write_route: requires_separate_owner_armed_fail_closed_delta
+  mainnet: forbidden
+  real_funds: forbidden
+  geo_bypass: forbidden
+  secret_browser_exposure: forbidden
+  raw_account_payload_return: forbidden
+  new_order_claim_from_signed_refresh: forbidden
 
 next_valid_handoff:
-  from: PBPD
-  to: PBPD_IMPLEMENTATION
-  required_output: MULTI_PAGE_LIVE_PROOF_LAB_DEPLOYED_AND_RUNTIME_VERIFIED
+  from: PBPD_IMPLEMENTATION
+  to: HUMAN_VERCEL_SECRET_BOUNDARY
+  required_output: VERCEL_SENSITIVE_PRODUCTION_SECRETS_CONFIGURED_WITHOUT_DISCLOSURE
+
+then:
+  - wait for Vercel Hobby build-rate limit reset
+  - trigger fresh current-main deployment
+  - verify HTTP 200 for /, /lab, /live-proof, /evaluations
+  - verify /api/live-market returns LIVE or explicit venue-unavailable fail-closed state
+  - verify /api/order-status returns LIVE_SIGNED_READ_VERIFIED or explicit venue eligibility state
+  - record runtime evidence
+  - PBPD reconciliation
+  - TRACE delta
+  - Winning Intelligence final recheck
 
 resume_rule: >-
-  The user explicitly authorized v0.4. Implement the four-page judge surface and server-side read endpoints now.
-  Do not rerun the successful testnet order and do not introduce a public Vercel write route in this initial delta.
+  v0.4 is implemented and CI green but not yet live. Do not report /lab as deployed until verified on the stable domain.
+  The next human action is only Vercel Sensitive Production secret configuration; no new Binance order is required.
