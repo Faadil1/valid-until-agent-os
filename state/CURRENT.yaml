@@ -2,7 +2,7 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: WINNING_INTELLIGENCE_FINAL_COMPLETE
-current_stage: TRACE_GATE_6_75_REMOTION_FILM_BUILD_IN_PROGRESS
+current_stage: TRACE_GATE_6_75_ENCODED_CANDIDATE_RENDERED_PENDING_HUMAN_AUDIO_PLAYBACK
 current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
@@ -81,10 +81,10 @@ winning_intelligence_final:
     - README.md
     - docs/JUDGE-MATRIX.md
     - docs/DEMO-SCRIPT.md
-  remaining_critical_risk: FINAL_ENCODED_VIDEO_NOT_YET_REVIEWED
+  remaining_critical_risk: FINAL_ENCODED_VIDEO_AUDIO_PLAYBACK_NOT_YET_HUMAN_CONFIRMED
 
 gate_6_75_packaging_alignment:
-  status: READY_FOR_RECORDING
+  status: ENCODED_CANDIDATE_RENDERED
   judge_performance_chain: RUBRIC__PAIN__PROBLEM__DIFFERENTIATOR__EXECUTION__EVIDENCE__STORY__DEMO__Q_AND_A
   rubric_is_internal_not_literal_video_scene: true
   pain_problem_target_seconds: 5
@@ -95,25 +95,51 @@ gate_6_75_packaging_alignment:
   evidence_story_demo_fused_into_causal_replay: true
   q_and_a_source: docs/JUDGE-MATRIX.md
   working_script: docs/DEMO-SCRIPT.md
-  working_script_alignment_commit: a86a6fda4fb7ebf84c52179a6028d92cfc9585c0
   trace_contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
-  trace_contract_alignment_commit: af1c6f56d91e9112095c34255ea78608dfea3b90
+  candidate_review: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
   film_target_seconds: 58-65
-  actual_encoded_video_exists: false
+  actual_encoded_video_exists: true
+  trace_visual_claim_readability_review: PASS
+  human_audio_playback_confirmation: PENDING
   trace_gate_6_75_pass: false
 
 remotion_final_film_build:
-  status: IN_PROGRESS
-  workflow: .github/workflows/final-remotion-film.yml
-  workflow_commit: 983f2f7e96ea25c21836f0b5607270db9df9365d
-  workflow_run: 34277478773
-  render_target: 1920x1080_30fps_62_seconds
+  status: SUCCESS_CANDIDATE_RENDERED
+  original_workflow: .github/workflows/final-remotion-film.yml
+  original_run: 34277478773
+  original_run_result: FAILED_PACKAGING_ONLY_FFPROBE_MISSING
+  retry_workflow: .github/workflows/final-remotion-film-retry.yml
+  retry_commit: 5e7992968137d71fb442fa13a6d61f2be6650a84
+  retry_run: 34277730560
+  retry_result: SUCCESS
+  artifact_name: valid-until-final-remotion-film
+  artifact_id: 10076473914
+  artifact_digest: sha256:45889aa6b4331d629769c7e9d3782ff4260a4d742f5fe547e4b78fa3f3a55680
+  encoded_file: valid-until-final.mp4
+  encoded_duration_seconds: 62.058667
+  encoded_size_bytes: 8189370
+  video_codec: H264
+  audio_codec: AAC
+  resolution: 1920x1080
+  fps: 30
   source_strategy: CURRENT_DEPLOYED_VERCEL_LIVE_SCREENSHOTS_PLUS_ACTUAL_REPLAY_FRAME_SEQUENCE
   live_source_url: https://valid-until-agent-os-plum.vercel.app
-  voiceover: REQUIRED_FOR_JUDGE_COMPREHENSION
-  voiceover_language: English
-  voiceover_generation: NEURAL_TTS_DRAFT_CAN_BE_REPLACED_BY_HUMAN_VOICE_WITHOUT_VISUAL_REBUILD
-  background_music: NOT_REQUIRED
+  voiceover: PRESENT_ENGLISH_NEURAL_TTS
+  voiceover_required_for_judge_comprehension: true
+  voiceover_subjective_naturalness: PENDING_HUMAN_PLAYBACK
+  voiceover_replaceable_without_visual_rebuild: true
+  background_music: OMITTED_BY_DESIGN
+  visual_sample_checkpoints_seconds:
+    - 3
+    - 9
+    - 13
+    - 18
+    - 25
+    - 37
+    - 44
+    - 51
+    - 59
+  visual_sample_review: PASS
   no_new_financial_write: true
   product_scope_change: NONE
 
@@ -129,10 +155,11 @@ security_invariants:
   - no_profitability_or_production_safety_claim
 
 next_valid_handoff:
-  from: WINNING_INTELLIGENCE_FINAL_RECHECK_PLUS_FILM_PACKAGING_ALIGNMENT
-  to: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
+  from: REMOTION_FINAL_FILM_BUILD
+  to: HUMAN_AUDIO_PLAYBACK_THEN_TRACE_GATE_6_75_CLOSURE
   contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
-  required_output: ACTUAL_FINAL_ENCODED_58_65_SECOND_EVIDENCE_FILM_AND_TRACE_VERDICT
+  candidate_review: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
+  required_output: HUMAN_KEEP_VOICEOVER_OR_CHANGE_VOICE_DECISION_THEN_TRACE_GATE_6_75_FINAL_VERDICT
 
 then:
   - PBPD candidate handoff
@@ -140,4 +167,4 @@ then:
   - protected human submission
 
 resume_rule: >-
-  The Remotion Gate 6.75 film build is active in GitHub Actions run 34277478773. It captures the current deployed Vercel surfaces, including a live replay frame sequence, then renders a 1080p 62-second evidence film with English voiceover. Product, visual direction and positioning remain frozen. If the render succeeds, retrieve the artifact and perform TRACE Gate 6.75 encoded-film review. If it fails, repair only the packaging pipeline; do not reopen product scope or execute a new Binance order.
+  The actual 62.06-second Remotion Gate 6.75 candidate now exists from successful run 34277730560. Visual compression/readability, judge-chain ordering, Agent OS legibility, cross-time signature, 6/6 evidence and controlled-versus-historical execution separation have been reviewed PASS. The only intentionally open subjective check is human playback of the English neural voiceover. If the user says KEEP VOICEOVER and reports no audio defect, TRACE may close Gate 6.75. If the user requests a different voice, rerender audio/packaging only. Do not reopen product scope or execute a new Binance order.
