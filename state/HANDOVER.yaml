@@ -14,7 +14,7 @@ handover_discipline:
   rule: read_both_files_first_then_resume_exact_gate
   update_after_each_meaningful_gate_or_packaging_step: true
 
-current_stage: PRODUCT_POSITIONING_FROZEN_AWAITING_TRACE_GATE_6_75_FINAL_FILM
+current_stage: TRACE_GATE_6_75_REMOTION_FILM_BUILD_IN_PROGRESS
 current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
 terminal_completeness_allowed: false
 
@@ -74,7 +74,7 @@ winning_intelligence_final:
     - docs/DEMO-SCRIPT.md
 
 gate_6_75_recording_contract:
-  status: READY_FOR_RECORDING__ENCODED_VIDEO_NOT_YET_CREATED
+  status: READY_FOR_RECORDING__REMOTION_RENDER_IN_PROGRESS
   judge_performance_chain: RUBRIC__PAIN__PROBLEM__DIFFERENTIATOR__EXECUTION__EVIDENCE__STORY__DEMO__Q_AND_A
   chain_application:
     rubric: INTERNAL_PROOF_MAP_NOT_LITERAL_SCENE
@@ -88,12 +88,35 @@ gate_6_75_recording_contract:
     q_and_a: PREPARED_IN_DOCS_JUDGE_MATRIX
   differentiator_line: A preflight asks whether an action is acceptable now. Valid Until asks whether this exact old action is still justified by the decision that produced it.
   working_script: docs/DEMO-SCRIPT.md
-  working_script_alignment_commit: a86a6fda4fb7ebf84c52179a6028d92cfc9585c0
   trace_contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
-  trace_contract_alignment_commit: af1c6f56d91e9112095c34255ea78608dfea3b90
   target_seconds: 58-65
   actual_encoded_video_required: true
   trace_gate_6_75_pass: false
+
+remotion_render_handoff:
+  workflow_file: .github/workflows/final-remotion-film.yml
+  workflow_commit: 983f2f7e96ea25c21836f0b5607270db9df9365d
+  workflow_run: 34277478773
+  current_status: IN_PROGRESS
+  target_artifact_name: valid-until-final-remotion-film
+  expected_video: video/final-film/out/valid-until-final.mp4
+  expected_duration_seconds: 62
+  resolution: 1920x1080
+  fps: 30
+  source_assets: LIVE_DEPLOYED_VERCEL_SCREENSHOTS_AND_ACTUAL_REPLAY_FRAME_SEQUENCE
+  replay_capture: CONTROLLED_REPLAY_ONLY__NO_FINANCIAL_WRITE
+  voiceover:
+    required: true
+    language: English
+    current_mode: NEURAL_TTS_DRAFT
+    replaceable_with_human_voice_without_visual_rebuild: true
+    reason: >-
+      The causal distinction between current-state preflight and cross-time decision validity is too dense to leave to silent screenshots. Voiceover carries the judge through pain, differentiator, execution and evidence while the live product remains on screen.
+  music:
+    required: false
+    recommendation: OMIT_FOR_FIRST_GATE_6_75_CUT
+  repair_boundary: >-
+    If the workflow fails, repair only screenshot capture, TTS, Remotion timing/rendering or packaging. Do not modify the Valid Until engine, deployed product, policy, historical proof, eligibility behavior, or add a new financial write.
 
 truth_boundaries:
   - controlled_replay_is_synthetic_and_creates_no_order
@@ -107,11 +130,11 @@ truth_boundaries:
   - no_public_write_route
 
 next_valid_handoff:
-  from: WINNING_INTELLIGENCE_FINAL_RECHECK_PLUS_GATE_6_75_PACKAGING_ALIGNMENT
+  from: REMOTION_FINAL_FILM_BUILD
   to: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
   required_contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
   required_output: >-
-    Produce the actual final encoded 58–65 second evidence film from the current TRACE-approved deployed B+C surface. The differentiator must be spoken before receipt/implementation detail. Then TRACE must inspect compression/readability, claim truth, Agent OS legibility, PASS 4/4 + MATCH versus FAIL 35.47 > 20 BPS signature, controlled replay versus historical verified-execution separation, and Q&A consistency. No Gate 6.75 PASS may be inferred before that encoded artifact is reviewed.
+    Retrieve the encoded MP4 from GitHub Actions run 34277478773 if successful. TRACE must inspect the actual file for 58-65 second duration, compression/readability, differentiator before technical detail, Agent OS legibility, PASS 4/4 + MATCH versus FAIL 35.47 > 20 BPS, controlled replay versus historical verified-execution separation, truthful Testnet language and no implication of a new trade. If failed, perform bounded packaging repair and rerender.
 
 then:
   - PBPD_CANDIDATE_HANDOFF
@@ -119,4 +142,4 @@ then:
   - HUMAN_PROTECTED_SUBMISSION
 
 resume_rule: >-
-  PBPD reconciliation, TRACE v0.4/B+C delta, Winning Intelligence final recheck, and the Judge Performance chain micro-alignment are closed. Product, visual direction and positioning remain frozen. Resume only by producing the actual Gate 6.75 encoded film. Do not add sponsor breadth, remote MCP OAuth proof, more trading proof, new features or redesign absent a new material defect. No new Binance order is permitted.
+  The final film is actively rendering through GitHub Actions run 34277478773 using Remotion and current deployed screenshots. Wait only for that foreground render result; do not reopen product scope. On success, download the artifact and begin TRACE Gate 6.75 encoded-film review. On failure, inspect the job logs and patch the packaging workflow only. No new Binance order is permitted.
