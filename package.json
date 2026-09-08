@@ -1,6 +1,6 @@
 {
   "name": "valid-until-agent-os",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "description": "Cross-time execution-integrity contract for Binance Agent OS: short-lived, exact-action-bound validity.",
@@ -17,7 +17,8 @@
     "test:mcp-observation": "node tests/binance-mcp-observation.mjs",
     "test:testnet-execution": "node tests/testnet-executor.mjs",
     "test:testnet-http": "node tests/binance-testnet-http.mjs",
-    "test:all": "npm test && npm run test:challenge && npm run test:mcp && npm run test:mcp-observation && npm run test:testnet-execution && npm run test:testnet-http",
+    "test:vercel-proof-api": "node tests/vercel-proof-api.mjs",
+    "test:all": "npm test && npm run test:challenge && npm run test:mcp && npm run test:mcp-observation && npm run test:testnet-execution && npm run test:testnet-http && npm run test:vercel-proof-api",
     "build:web": "node src/build-web-data.mjs && node src/challenge-suite.mjs --write-web"
   },
   "engines": {
