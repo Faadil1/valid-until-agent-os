@@ -13,7 +13,7 @@ handover_discipline:
   chat_memory_is_not_authority: true
   rule: read_both_files_first_then_resume_exact_gate
 
-current_stage: HUMAN_WORKFLOW_DISPATCH_REQUIRED
+current_stage: CORRECT_TESTNET_WORKFLOW_DISPATCH_REQUIRED
 current_owner: HUMAN_PROTECTED_TESTNET_WRITE_BOUNDARY
 terminal_completeness_allowed: false
 
@@ -24,7 +24,7 @@ completed_in_current_sequence:
   workflow_packaging:
     status: COMPLETE
     workflow: .github/workflows/live-testnet-proof.yml
-    workflow_name: live-binance-spot-testnet-proof
+    workflow_name: 'RUN THIS — live-binance-spot-testnet-proof'
     trigger: workflow_dispatch_only
     environment: testnet-proof
     ci_run: 34247316936
@@ -37,6 +37,23 @@ completed_in_current_sequence:
     placeholder_json: web/live-testnet-proof.json
     page: web/live-proof.html
     intended_route: https://valid-until-agent-os.vercel.app/live-proof
+  judge_optimization:
+    status: INTEGRATED
+    evidence: product/JUDGE-OPTIMIZATION-EVIDENCE-001.md
+    judge_matrix: docs/JUDGE-MATRIX.md
+    demo_structure: docs/DEMO-SCRIPT.md
+    product_scope_changed: false
+    final_video_frozen: false
+
+judge_optimization_rules:
+  - Problem_Pain_Execution_Story_Demo_must_all_be_legible
+  - problem_understood_within_15_seconds
+  - aha_moment_is_NO_LONGER_VALID
+  - technical_detail_only_if_it_answers_an_objection
+  - show_end_to_end_behavior_not_feature_count
+  - prepare_QA_for_limit_order_stop_loss_generic_preflight_30_lines_AI_need_and_ALLOW_meaning
+  - do_not_add_features_for_rubric_theatre
+  - final_script_waits_for_live_testnet_proof_and_TRACE_6_75
 
 workflow_security_contract:
   credentials_source: GitHub_Environment_testnet-proof
@@ -68,32 +85,39 @@ human_requested_scope:
   stop_after_step: 5
   step_1_secret_installation: COMPLETE
   step_2_manual_workflow: COMPLETE
-  step_3_real_testnet_capture: BLOCKED_ON_ONE_MANUAL_DISPATCH_CLICK
+  step_3_real_testnet_capture: BLOCKED_ON_CORRECT_MANUAL_DISPATCH
   step_4_sanitized_proof: PENDING
   step_5_vercel_publication: PENDING
   do_not_continue_past_step_5_without_new_instruction: true
+
+misdispatch_record:
+  workflow_selected: live-binance-readonly-proof
+  run_id: 34247925054
+  result: SUCCESS
+  evidence_class: AUTHENTIC_PUBLIC_BINANCE_READ_ONLY_ONLY
+  satisfies_step_3: false
+  remediation:
+    - archived workflow renamed to 'ARCHIVE — live-binance-readonly-proof'
+    - archived workflow no longer exposes workflow_dispatch
+    - correct workflow renamed to 'RUN THIS — live-binance-spot-testnet-proof'
 
 manual_action_required_now:
   exact_path:
     - open GitHub repo Faadil1/valid-until-agent-os
     - open Actions
-    - choose live-binance-spot-testnet-proof
+    - choose 'RUN THIS — live-binance-spot-testnet-proof'
     - click Run workflow
     - choose main
     - click Run workflow
   no_inputs_required: true
   do_not_share_secrets: true
 
-why_manual_click_exists:
-  policy: write_capture_must_be_manual_only
-  tooling_constraint: current_GitHub_connector_has_no_initial_workflow_dispatch_action
-  forbidden_workaround: do_not_change_to_push_triggered_execution
-
 what_next_conversation_or_current_assistant_must_do_after_click:
-  - find newest workflow_dispatch run for live-binance-spot-testnet-proof
+  - find newest workflow_dispatch run whose name is RUN THIS — live-binance-spot-testnet-proof
   - inspect job status and sanitized logs only
+  - verify protected secret presence check passed without disclosure
   - verify authenticated Spot Testnet account check passed
-  - inspect decision cycle statuses
+  - inspect fresh decision cycle statuses
   - if ALLOW verify order_sent=true and same_order_verified=true
   - if BLOCK verify order_sent=false and preserve result without policy weakening
   - inspect sanitized artifact only; never request raw secrets
@@ -103,7 +127,8 @@ what_next_conversation_or_current_assistant_must_do_after_click:
   - STOP at completed step 5 before PBPD final reconciliation, TRACE, final Winning Intelligence, video or Project Finisher
 
 claim_boundaries:
-  - no_real_testnet_order_claim_until_actual_workflow_run_proves_it
+  - read_only_run_34247925054_is_not_a_testnet_write_claim
+  - no_real_testnet_order_claim_until_correct_workflow_proves_it
   - no_mainnet_trade_claim
   - Spot_Testnet_is_non_production
   - no_profitability_alpha_or_financial_safety_claim
@@ -111,4 +136,4 @@ claim_boundaries:
 next_valid_handoff:
   from: HUMAN_PROTECTED_TESTNET_WRITE_BOUNDARY
   to: PBPD_RUNTIME_EVIDENCE
-  required_output: REAL_GITHUB_ACTIONS_RUN_ID
+  required_output: REAL_GITHUB_ACTIONS_RUN_ID_FOR_RUN_THIS_WORKFLOW
