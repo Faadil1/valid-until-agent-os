@@ -1,0 +1,57 @@
+name: live-binance-readonly-proof
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/live-proof.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install official Binance CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 -LsSf \
+            https://github.com/binance/binance-cli/releases/latest/download/binance-cli-installer.sh \
+            | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+
+      - name: Verify Binance CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v binance-cli
+          binance-cli --version
+
+      - name: Capture real public Binance proof
+        shell: bash
+        env:
+          VALID_UNTIL_RECHECK_MS: '3000'
+        run: bash scripts/capture-live-evidence.sh BTCUSDT
+
+      - name: Show bounded verdict
+        shell: bash
+        run: |
+          find evidence/live -maxdepth 2 -type f -name verdict.txt -print -exec cat {} \;
+
+      - name: Upload read-only proof artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: valid-until-live-binance-readonly-proof
+          path: evidence/live/
+          if-no-files-found: error
+          retention-days: 30
