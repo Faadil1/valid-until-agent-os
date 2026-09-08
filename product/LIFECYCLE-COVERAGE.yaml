@@ -3,8 +3,8 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
-current_stage: TRACE_GATE_6_75_ENCODED_CANDIDATE_RENDERED_PENDING_HUMAN_AUDIO_PLAYBACK
+current_owner: HUMAN_PROTECTED_SUBMISSION
+current_stage: SUBMISSION_READY_AWAITING_HUMAN_SUBMIT
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -29,7 +29,6 @@ capabilities:
     owner: hackathon-opportunity-intelligence
     status: SATISFIED
     evidence_pointer: product/WINNER-INTELLIGENCE-RERUN-004-X-API.md
-    note: historical/rerun capability satisfied; final recheck separately satisfied below
 
   - capability: project_authorization
     owner: human / chief-of-staff authority boundary
@@ -50,13 +49,12 @@ capabilities:
     owner: PBPD
     status: SATISFIED
     evidence_pointer: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
-    note: current living definition is product/PRD.md v0.2 + v0.3 + v0.4; changelog reconciled
+    note: v0.4 runtime acceptance satisfied and reconciled
 
   - capability: spec_kit
     owner: Spec Kit orchestration under PBPD
     status: SATISFIED
     evidence_pointer: product/specs/001-execution-validity/tasks.md
-    note: authority NONE; tasks reconciled through PBPD v0.4 runtime gate
 
   - capability: production_build_core
     owner: PBPD
@@ -73,7 +71,6 @@ capabilities:
     owner: PBPD evidence plane
     status: SATISFIED
     evidence_pointer: web/live-testnet-proof.json
-    note: canonical proof blob preserved unchanged
 
   - capability: judge_optimization_evidence
     owner: PBPD / Winning Intelligence / TRACE input
@@ -94,83 +91,86 @@ capabilities:
     owner: PBPD
     status: SATISFIED
     evidence_pointer: api/order-status.mjs
-    note: Vercel + Cloudflare fixed known-order signed read; no public write route
+    note: fixed known-order signed read only; no public write route
 
   - capability: live_proof_lab_v0_4_secret_configuration
     owner: human
     status: SATISFIED
     evidence_pointer: state/HANDOVER.yaml
-    note: server-side credentials configured without disclosure; Cloudflare signed read proves runtime configuration
 
   - capability: live_proof_lab_v0_4_runtime_deployment
     owner: PBPD + deployment platforms
     status: SATISFIED
     evidence_pointer: state/HANDOVER.yaml
-    note: Vercel READY with four static routes and explicit venue fail-closed APIs; Cloudflare verified mirror
 
   - capability: live_proof_lab_v0_4_verified_runtime
     owner: PBPD runtime evidence
     status: SATISFIED
-    evidence_pointer: state/HANDOVER.yaml
-    note: Cloudflare signed GET re-verifies canonical historical order; no runtime financial write
+    evidence_pointer: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
 
   - capability: pbpd_runtime_evidence_reconciliation_after_v0_4
     owner: PBPD
     status: SATISFIED
     evidence_pointer: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
-    note: v0.4 acceptance PASS; no PRD increment required
 
   - capability: trace_delta_after_live_testnet_and_v0_4_scope
     owner: TRACE
     status: SATISFIED
     evidence_pointer: product/TRACE-DELTA-BC-001.md
-    note: specialist PASS recorded in Faadil1/trace-design-workflow; runtime run 34274047494 PASS desktop/mobile and normal/reduced-motion
+    note: TRACE runtime run 34274047494 PASS desktop/mobile normal/reduced-motion 4/4
 
   - capability: winning_intelligence_final_recheck
     owner: hackathon-opportunity-intelligence
     status: SATISFIED
     evidence_pointer: product/WINNER-INTELLIGENCE-FINAL-2026-09-08.md
-    note: PASS_WITH_FREEZE; generic preflight/trade-readiness positioning rejected; README/JUDGE-MATRIX/DEMO-SCRIPT packaging contradictions repaired; no new feature or proof breadth recommended
+    note: PASS_WITH_FREEZE
+
+  - capability: winning_intelligence_final_film_heuristic
+    owner: hackathon-opportunity-intelligence
+    status: SATISFIED
+    evidence_pointer: product/WINNER-INTELLIGENCE-FINAL-FILM-HEURISTIC-2026-09-08.md
+    note: PASS_WITH_FREEZE; no scope reopen recommended
 
   - capability: trace_gate_6_75_demo_narrative_evidence_film
     owner: TRACE
-    status: MISSING
-    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
-    note: >-
-      Actual encoded 62.058667-second Remotion candidate now exists from run 34277730560 / artifact 10076473914. Visual compression/readability, judge-chain ordering, Agent OS role, cross-time signature, 6/6 proof, and controlled-vs-historical execution separation are reviewed PASS. Gate remains open only for subjective human playback confirmation of the English neural voiceover; Gate 7 is not authorized.
+    status: SATISFIED
+    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_FINAL_CLOSEOUT_001.md
+    note: final 62.0s encoded film PASS; human accepted final narrative voice v2
 
   - capability: pbpd_candidate_handoff
     owner: PBPD
-    status: MISSING
-    evidence_pointer: null
+    status: SATISFIED
+    evidence_pointer: product/PBPD-CANDIDATE-HANDOFF-2026-09-08.md
+    note: BUILD_CANDIDATE_READY
 
   - capability: terminal_assurance
     owner: Project Finisher
-    status: MISSING
-    evidence_pointer: null
+    status: SATISFIED
+    evidence_pointer: product/PROJECT-FINISHER-TERMINAL-ASSURANCE-2026-09-08.md
+    note: SUBMISSION_READY
+
+  - capability: final_submission_package
+    owner: Project Finisher packaging plane
+    status: SATISFIED
+    evidence_pointer: docs/FINAL-SUBMISSION-PACKAGE-2026-09-08.md
+    note: archive SHA256 0f43fe320b4521f840eeac325cdfea19e45a04b1bfd6bc163d148bc8325fd7e3
 
   - capability: protected_submission
     owner: human
     status: MISSING
     evidence_pointer: null
+    note: final official Submit must be performed and confirmed by human
 
   - capability: post_mortem_and_learning
     owner: Project Finisher with HOI/PBPD/TRACE as applicable
     status: NOT_APPLICABLE_WITH_REASON
-    not_applicable_reason: project has not yet been officially submitted and no official outcome exists
+    not_applicable_reason: official submission has not yet been human-confirmed and no official outcome exists
 
 missing:
-  - trace_gate_6_75_demo_narrative_evidence_film
-  - pbpd_candidate_handoff
-  - terminal_assurance
   - protected_submission
 
 unknown: []
-
 triggered_but_unresolved:
-  - TRACE_GATE_6_75_HUMAN_AUDIO_PLAYBACK_AND_FINAL_CLOSURE
-  - PBPD_CANDIDATE_HANDOFF
-  - PROJECT_FINISHER
   - HUMAN_PROTECTED_SUBMISSION
 
 human_overrides: []
@@ -178,25 +178,23 @@ human_overrides: []
 current_evidence:
   primary_judge_url: https://valid-until-agent-os-plum.vercel.app
   cloudflare_runtime_url: https://valid-until-agent-os.pages.dev
+  public_repository: https://github.com/Faadil1/valid-until-agent-os
+  repository_visibility: public
   trace_runtime_run: 34274047494
   trace_runtime_result: SUCCESS
-  trace_runtime_artifact_id: 10074995345
-  trace_runtime_artifact_digest: sha256:0d93d791857166854c81a0a085b87abb6ca191744d460bfb8ef9c2b12606e603
   trace_desktop_mobile_reduced_motion: PASS_4_OF_4
-  trace_delta_verdict: PASS
-  winning_intelligence_final_artifact: product/WINNER-INTELLIGENCE-FINAL-2026-09-08.md
-  winning_intelligence_final_verdict: PASS_WITH_FREEZE
-  product_visual_positioning_freeze: true
-  remotion_retry_run: 34277730560
-  remotion_retry_result: SUCCESS
-  remotion_artifact_id: 10076473914
-  remotion_artifact_digest: sha256:45889aa6b4331d629769c7e9d3782ff4260a4d742f5fe547e4b78fa3f3a55680
-  remotion_encoded_duration_seconds: 62.058667
-  remotion_resolution: 1920x1080
-  remotion_fps: 30
-  remotion_audio_present: true
-  remotion_visual_encoded_review: PASS
-  remotion_human_audio_playback: PENDING
+  trace_gate_6_75: PASS
+  final_film_run: 34284794981
+  final_film_artifact_id: 10079108948
+  final_film_artifact_digest: sha256:37b36cb284e80659dabdaea51982bcc0e6aacc435e1ac7f7acb61f99f8ee6f8d
+  final_film_mp4_sha256: 062583713a1c8cb2184b4fd69dc40ff98a079e50b24894ca5ffb98ec6dde0838
+  final_film_duration_seconds: 62.0
+  final_film_resolution: 1920x1080
+  final_film_fps: 30
+  final_voice_human_verdict: ACCEPTED
+  final_package_sha256: 0f43fe320b4521f840eeac325cdfea19e45a04b1bfd6bc163d148bc8325fd7e3
+  pbpd_candidate_state: BUILD_CANDIDATE_READY
+  project_finisher_state: SUBMISSION_READY
   cloudflare_signed_read_status: LIVE_SIGNED_READ_VERIFIED
   testnet_order_id: 13634770
   testnet_client_order_id: vu-mtswxiik-ecb6b093
@@ -205,7 +203,6 @@ current_evidence:
   production: false
   real_funds: false
   canonical_trade_rerun: false
-  v0_4_acceptance: PASS
 
 non_bypass_rules_reaffirmed:
   - no_cloud_region_hopping
@@ -218,11 +215,13 @@ non_bypass_rules_reaffirmed:
   - no_browser_secret_exposure
   - do_not_rerun_successful_testnet_order
   - no_cloudflare_or_vercel_placement_manipulation_for_venue_bypass
+  - no_automatic_final_submission
 
 next_valid_handoff:
-  from: REMOTION_FINAL_FILM_BUILD
-  to: HUMAN_AUDIO_PLAYBACK_THEN_TRACE_GATE_6_75_CLOSURE
-  required_output: HUMAN_KEEP_VOICEOVER_OR_CHANGE_VOICE_DECISION_THEN_TRACE_GATE_6_75_FINAL_VERDICT
+  from: PROJECT_FINISHER
+  to: HUMAN
+  trigger: SUBMISSION_READY
+  required_output: HUMAN_OFFICIAL_SUBMISSION_CONFIRMATION
 
 resume_rule: >-
-  The encoded Remotion candidate exists and its visual/claim review is PASS. Lifecycle capability Gate 6.75 remains MISSING only because the final subjective human voiceover playback confirmation has not yet occurred. If KEEP VOICEOVER is confirmed with no audio defect, TRACE can close Gate 6.75 and then hand off to PBPD candidate review. If voice changes are requested, rerender audio/packaging only. No new product scope or Binance order is permitted.
+  All mandatory hackathon lifecycle capabilities through Project Finisher terminal assurance are satisfied. The final human-approved 62-second film and hashed submission package are ready. The only unresolved capability is protected_submission. Do not reopen product, visual, voice or proof scope absent a concrete defect, and do not execute another Binance order. Human must perform the official Submit action and then confirm it before SUBMITTED or post-mortem state is recorded.
