@@ -100,9 +100,10 @@ verified_implementation:
   mcp_companion: PASS_5_OF_5
   mcp_observation_adapter: PASS_4_OF_4
   testnet_execution_boundary: PASS_7_OF_7
-  native_testnet_transport_tests: ADDED_TO_TEST_ALL
-  last_known_ci: 34252733486_SUCCESS
-  latest_native_path_ci: PENDING_CURRENT_HEAD_CHECK
+  native_testnet_transport_tests: PASS_IN_TEST_ALL
+  native_path_ci_run: 34252867490
+  native_path_ci_conclusion: SUCCESS
+  native_path_ci_head: f00d9e24c48d234cd72b554908c3beeb01e88c94
 
 proof_status:
   prior_public_readonly_binance: VERIFIED
