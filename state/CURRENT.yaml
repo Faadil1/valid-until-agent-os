@@ -2,8 +2,8 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: STEP_5_COMPLETE_AWAITING_PBPD_RUNTIME_EVIDENCE_RECONCILIATION
-current_owner: PBPD_NEXT_NOT_STARTED
+current_stage: LIVE_PROOF_LAB_V0_4_IMPLEMENTATION_ACTIVE
+current_owner: PBPD
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -19,150 +19,87 @@ state_discipline:
 
 human_authorization:
   source: product/AUTHORIZATION.md
-  latest_direction: product/HUMAN-DIRECTION-LIVE-PROOF-001.md
+  latest_direction: product/HUMAN-DIRECTION-LIVE-PROOF-LAB-002.md
   spot_testnet_write_authorized: true
+  vercel_sensitive_testnet_credentials_authorized: true
+  public_unrestricted_write_button_authorized: false
   mainnet_write_authorized: false
   real_funds_authorized: false
   geo_bypass_authorized: false
 
 living_prd:
-  version: '0.3'
+  version: '0.4'
   base: product/PRD.md
-  normative_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
-  status: CURRENT_PENDING_RUNTIME_EVIDENCE_RECONCILIATION
-  actual_location_access: PASS
-  local_transport: NATIVE_NODE_HTTPS_HMAC_AGAINST_OFFICIAL_SPOT_TESTNET
+  v0_3_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
+  v0_4_addendum: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
+  status: CURRENT_IMPLEMENTATION_ACTIVE
 
 spec_kit:
-  delta: product/specs/001-execution-validity/TESTNET-PROOF-DELTA-0.3.md
-  status: CONVERGED_FOR_CURRENT_SCOPE
+  v0_4_delta: product/specs/001-execution-validity/LIVE-PROOF-LAB-DELTA-0.4.md
+  status: DERIVED_READY_FOR_IMPLEMENTATION
   authority: NONE
 
-step_1_to_5_scope:
-  requested_stop_after_step: 5
-  stop_boundary_reached: true
-  steps:
-    1_secret_installation: COMPLETE
-    2_manual_testnet_workflow: COMPLETE_CI_VERIFIED
-    3_real_testnet_capture: COMPLETE_ALLOW_ORDER_VERIFIED
-    4_sanitized_public_trade_proof: COMPLETE_GITHUB_PUBLISHED
-    5_judge_surface_vercel_write_proof: COMPLETE_HTTP_200_VERIFIED
-
-historical_attempts:
-  hosted_attempt_001:
-    evidence: evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md
-    result: FAIL_CLOSED_RESTRICTED_LOCATION_BEFORE_EXECUTION
-    order_sent: false
-  local_access_attempt_002:
-    evidence: evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md
-    result: PASS
-    financial_write: false
-  local_wrapper_attempt_003:
-    evidence: evidence/live-testnet/ATTEMPT-003-LOCAL-POWERSHELL-PARSER-FAIL.md
-    result: FAIL_BEFORE_EXECUTION
-    order_sent: false
-  local_execution_attempt_004:
-    evidence: evidence/live-testnet/ATTEMPT-004-LOCAL-ALLOW-ORDER-VERIFIED-PUBLISHED.md
-    result: ALLOW_ORDER_VERIFIED_AND_PUBLISHED
-    order_sent: true
-    same_order_verified: true
-
-successful_live_testnet_proof:
-  captured_at: '2026-09-08T16:57:43.295Z'
-  endpoint: https://testnet.binance.vision
-  network: Binance Spot Testnet
-  production: false
-  real_funds: false
-  action:
-    symbol: BTCUSDT
-    side: BUY
-    notional_usdt: 10
-  decision_contract:
-    receipt_version: valid-until.receipt.v2
-    validity_status: ALLOW
-    next_state: ACTION_REMAINS_VALID
-    failed_checks: []
-    t0_mid: 78707.705
-    t1_mid: 78707.705
-    policy_hash: dfb6d0f1fdbe0b817a78763466fb4a7c5ba5ae4f2c673db8001eb5193fdb5578
-    snapshot_hash: 09bcb3462f776493153b839040174208039ac90106cb76397dfbc08cdc762dc0
-    action_hash: c7887fc9eb2f0168e8c15b29158a77eed3178845e8fa04b59383fb9dea17bcef
-  execution:
+completed_proof_boundary:
+  prior_step_1_to_5: COMPLETE
+  authenticated_spot_testnet_order:
     order_id: 13634770
     client_order_id: vu-mtswxiik-ecb6b093
     status: FILLED
-    executed_qty: '0.00012000'
-    cumulative_quote_qty: '9.44492520'
     same_order_verified: true
-    uncertain_transport_recovered: false
-  evidence_digests:
-    raw_capture_sha256: 5a67e7e912c2de23a14e23cf28a396520ab9837ae142b2992edf9f37753f826a
-    public_proof_sha256: a318c6a6d8d56cd5ab66ee5beedf3baac32dc33885a963b64fbfe814ccad6b76
+    network: Binance Spot Testnet
+    real_funds: false
+  github_proof_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
+  vercel_proof_route: https://valid-until-agent-os.vercel.app/live-proof
+  vercel_proof_verified_200: true
+  do_not_rerun_without_new_explicit_authorization: true
 
-publication:
-  github:
-    commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
-    commit_message: evidence: publish local authenticated Binance Spot Testnet proof
-    changed_files:
-      - web/live-testnet-proof.json
-    proof_ci_run: 34254211176
-    proof_ci_conclusion: SUCCESS
-  vercel:
-    project_id: prj_G4gsIiXTRxOTLhXf8ZMqqVDRJSYs
-    deployment_id: dpl_2M3AgFyfNRzEdd9z84dzfTzjjcth
-    deployment_state: READY
-    deployment_target: production
-    deployment_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
-    stable_live_proof: https://valid-until-agent-os.vercel.app/live-proof
-    stable_live_proof_status: 200
-    stable_live_json: https://valid-until-agent-os.vercel.app/live-testnet-proof.json
-    stable_live_json_status: 200
+v0_4_information_architecture:
+  home: '/'
+  live_lab: '/lab'
+  verified_execution: '/live-proof'
+  evaluations: '/evaluations'
 
-verified_implementation:
-  core_tests: PASS_8_OF_8
-  challenge_suite: PASS_6_OF_6
-  mcp_companion: PASS_5_OF_5
-  mcp_observation_adapter: PASS_4_OF_4
-  testnet_execution_boundary: PASS_7_OF_7
-  native_testnet_transport_tests: PASS_5_OF_5
-  windows_powershell_parser_ci: PASS
+v0_4_runtime_plan:
+  live_market_endpoint: '/api/live-market'
+  signed_order_status_endpoint: '/api/order-status'
+  vercel_secret_names:
+    - BINANCE_TESTNET_API_KEY
+    - BINANCE_TESTNET_API_SECRET
+  secrets_server_only: true
+  authenticated_write_route_initially_required: false
+  future_write_route_rule: SEPARATE_OWNER_ARMED_FAIL_CLOSED_DELTA_REQUIRED
 
-proof_status:
-  prior_public_readonly_binance: VERIFIED
-  controlled_cross_time_block: VERIFIED_35_47_BPS_GT_20
-  actual_location_testnet_access: VERIFIED_PASS
-  authenticated_spot_testnet_allow_write: VERIFIED
-  same_order_verification: VERIFIED
-  sanitized_public_write_proof: VERIFIED
-  vercel_public_write_proof: VERIFIED
-  mainnet_trade: NOT_PERFORMED_NOT_AUTHORIZED
-  real_money_trade: NOT_PERFORMED_NOT_AUTHORIZED
+v0_4_evidence_classes:
+  - LIVE
+  - CONTROLLED
+  - VERIFIED_EXECUTION
 
-safety_decision:
-  - no_admin_elevation
-  - no_WSL_installation_on_this_machine
-  - no_cloud_region_hopping
-  - no_VPN_or_proxy
+v0_4_required_scenarios:
+  - CLEAN_ALLOW
+  - MARKET_DRIFT
+  - EXACT_ACTION_MUTATION
+  - TTL_EXPIRY
+  - RECEIPT_TAMPER
+  - POLICY_MISMATCH
+
+security_invariants:
+  - no_browser_secret_exposure
+  - no_public_prefixed_binance_secrets
+  - no_raw_account_payload_to_browser
+  - no_secret_logging
+  - hardcoded_official_spot_testnet_for_authenticated_calls
   - no_mainnet
-  - no_alternate_endpoint_used_to_bypass_eligibility
-  - no_policy_weakening_to_force_ALLOW
-  - no_profitability_claim
-  - no_production_financial_safety_claim
-  - do_not_rerun_successful_testnet_order_proof_without_new_explicit_authorization
-
-requested_stop_boundary:
-  after_step: 5
-  reached: true
-  further_lifecycle_work_started: false
+  - no_geo_bypass
+  - no_public_unrestricted_write_button
+  - no_new_execution_claim_from_signed_read_refresh
 
 next_valid_handoff:
-  from: PBPD_EVIDENCE_PLANE
-  to: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
+  from: PBPD
+  to: PBPD_IMPLEMENTATION
   required_output: >-
-    Reconcile the successful Branch A Spot Testnet evidence into PRD v0.3 / post-build evidence state without changing the core thesis,
-    then hand off to TRACE delta. This next handoff is recorded but intentionally NOT STARTED because the human requested a stop after step 5.
+    Implement and deploy the v0.4 multi-page Live Proof Lab, including /lab, server-side live market and signed known-order status endpoints,
+    navigation across all four judge surfaces, CI/security assertions, and stable Vercel runtime verification. Preserve the existing authenticated execution receipt.
 
 resume_rule: >-
-  Steps 1 through 5 are complete and verified. Do not rerun the Spot Testnet order proof. On the next authorized continuation,
-  start with PBPD runtime-evidence reconciliation, then TRACE delta, Winning Intelligence final recheck, TRACE Gate 6.75 video,
-  PBPD candidate handoff, Project Finisher and protected human submission. No one may skip or substitute those owners.
+  v0.4 is now authorized and active. Do not rerun the successful Spot Testnet order. Implement server-side reads first; any new Vercel write route needs a separate owner-armed fail-closed delta.
+  After implementation, reconcile runtime evidence before TRACE delta and Winning Intelligence final recheck.
