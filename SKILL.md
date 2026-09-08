@@ -50,6 +50,25 @@ This Track A submission is **read-only by design**.
    - `ALLOW` means the previously proposed action is still eligible under the sealed policy. In this submission, present the preview only; do not execute it.
    - `BLOCK` means **NO LONGER VALID**. Do not reinterpret the failure as permission to loosen thresholds. Require fresh reasoning from fresh state.
 
+## Evaluation discipline
+
+Treat every failure as a governance signal, not as permission for the model to renegotiate controls.
+
+- **Red-team the boundary, not just the prompt.** Challenge stale state, receipt tampering, expiry, policy mismatch and missing data.
+- **Convert failures into regression cases.** Once a failure class is identified, preserve it as a deterministic test so future model or skill changes cannot silently reintroduce it.
+- **Evaluate distributions, not anecdotes.** A persuasive single demo is not enough evidence for production trust; repeated bounded tests should show which classes of failure are caught and which remain unsupported.
+- **Keep controls predictable.** The LLM may improve its interpretation skill over time, but the authorization boundary must remain deterministic, inspectable and independently testable.
+- **Never self-heal by weakening policy.** A blocked run may trigger fresh reasoning, but it must not modify the sealed policy inside the same authorization cycle.
+
+The trust model is therefore:
+
+```text
+skills + MCP -> autonomy
+red-team + deterministic checks -> control
+evaluations + receipts -> evidence
+repeated evidence -> trust
+```
+
 ## Commands
 
 Deterministic judge proof:
