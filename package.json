@@ -18,7 +18,8 @@
     "test:testnet-execution": "node tests/testnet-executor.mjs",
     "test:testnet-http": "node tests/binance-testnet-http.mjs",
     "test:vercel-proof-api": "node tests/vercel-proof-api.mjs",
-    "test:all": "npm test && npm run test:challenge && npm run test:mcp && npm run test:mcp-observation && npm run test:testnet-execution && npm run test:testnet-http && npm run test:vercel-proof-api",
+    "test:cloudflare-pages": "node tests/cloudflare-pages-functions.mjs",
+    "test:all": "npm test && npm run test:challenge && npm run test:mcp && npm run test:mcp-observation && npm run test:testnet-execution && npm run test:testnet-http && npm run test:vercel-proof-api && npm run test:cloudflare-pages",
     "build:web": "node src/build-web-data.mjs && node src/challenge-suite.mjs --write-web"
   },
   "engines": {
