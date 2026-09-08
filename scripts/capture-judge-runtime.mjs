@@ -29,7 +29,10 @@ async function runCase({ id, viewport, reducedMotion }) {
   const portableSkillVisible = await page.getByText('skills/valid-until/SKILL.md', { exact: false }).first().isVisible().catch(() => false);
   const mcpContractVisible = await page.getByText(/valid_until_begin.*valid_until_revalidate/i).first().isVisible().catch(() => false);
   const receiptV2Visible = await page.getByText(/V2 · ACTION-BOUND/i).isVisible().catch(() => false);
-  const actionHashVisible = await page.getByText(/^action [0-9a-f]{8,}…$/i).isVisible().catch(() => false);
+  // The deployed receipt seal currently abbreviates hashes with ASCII "..." while
+  // older captures used a single Unicode ellipsis. Both represent the same visible
+  // action-bound receipt proof, so the runtime assertion accepts either spelling.
+  const actionHashVisible = await page.getByText(/^action [0-9a-f]{8,}(?:…|\.\.\.)$/i).isVisible().catch(() => false);
   const replayVisible = await page.getByRole('button', { name: /Replay proof/i }).isVisible().catch(() => false);
   const evalLinkVisible = await page.getByRole('link', { name: /6-case red team/i }).isVisible().catch(() => false);
 
