@@ -5,6 +5,12 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/live-proof.yml'
+      - 'scripts/capture-live-evidence.sh'
+      - 'src/live.mjs'
+      - 'src/snapshot.mjs'
+      - 'src/policy.mjs'
+      - 'src/receipt.mjs'
+      - 'config/policy.example.json'
   workflow_dispatch:
 
 permissions:
