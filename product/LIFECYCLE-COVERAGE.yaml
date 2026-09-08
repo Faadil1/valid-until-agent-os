@@ -3,8 +3,8 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: WINNING_INTELLIGENCE_FINAL_RECHECK
-current_stage: TRACE_V0_4_DELTA_PASS_AWAITING_WINNING_INTELLIGENCE_FINAL
+current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
+current_stage: PRODUCT_POSITIONING_FROZEN_AWAITING_TRACE_GATE_6_75_FINAL_FILM
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -29,7 +29,7 @@ capabilities:
     owner: hackathon-opportunity-intelligence
     status: SATISFIED
     evidence_pointer: product/WINNER-INTELLIGENCE-RERUN-004-X-API.md
-    note: historical/rerun capability satisfied; prescribed final recheck is still separately open
+    note: historical/rerun capability satisfied; final recheck separately satisfied below
 
   - capability: project_authorization
     owner: human / chief-of-staff authority boundary
@@ -124,18 +124,19 @@ capabilities:
     owner: TRACE
     status: SATISFIED
     evidence_pointer: product/TRACE-DELTA-BC-001.md
-    note: specialist PASS recorded in Faadil1/trace-design-workflow; runtime run 34274047494 PASS desktop/mobile and normal/reduced-motion; B+C surface frozen pending WI final
+    note: specialist PASS recorded in Faadil1/trace-design-workflow; runtime run 34274047494 PASS desktop/mobile and normal/reduced-motion
 
   - capability: winning_intelligence_final_recheck
     owner: hackathon-opportunity-intelligence
-    status: MISSING
-    evidence_pointer: null
+    status: SATISFIED
+    evidence_pointer: product/WINNER-INTELLIGENCE-FINAL-2026-09-08.md
+    note: PASS_WITH_FREEZE; generic preflight/trade-readiness positioning rejected; README/JUDGE-MATRIX/DEMO-SCRIPT packaging contradictions repaired; no new feature or proof breadth recommended
 
   - capability: trace_gate_6_75_demo_narrative_evidence_film
     owner: TRACE
     status: MISSING
     evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
-    note: updated current-truth film contract exists; actual final encoded video still required after WI final
+    note: current-truth film contract exists; actual final encoded 58–65 second artifact and TRACE review are still required
 
   - capability: pbpd_candidate_handoff
     owner: PBPD
@@ -158,7 +159,6 @@ capabilities:
     not_applicable_reason: project has not yet been officially submitted and no official outcome exists
 
 missing:
-  - winning_intelligence_final_recheck
   - trace_gate_6_75_demo_narrative_evidence_film
   - pbpd_candidate_handoff
   - terminal_assurance
@@ -167,7 +167,6 @@ missing:
 unknown: []
 
 triggered_but_unresolved:
-  - WINNING_INTELLIGENCE_FINAL_RECHECK
   - TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
   - PBPD_CANDIDATE_HANDOFF
   - PROJECT_FINISHER
@@ -176,17 +175,17 @@ triggered_but_unresolved:
 human_overrides: []
 
 current_evidence:
-  primary_trace_runtime_url: https://valid-until-agent-os-plum.vercel.app
-  trace_visual_delta_merge_head: 370e6039f60c41a0e3211666bb44627d494cca85
-  trace_runtime_harness_head: dd5cf611b8ac9efd60443741a7247c373c6dc67d
-  trace_proof_ci_run: 34274047464
+  primary_judge_url: https://valid-until-agent-os-plum.vercel.app
+  cloudflare_runtime_url: https://valid-until-agent-os.pages.dev
   trace_runtime_run: 34274047494
   trace_runtime_result: SUCCESS
   trace_runtime_artifact_id: 10074995345
   trace_runtime_artifact_digest: sha256:0d93d791857166854c81a0a085b87abb6ca191744d460bfb8ef9c2b12606e603
   trace_desktop_mobile_reduced_motion: PASS_4_OF_4
   trace_delta_verdict: PASS
-  cloudflare_runtime_url: https://valid-until-agent-os.pages.dev
+  winning_intelligence_final_artifact: product/WINNER-INTELLIGENCE-FINAL-2026-09-08.md
+  winning_intelligence_final_verdict: PASS_WITH_FREEZE
+  product_visual_positioning_freeze: true
   cloudflare_signed_read_status: LIVE_SIGNED_READ_VERIFIED
   testnet_order_id: 13634770
   testnet_client_order_id: vu-mtswxiik-ecb6b093
@@ -210,9 +209,9 @@ non_bypass_rules_reaffirmed:
   - no_cloudflare_or_vercel_placement_manipulation_for_venue_bypass
 
 next_valid_handoff:
-  from: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
-  to: WINNING_INTELLIGENCE_FINAL_RECHECK
-  required_output: FINAL_COLLISION_JUDGE_STRATEGY_AND_FREEZE_VERDICT_ON_TRACE_APPROVED_BUILD
+  from: WINNING_INTELLIGENCE_FINAL_RECHECK
+  to: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
+  required_output: ACTUAL_FINAL_ENCODED_58_65_SECOND_EVIDENCE_FILM_AND_TRACE_VERDICT
 
 resume_rule: >-
-  TRACE v0.4/B+C delta is SATISFIED. The current surface is visually/runtime verified and should remain frozen unless Winning Intelligence finds a concrete material collision or claim issue. Run the final WI recheck next, then return to TRACE for Gate 6.75 encoded-film review. No new Binance order or protected submission action is permitted.
+  PBPD runtime reconciliation, TRACE v0.4/B+C delta and Winning Intelligence final recheck are SATISFIED. Product, visual direction and positioning are frozen. Resume at TRACE Gate 6.75 final encoded film only. No new product scope, remote MCP OAuth proof, trading proof or redesign should be added before submission absent a new material defect.
