@@ -1,0 +1,13 @@
+{
+  "snapshot_version": "valid-until.market.v1",
+  "symbol": "BTCUSDT",
+  "server_time_ms": 1788810003000,
+  "best_bid": 80484.0,
+  "best_ask": 80487.0,
+  "mid": 80485.5,
+  "spread_bps": 0.37,
+  "top5_bid_depth_usdt": 171000.0,
+  "top5_ask_depth_usdt": 168000.0,
+  "last_1m_return_bps": 47.2,
+  "source": "CONTROLLED FIXTURE shaped like Binance Agent OS market data"
+}
