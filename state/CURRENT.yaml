@@ -2,8 +2,8 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: CORRECT_TESTNET_WORKFLOW_DISPATCH_REQUIRED
-current_owner: HUMAN_PROTECTED_TESTNET_WRITE_BOUNDARY
+current_stage: LIVE_TESTNET_VENUE_ELIGIBILITY_BLOCKED
+current_owner: PBPD_PLUS_HUMAN_ELIGIBILITY_BOUNDARY
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -17,41 +17,30 @@ state_discipline:
   chat_memory_is_not_authority: true
   falsified_history: forbidden
 
-human_secret_boundary:
-  environment: testnet-proof
-  required_secrets: [BINANCE_TESTNET_API_KEY, BINANCE_TESTNET_API_SECRET]
-  status: CONFIRMED_BY_HUMAN_VALUES_NOT_READ_BY_ASSISTANT
-  credentials_in_repo_chat_vercel_or_artifacts: false
-
 judge_optimization:
   status: INTEGRATED_AS_NARRATIVE_AND_QA_EVIDENCE
   product_scope_change: NONE
   evidence: product/JUDGE-OPTIMIZATION-EVIDENCE-001.md
   judge_matrix: docs/JUDGE-MATRIX.md
   provisional_demo_structure: docs/DEMO-SCRIPT.md
-  principles:
-    - problem_pain_execution_story_demo
-    - problem_legible_within_first_15_seconds
-    - aha_moment_is_NO_LONGER_VALID
-    - technical_details_only_when_they_answer_a_judge_objection
-    - show_end_to_end_behavior_not_architecture_density
-    - prepare_alternative_rejection_QA
-    - do_not_add_features_for_rubric_theatre
-  source_set:
-    - user_provided_winner_pattern_screenshot
-    - https://unstop.com/blog/hackathon-judging-criteria-for-hiring
-    - https://www.masaischool.com/blog/how-to-win-an-ai-hackathon-in-2026-full-guide/
   final_video_script_frozen: false
-  reason: authenticated_Spot_Testnet_proof_and_TRACE_6_75_still_pending
+
+human_authorization:
+  source: product/AUTHORIZATION.md
+  latest_direction: product/HUMAN-DIRECTION-LIVE-PROOF-001.md
+  spot_testnet_write_authorized: true
+  mainnet_write_authorized: false
+  real_funds_authorized: false
+  geo_bypass_authorized: false
 
 step_1_to_5_scope:
   requested_stop_after_step: 5
   steps:
     1_secret_installation: COMPLETE
     2_manual_testnet_workflow: COMPLETE_CI_VERIFIED
-    3_real_testnet_capture: WAITING_FOR_CORRECT_MANUAL_WORKFLOW_DISPATCH
-    4_sanitized_proof: PENDING
-    5_judge_surface_vercel: PENDING
+    3_real_testnet_capture: FAIL_CLOSED_VENUE_ELIGIBILITY_RESTRICTION
+    4_sanitized_public_trade_proof: NOT_PRODUCED_BECAUSE_STEP_3_DID_NOT_REACH_EXECUTION
+    5_judge_surface_vercel_write_proof: NOT_PUBLISHED
   after_step_5_stop_before:
     - pbpd_final_reconciliation
     - trace_delta_assurance
@@ -65,29 +54,48 @@ workflow_packaging:
   workflow_name: 'RUN THIS — live-binance-spot-testnet-proof'
   trigger: workflow_dispatch_only
   environment: testnet-proof
-  official_cli_auth: environment_variables_only_no_profile_file
-  binance_env: testnet
+  auth_mode: protected_environment_variables_only
   endpoint: https://testnet.binance.vision
-  exact_action: BUY_BTCUSDT_10_USDT_TESTNET
+  intended_action: BUY_BTCUSDT_10_USDT_TESTNET
   executor_hard_cap_usdt: 25
-  max_fresh_decision_cycles: 3
   maximum_orders_per_workflow: 1
   raw_proof_publication: forbidden
-  sanitizer: scripts/sanitize-testnet-proof.mjs
-  public_json: web/live-testnet-proof.json
-  public_page: web/live-proof.html
-  public_route: https://valid-until-agent-os.vercel.app/live-proof
-  proof_commit_scope: web/live-testnet-proof.json_only
+  public_json_if_successful: web/live-testnet-proof.json
+  public_route_if_successful: https://valid-until-agent-os.vercel.app/live-proof
 
-readonly_workflow_status:
-  workflow: .github/workflows/live-proof.yml
-  current_name: 'ARCHIVE — live-binance-readonly-proof'
-  manual_dispatch_removed: true
-  mistaken_dispatch_run: 34247925054
-  mistaken_dispatch_conclusion: SUCCESS
-  evidence_class: AUTHENTIC_PUBLIC_BINANCE_READ_ONLY_ONLY
-  counts_as_step_3_real_testnet_write_capture: false
-  action_required: launch_the_correct_RUN_THIS_workflow
+latest_write_attempt:
+  run_id: 34248954040
+  job_id: 102138125899
+  head: ad26e96628e4902554b317e5661143b43f6bf56a
+  result: FAIL_CLOSED_BEFORE_EXECUTION
+  evidence: evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md
+  hosted_runner:
+    os: Ubuntu_24_04
+    cloud: Azure
+    region: eastus
+  passed_before_failure:
+    - protected_secret_presence_without_disclosure
+    - core_8_of_8
+    - challenge_6_of_6
+    - local_mcp_5_of_5
+    - mcp_observation_4_of_4
+    - testnet_execution_boundary_7_of_7
+    - Binance_CLI_2_1_1_install
+  failed_at: authenticated_spot_testnet_account_check
+  venue_error_class: RESTRICTED_LOCATION_ELIGIBILITY
+  order_sent: false
+  order_id: NONE
+  client_order_id: NONE
+  same_order_verified: false
+  sanitized_public_trade_proof: NONE
+
+safety_decision:
+  - do_not_change_cloud_region_to_evade_restriction
+  - do_not_use_VPN_proxy_or_geo_bypass
+  - do_not_switch_to_mainnet
+  - do_not_use_alternate_endpoint_or_client_sold_as_a_bypass
+  - do_not_weaken_Valid_Until_policy_to_force_ALLOW
+  - a_future_write_attempt_must_originate_from_a_legitimately_permitted_actual_execution_location
 
 verified_implementation:
   core_tests: PASS_8_OF_8
@@ -95,42 +103,34 @@ verified_implementation:
   mcp_companion: PASS_5_OF_5
   mcp_observation_adapter: PASS_4_OF_4
   testnet_execution_boundary: PASS_7_OF_7
-  workflow_packaging_ci_run: 34247316936
-  workflow_packaging_ci_conclusion: SUCCESS
-
-live_testnet_rules:
-  - mainnet_execution_forbidden
-  - real_funds_forbidden
-  - Spot_Testnet_only
-  - BLOCK_means_zero_executor_calls
-  - ALLOW_may_send_one_market_buy_then_query_same_clientOrderId
-  - do_not_weaken_policy_to_force_ALLOW
-  - secrets_never_echoed_or_uploaded
-  - Vercel_receives_sanitized_proof_only
+  packaging_ci_run: 34247316936
+  packaging_ci_conclusion: SUCCESS
 
 proof_status:
-  prior_readonly_dispatch_run: 34247925054_SUCCESS
-  real_authenticated_spot_testnet_capture: PENDING_CORRECT_WORKFLOW
-  order_sent: NOT_YET_KNOWN
-  order_id: NOT_YET_KNOWN
-  same_order_verified: NOT_YET_KNOWN
-  sanitized_proof: PENDING
-  vercel_publication: PENDING
+  prior_public_readonly_binance: VERIFIED
+  controlled_cross_time_block: VERIFIED_35_47_BPS_GT_20
+  hosted_testnet_authenticated_account_access: BLOCKED_BY_VENUE_ELIGIBILITY
+  real_testnet_order_capture: NOT_OBTAINED_NOT_CLAIMED
+  public_testnet_write_proof_on_vercel: NOT_OBTAINED_NOT_CLAIMED
 
-protected_manual_action:
-  reason: >-
-    The available GitHub connector cannot initiate the first workflow_dispatch and the write workflow must remain manual-only.
-    The previous human dispatch selected the archived read-only workflow, which succeeded but does not satisfy the Spot Testnet write gate.
-  required_click: 'GitHub Actions -> RUN THIS — live-binance-spot-testnet-proof -> Run workflow -> main -> Run workflow'
-  no_inputs_required: true
-  secret_values_required_from_human: false
+lifecycle:
+  global_policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
+  coverage_manifest: product/LIFECYCLE-COVERAGE.yaml
+  living_prd: product/PRD.md
+  prd_material_scope_delta_from_live_testnet_direction: UNRECONCILED
+  trace_gate_6_75: PAUSED
+  pbpd_candidate_handoff: NOT_EMITTED
+  project_finisher: NOT_YET_ELIGIBLE
 
 next_valid_handoff:
-  from: HUMAN_PROTECTED_TESTNET_WRITE_BOUNDARY
-  to: PBPD_RUNTIME_EVIDENCE
-  required_output: REAL_GITHUB_ACTIONS_RUN_ID_FOR_RUN_THIS_LIVE_BINANCE_SPOT_TESTNET_PROOF
+  from: PBPD_PLUS_HUMAN_ELIGIBILITY_BOUNDARY
+  to: PBPD_PRD_AND_EVIDENCE_RECONCILIATION
+  required_output: >-
+    Reconcile the material Spot Testnet evidence scope and the failed venue-eligibility attempt before any new write attempt.
+    If the human later uses a personal development machine at the user's actual location, first perform an official Binance CLI
+    signed Spot Testnet account check with no VPN/proxy. Only if Binance itself permits that actual-location access may a bounded
+    testnet write proof proceed. Otherwise preserve the read-only + controlled proof strategy and do not bypass eligibility.
 
 resume_rule: >-
-  After the human dispatches RUN THIS — live-binance-spot-testnet-proof, immediately inspect the new run.
-  Do not ask for secret values. If BLOCK, preserve zero-write evidence honestly. If ALLOW, verify the same Spot Testnet
-  order was queried back. Publish only sanitized evidence, verify Vercel /live-proof, update CURRENT/HANDOVER, then stop at step 5.
+  Read CURRENT and HANDOVER first. Do not rerun the GitHub-hosted write workflow: the venue rejected that hosted location.
+  Do not change runner geography to evade the restriction. No testnet order claim exists. Step 4/5 public write proof remains pending.
