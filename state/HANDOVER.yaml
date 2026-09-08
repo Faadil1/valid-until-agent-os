@@ -14,26 +14,31 @@ handover_discipline:
   rule: read_both_files_first_then_resume_exact_gate
   update_after_each_meaningful_gate_or_packaging_step: true
 
-current_stage: TRACE_GATE_6_75_NARRATIVE_VOICE_V2_AWAITING_HUMAN_AUDIO_VERDICT
-current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
+current_stage: HUMAN_PROTECTED_SUBMISSION
+current_owner: HUMAN
+project_finisher_state: SUBMISSION_READY
 terminal_completeness_allowed: false
 
 material_scope_state:
   living_prd_version: '0.4'
   pbpd_runtime_reconciliation: COMPLETE
   trace_delta: PASS
+  trace_gate_6_75: PASS
   winning_intelligence_final: PASS_WITH_FREEZE
-  gate_6_75_judge_chain_alignment: COMPLETE
+  winning_intelligence_final_film: PASS_WITH_FREEZE
+  pbpd_candidate: BUILD_CANDIDATE_READY
+  terminal_assurance: PASS
   product_scope: FROZEN
   visual_scope: FROZEN
   positioning_scope: FROZEN
-  human_visual_feedback: ACCEPTED_ALL_EXCEPT_PREVIOUS_VOICE_TONE
+  voice_scope: FROZEN
 
 preserved_verified_execution:
   order_id: 13634770
   client_order_id: vu-mtswxiik-ecb6b093
   status: FILLED
   same_order_verified: true
+  network: Binance Spot Testnet
   production: false
   real_funds: false
   rerun_without_new_authorization: FORBIDDEN
@@ -41,81 +46,98 @@ preserved_verified_execution:
 judge_runtime:
   primary_url: https://valid-until-agent-os-plum.vercel.app
   cloudflare_mirror: https://valid-until-agent-os.pages.dev
+  public_repository: https://github.com/Faadil1/valid-until-agent-os
+  repository_visibility: public
   trace_runtime_run: 34274047494
   trace_runtime_artifact_id: 10074995345
   trace_runtime_artifact_digest: sha256:0d93d791857166854c81a0a085b87abb6ca191744d460bfb8ef9c2b12606e603
   desktop_mobile_normal_reduced_motion: PASS_4_OF_4
+  cloudflare_signed_known_order_read: LIVE_SIGNED_READ_VERIFIED
 
-trace_gate_6_75:
-  contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
-  candidate_review: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
-  visual_claim_readability: PASS
-  human_voice_request: NARRATIVE_CAPTIVATING_RESTRAINED
-  gate_pass: false
+final_film:
+  workflow: .github/workflows/final-remotion-film-retry.yml
+  run: 34284794981
+  result: SUCCESS
+  artifact_name: valid-until-final-remotion-film-narrative-voice-v2
+  artifact_id: 10079108948
+  artifact_digest: sha256:37b36cb284e80659dabdaea51982bcc0e6aacc435e1ac7f7acb61f99f8ee6f8d
+  mp4_sha256: 062583713a1c8cb2184b4fd69dc40ff98a079e50b24894ca5ffb98ec6dde0838
+  duration_seconds: 62.0
+  narration_seconds: 59.616
+  resolution: 1920x1080
+  fps: 30
+  video_codec: H264
+  audio_codec: AAC
+  voice: en-GB-RyanNeural
+  delivery: CALM_NARRATIVE_CAPTIVATING
+  human_visual_verdict: ACCEPTED
+  human_voice_verdict: ACCEPTED
+  trace_closeout: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_FINAL_CLOSEOUT_001.md
 
-voice_revision_history:
-  original_candidate:
-    run: 34277730560
-    artifact_id: 10076473914
-    duration_seconds: 62.058667
-    visuals: HUMAN_ACCEPTED
-    voice: HUMAN_REJECTED_TOO_ENTHUSIASTIC
-  revision_v1:
-    commit: e18f3f423c140759d5ffa58e69a2722deb57dc34
-    run: 34284256012
-    result: SUCCESS_RENDER_BUT_PACKAGING_DEFECT
-    artifact_id: 10078906608
-    artifact_digest: sha256:2c8cbfc9c0cd6d59ab7c0c90a787964acd8e30c5411af455643d5cca04777067
-    actual_voice: en-GB-RyanNeural
-    normalized_audio_seconds: 70.224
-    video_seconds: 62.058667
-    defect: AUDIO_EXCEEDS_FILM__DO_NOT_USE_AS_FINAL
-  revision_v2:
-    workflow: .github/workflows/final-remotion-film-retry.yml
-    commit: fd66acb01cf3942a7f7fbc2dd58a2e3a05a6bbe8
-    run: 34284794981
-    result: SUCCESS
-    artifact_name: valid-until-final-remotion-film-narrative-voice-v2
-    artifact_id: 10079108948
-    artifact_digest: sha256:37b36cb284e80659dabdaea51982bcc0e6aacc435e1ac7f7acb61f99f8ee6f8d
-    voice: en-GB-RyanNeural
-    delivery: CALM_NARRATIVE_CAPTIVATING
-    generated_rate: '+18%'
-    pitch: '-2Hz'
-    raw_audio_seconds: 66.0
-    tempo_factor: 1.10738255
-    normalized_audio_seconds: 59.616
-    video_seconds: 62.0
-    final_visual_breathing_room_seconds: 2.384
-    resolution: 1920x1080
-    technical_audio_timing: PASS
-    visuals_changed: false
-    script_changed: false
-    product_changed: false
-    human_audio_quality_verdict: PENDING
+final_submission_package:
+  local_archive_name: valid-until-final-submission-package.zip
+  archive_sha256: 0f43fe320b4521f840eeac325cdfea19e45a04b1bfd6bc163d148bc8325fd7e3
+  repository_manifest: docs/FINAL-SUBMISSION-PACKAGE-2026-09-08.md
+  contents:
+    - README-FIRST.md
+    - SUBMISSION-COPY.md
+    - JUDGE-QA.md
+    - MANIFEST.json
+    - SHA256SUMS.txt
+    - video/Valid-Until-Final-Demo-62s.mp4
+    - screenshots/hero.jpg
+    - screenshots/stage-before.jpg
+    - screenshots/stage-after.jpg
+    - screenshots/evaluations.jpg
+    - screenshots/live-proof.jpg
 
-repair_boundary: >-
-  The artifact is technically complete. Do not modify product, visuals or narration content. Human should now listen to narrative voice v2. If voice is rejected, revise voice delivery only. If accepted, TRACE may close Gate 6.75.
+pbpd_handoff:
+  artifact: product/PBPD-CANDIDATE-HANDOFF-2026-09-08.md
+  state: BUILD_CANDIDATE_READY
+  proof_classes:
+    technical: PASS
+    behavior: PASS
+    outcome: NOT_CLAIMED
+    production_evidence: NOT_CLAIMED
+
+project_finisher:
+  artifact: product/PROJECT-FINISHER-TERMINAL-ASSURANCE-2026-09-08.md
+  verdict: SUBMISSION_READY
+  submission_package_verified: true
+  demo_verified_from_canonical_runtime_evidence: true
+  claims_evidence_aligned: true
+  unresolved_risks: EXPLICIT_NON_BLOCKING_LIMITATIONS_ONLY
+
+judge_memory:
+  line: The one where every current check stayed green and the action still matched, but the old decision had expired.
+  differentiator: A preflight asks whether an action is acceptable now. Valid Until asks whether this exact old action is still justified by the decision that produced it.
 
 truth_boundaries:
   - controlled_replay_is_synthetic_and_creates_no_order
   - historical_testnet_execution_is_real_nonproduction_evidence
   - signed_get_is_read_only_and_not_new_execution
   - no_mainnet
-  - no_geo_bypass
-  - no_public_write_route
+  - no_real_funds
+  - no_profitability_or_alpha_claim
+  - no_reduced_loss_claim
+  - no_production_readiness_claim
+  - no_public_unrestricted_write_route
+  - no_automatic_final_submission
+
+remaining_lifecycle:
+  protected_submission:
+    owner: HUMAN
+    status: PENDING
+    protected: true
+  post_mortem:
+    status: NOT_APPLICABLE_UNTIL_SUBMISSION_CONFIRMED
 
 next_valid_handoff:
-  from: NARRATIVE_VOICE_V2_RENDER
-  to: HUMAN_AUDIO_PLAYBACK_CONFIRMATION
+  from: PROJECT_FINISHER
+  to: HUMAN
+  trigger: SUBMISSION_READY
   required_output: >-
-    Listen to artifact 10079108948 / valid-until-final-remotion-film-narrative-voice-v2. The complete voiceover is 59.616 seconds inside a 62.0-second film. Return KEEP VOICE or CHANGE VOICE. All visuals and claims are already accepted and frozen.
-
-then:
-  - TRACE_GATE_6_75_CLOSURE_IF_VOICE_ACCEPTED
-  - PBPD_CANDIDATE_HANDOFF
-  - PROJECT_FINISHER
-  - HUMAN_PROTECTED_SUBMISSION
+    Use the final package and perform the official hackathon submission. After the actual Submit action succeeds, explicitly confirm submission so canonical state may advance to SUBMITTED. Do not infer submission from package readiness or form preparation.
 
 resume_rule: >-
-  Narrative voice v2 is the only active candidate. It is technically valid and complete. Human audio-quality confirmation is the sole unresolved item before TRACE Gate 6.75 closure. No new Binance order is permitted.
+  Valid Until is SUBMISSION_READY. All non-human lifecycle gates through Project Finisher are closed: TRACE Gate 6.75 PASS, final narrative voice human accepted, final-film Winner Intelligence PASS_WITH_FREEZE, PBPD BUILD_CANDIDATE_READY, and Project Finisher terminal assurance PASS. The final archive is assembled and hashed. The only next action is the protected human official submission. Do not reopen scope or execute another Binance order unless a concrete blocker is discovered.
