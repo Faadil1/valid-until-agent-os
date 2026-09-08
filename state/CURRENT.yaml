@@ -2,8 +2,8 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: LIVE_PROOF_LAB_V0_4_SECRETS_CONFIGURED_WAITING_VERCEL_DEPLOY
-current_owner: VERCEL_PLATFORM_DEPLOYMENT_BOUNDARY
+current_stage: LIVE_PROOF_LAB_V0_4_CLOUDFLARE_FALLBACK_READY_FOR_PROJECT_IMPORT
+current_owner: HUMAN_CLOUDFLARE_PROJECT_SETUP
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -22,6 +22,7 @@ human_authorization:
   latest_direction: product/HUMAN-DIRECTION-LIVE-PROOF-LAB-002.md
   spot_testnet_write_authorized: true
   vercel_sensitive_testnet_credentials_authorized: true
+  cloudflare_sensitive_testnet_credentials_authorized: true
   public_unrestricted_write_button_authorized: false
   mainnet_write_authorized: false
   real_funds_authorized: false
@@ -33,11 +34,7 @@ living_prd:
   v0_3_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
   v0_4_addendum: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
   status: IMPLEMENTED_CODE_PENDING_RUNTIME_DEPLOYMENT
-
-spec_kit:
-  v0_4_delta: product/specs/001-execution-validity/LIVE-PROOF-LAB-DELTA-0.4.md
-  status: CONVERGED_CODE_PENDING_RUNTIME
-  authority: NONE
+  cloudflare_fallback_interpretation: DEPLOYMENT_RESILIENCE_ONLY_NO_NEW_PRODUCT_SCOPE
 
 preserved_verified_execution:
   proof_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
@@ -49,7 +46,7 @@ preserved_verified_execution:
   real_funds: false
   rerun_without_new_authorization: FORBIDDEN
 
-v0_4_implementation:
+v0_4_product_surface:
   routes:
     home: '/'
     live_lab: '/lab'
@@ -62,49 +59,66 @@ v0_4_implementation:
     - LIVE
     - CONTROLLED
     - VERIFIED_EXECUTION
-  scenarios:
-    - CLEAN_ALLOW
-    - MARKET_DRIFT
-    - EXACT_ACTION_MUTATION
-    - TTL_EXPIRY
-    - RECEIPT_TAMPER
-    - POLICY_MISMATCH
-  files:
-    - web/lab.html
-    - web/live-proof.html
-    - web/evaluations.html
-    - api/live-market.mjs
-    - api/order-status.mjs
-    - tests/vercel-proof-api.mjs
-    - docs/VERCEL-LIVE-PROOF-LAB-ENV.md
-  ci_run: 34256450643
-  ci_conclusion: SUCCESS
-  ci_head: 13d71b62cdbb77d24c4468176bcf8afdef0a5369
-  api_unit_tests: PASS_6_OF_6
-  secret_browser_boundary_ci: PASS
-  signed_refresh_read_only_ci: PASS
+  financial_write_from_public_runtime: false
 
-vercel_secret_boundary:
-  guide: docs/VERCEL-LIVE-PROOF-LAB-ENV.md
-  environment: Production
-  variable_type: Sensitive
-  required_variables:
-    - BINANCE_TESTNET_API_KEY
-    - BINANCE_TESTNET_API_SECRET
-  configured_status: HUMAN_CONFIRMED_BOTH_PRODUCTION_VALUES_PRESENT_VALUES_NOT_READ_BY_ASSISTANT
-  browser_exposure: FORBIDDEN
-  values_in_chat: FORBIDDEN
-
-vercel_runtime_status:
+v0_4_vercel:
   project_id: prj_G4gsIiXTRxOTLhXf8ZMqqVDRJSYs
   stable_domain: https://valid-until-agent-os.vercel.app
-  latest_successful_deployment_before_full_v0_4_code: dpl_HYcUki7UJgFBYFrMt7Fm541qF8yN
-  latest_successful_deployment_commit: 90cf6c3441e48f7ad916d476639d00544ad1db3e
-  previous_full_v0_4_commit_status: FAILURE_BUILD_RATE_LIMIT
-  previous_failure_target: https://vercel.com/faadil1s-projects?upgradeToPro=build-rate-limit
+  production_secrets: HUMAN_CONFIRMED_BOTH_PRESENT_VALUES_NOT_READ_BY_ASSISTANT
+  runtime_status: BLOCKED_BY_HOBBY_BUILD_RATE_LIMIT
   lab_route_last_verified_status: 404_NOT_DEPLOYED_YET
-  interpretation: PLATFORM_HOBBY_BUILD_RATE_LIMIT_NOT_PRODUCT_FAILURE
-  current_state_commit_is_single_deployment_retry_trigger: true
+  do_not_create_commits_only_to_poll_rate_limit: true
+
+cloudflare_fallback:
+  purpose: COMPETITION_RUNTIME_RESILIENCE_MIRROR
+  account_status: HUMAN_CONFIRMED_ACCOUNT_READY
+  guide: docs/CLOUDFLARE-PAGES-FALLBACK.md
+  github_repo: Faadil1/valid-until-agent-os
+  production_branch: main
+  framework_preset: None
+  root_directory: repository_root
+  build_command: npm run build:web
+  build_output_directory: web
+  desired_project_name: valid-until-agent-os
+  function_routes:
+    live_market:
+      file: functions/api/live-market.js
+      route: '/api/live-market'
+      auth: NONE
+      write: false
+    signed_known_order_refresh:
+      file: functions/api/order-status.js
+      route: '/api/order-status'
+      auth: CLOUDFLARE_CONTEXT_ENV_SECRETS_ONLY
+      fixed_order_id: 13634770
+      fixed_client_order_id: vu-mtswxiik-ecb6b093
+      write: false
+  routes_manifest: web/_routes.json
+  functions_invocation_scope: '/api/*'
+  required_production_secrets:
+    - BINANCE_TESTNET_API_KEY
+    - BINANCE_TESTNET_API_SECRET
+  secret_values_in_chat: FORBIDDEN
+  runtime_status: READY_FOR_HUMAN_PROJECT_IMPORT_NOT_YET_DEPLOYED
+
+cloudflare_assurance:
+  full_ci_run: 34259529684
+  conclusion: SUCCESS
+  head: c76b6f6520b59ca62b6156bfdd4db6354b96b131
+  cloudflare_pages_function_tests: PASS_12_OF_12
+  webcrypto_hmac_matches_node_hmac: PASS
+  missing_secrets_fail_closed: PASS
+  non_get_rejected: PASS
+  no_process_env_in_functions: PASS
+  no_binance_post_in_signed_read: PASS
+  static_routes_excluded_from_function_invocation: PASS
+  windows_powershell_parse: PASS
+  first_packaging_gate_attempt:
+    run: 34259373604
+    conclusion: FAILURE_CI_ASSERTION_ONLY
+    cause: gate_expected_literal_context_env_while_code_destructured_equivalent_env
+    financial_write: false
+    remediation: aligned_code_and_gate_then_reran_successfully
 
 security_invariants:
   - no_browser_secret_exposure
@@ -117,13 +131,17 @@ security_invariants:
   - no_public_unrestricted_write_button
   - no_new_execution_claim_from_signed_read_refresh
   - do_not_rerun_successful_testnet_order
+  - cloudflare_signed_read_must_fail_closed_on_venue_eligibility
 
 next_valid_handoff:
-  from: HUMAN_VERCEL_SECRET_BOUNDARY
-  to: VERCEL_PLATFORM_DEPLOYMENT_BOUNDARY
+  from: PBPD_DEPLOYMENT_RESILIENCE_PREP
+  to: HUMAN_CLOUDFLARE_PROJECT_SETUP
   required_output: >-
-    Verify a production deployment from current main after the Hobby build-rate limit permits it, then verify HTTP behavior for /, /lab, /live-proof, /evaluations, /api/live-market and /api/order-status. Do not create a new testnet order.
+    Import Faadil1/valid-until-agent-os into Cloudflare Pages with production branch main,
+    build command npm run build:web, output directory web and repository root. Then add
+    BINANCE_TESTNET_API_KEY and BINANCE_TESTNET_API_SECRET as Production Secrets without sharing values in chat.
 
 resume_rule: >-
-  Both Vercel Production secret names are human-confirmed configured; values were not read by the assistant. v0.4 code and CI are complete.
-  Do not claim the new multi-page surface is deployed until Vercel serves it. No new financial write is required.
+  Cloudflare fallback code is CI-green and ready for import. Vercel remains rate-limited. Do not rerun the authenticated testnet order.
+  Once Cloudflare provides a production pages.dev URL and the two Production Secrets are configured, verify /, /lab, /live-proof,
+  /evaluations, /api/live-market and /api/order-status, then record runtime evidence and resume PBPD reconciliation.
