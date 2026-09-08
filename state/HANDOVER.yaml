@@ -13,9 +13,19 @@ handover_discipline:
   chat_memory_is_not_authority: true
   rule: read_both_files_first_then_resume_exact_gate
 
-current_stage: LIVE_TESTNET_VENUE_ELIGIBILITY_BLOCKED
-current_owner: PBPD_PLUS_HUMAN_ELIGIBILITY_BOUNDARY
+current_stage: LOCAL_ACTUAL_LOCATION_TESTNET_ACCESS_CHECK_REQUIRED
+current_owner: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
 terminal_completeness_allowed: false
+
+material_scope_state:
+  authorization: product/AUTHORIZATION.md
+  human_direction: product/HUMAN-DIRECTION-LIVE-PROOF-001.md
+  living_prd_version: '0.3'
+  living_prd_base: product/PRD.md
+  living_prd_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
+  prd_changelog: product/PRD-CHANGELOG.md
+  spec_kit_delta: product/specs/001-execution-validity/TESTNET-PROOF-DELTA-0.3.md
+  scope_reconciliation_status: COMPLETE
 
 completed:
   judge_optimization:
@@ -37,52 +47,66 @@ completed:
     page: web/live-proof.html
     route: https://valid-until-agent-os.vercel.app/live-proof
 
-latest_live_write_attempt:
-  workflow_name: 'RUN THIS — live-binance-spot-testnet-proof'
+hosted_write_attempt:
   run_id: 34248954040
   job_id: 102138125899
   head: ad26e96628e4902554b317e5661143b43f6bf56a
   evidence: evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md
-  conclusion: FAILURE
-  exact_failure_stage: VERIFY_AUTHENTICATED_SPOT_TESTNET_ACCOUNT_ACCESS
-  Binance_CLI: 2.1.1
   runner: GitHub_hosted_Azure_eastus
-  venue_response: RESTRICTED_LOCATION_ELIGIBILITY
   protected_secrets_present: true
-  secret_values_disclosed: false
-  deterministic_tests_passed: true
+  deterministic_assurance: PASS
+  Binance_CLI: 2.1.1
+  failure_stage: AUTHENTICATED_SPOT_TESTNET_ACCOUNT_CHECK
+  venue_response: RESTRICTED_LOCATION_ELIGIBILITY
+  decision_cycles_started: false
   order_sent: false
   order_id: NONE
   client_order_id: NONE
-  sanitized_trade_proof_created: false
+  public_trade_proof_created: false
   vercel_trade_proof_published: false
 
 important_interpretation:
-  - this_is_not_a_Valid_Until_BLOCK_decision
-  - this_is_not_a_successful_authenticated_testnet_capture
-  - this_is_venue_eligibility_fail_closed_before_execution
+  - hosted_run_is_not_a_Valid_Until_BLOCK
+  - hosted_run_is_not_a_successful_testnet_write_proof
+  - hosted_run_is_fail_closed_venue_eligibility_evidence
   - no_order_call_was_reached
-  - do_not_surface_as_live_trade_proof
+  - do_not_publish_as_live_trade_claim
 
-safety_boundary:
+non_bypass_boundary:
   forbidden:
-    - change_GitHub_cloud_region_to_evade_restriction
-    - VPN_or_proxy_geo_bypass
+    - GitHub_cloud_region_hopping_to_evade_restriction
+    - VPN_or_proxy
     - mainnet_execution
-    - alternate_client_or_endpoint_used_specifically_to_bypass_eligibility
-    - weaken_policy_to_force_ALLOW
-  permitted_future_check:
-    - >-
-      On a personal development machine at the user's actual location only, an official Binance CLI signed Spot Testnet
-      account check may be attempted without VPN/proxy. If Binance permits that legitimate actual-location access, a bounded
-      non-production Spot Testnet write proof can proceed under the existing human authorization. If Binance refuses, stop.
+    - alternate_endpoint_or_client_used_specifically_to_bypass_eligibility
+    - weakening_Valid_Until_policy_to_force_ALLOW
+  next_permitted_check:
+    machine: personal_development_machine_only
+    location: user_actual_location
+    VPN_proxy: forbidden
+    tool: official_binance_cli
+    action: signed_GET_Spot_Testnet_account_check_only
+    financial_write: false
+
+branch_logic:
+  if_actual_location_check_passes:
+    - PBPD runs bounded v0.3 Spot Testnet proof
+    - at most one BUY BTCUSDT order, 10 test USDT, hard cap 25
+    - query same clientOrderId
+    - sanitize evidence
+    - publish safe proof to Vercel
+    - stop at requested step 5 before TRACE/Winning Intelligence final
+  if_actual_location_check_is_restricted:
+    - stop live write proof branch
+    - no circumvention
+    - retain controlled 35.47 bps proof + authentic public read-only Binance evidence
+    - later Winning Intelligence and TRACE reassess evidence ceiling
 
 human_requested_step_1_to_5_scope:
   step_1_secret_installation: COMPLETE
   step_2_manual_workflow_packaging: COMPLETE
-  step_3_real_testnet_capture: FAIL_CLOSED_VENUE_ELIGIBILITY_RESTRICTION
-  step_4_sanitized_public_trade_proof: NOT_PRODUCED
-  step_5_vercel_public_trade_proof: NOT_PUBLISHED
+  step_3_real_testnet_capture: PENDING_ACTUAL_LOCATION_ACCESS_CHECK_AFTER_HOSTED_FAIL_CLOSED
+  step_4_sanitized_public_trade_proof: PENDING
+  step_5_vercel_public_trade_proof: PENDING
   requested_stop_after_step_5: true
 
 current_claim_boundaries:
@@ -92,9 +116,9 @@ current_claim_boundaries:
     - local_mcp_5_of_5
     - mcp_observation_4_of_4
     - testnet_execution_boundary_7_of_7
-    - public_live_readonly_Binance_evidence
+    - authentic_public_readonly_Binance_evidence
     - controlled_35_47_bps_cross_time_BLOCK
-    - hosted_testnet_attempt_failed_closed_before_order_due_to_venue_eligibility
+    - hosted_write_attempt_failed_closed_before_order_due_to_venue_eligibility
   cannot_claim:
     - successful_authenticated_Spot_Testnet_account_access
     - real_Spot_Testnet_order
@@ -103,23 +127,12 @@ current_claim_boundaries:
     - real_money_trade
     - production_financial_safety
 
-lifecycle_gap_created_by_material_scope_change:
-  human_direction: product/HUMAN-DIRECTION-LIVE-PROOF-001.md
-  authorization_reconciled: product/AUTHORIZATION.md
-  living_prd_current_version: '0.2'
-  live_testnet_scope_prd_delta_status: UNRECONCILED
-  next_owner: PBPD
-  trace_6_75: PAUSED
-  project_finisher: NOT_ELIGIBLE
-
 next_valid_handoff:
-  from: PBPD_PLUS_HUMAN_ELIGIBILITY_BOUNDARY
-  to: PBPD_PRD_AND_EVIDENCE_RECONCILIATION
-  required_output: >-
-    Reconcile PRD/spec/evidence for the material Spot Testnet proof scope and record the hosted-runner eligibility failure.
-    Do not launch another cloud-region write attempt. Decide after reconciliation whether to attempt the official CLI from the
-    user's actual permitted location on a personal development machine or to freeze the submission around existing read-only + controlled evidence.
+  from: PBPD
+  to: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
+  required_output: OFFICIAL_BINANCE_CLI_SIGNED_SPOT_TESTNET_ACCOUNT_CHECK_FROM_ACTUAL_LOCATION
 
 resume_rule: >-
-  Do not rerun GitHub-hosted Spot Testnet write proof. Run 34248954040 is the canonical first attempt and was blocked by Binance
-  eligibility before execution. No order exists. Preserve no-geo-bypass. Read CURRENT/HANDOVER before any next action.
+  Do not rerun GitHub-hosted write workflow. On a personal development machine at the user's actual location and without VPN/proxy,
+  use the official Binance CLI for a signed GET Spot Testnet account check only. Do not place an order yet. If access is allowed,
+  return that bounded result and PBPD may resume steps 3→5. If refused, stop the write branch with no bypass.
