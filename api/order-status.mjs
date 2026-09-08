@@ -92,13 +92,14 @@ export default async function handler(req, res) {
       boundary: 'SIGNED GET OF THE ALREADY-KNOWN TESTNET ORDER ONLY. NO NEW ORDER WAS CREATED.',
     });
   } catch (error) {
-    return res.status(503).json({
-      status: /abort|timeout/i.test(String(error?.message || '')) ? 'SIGNED_READ_TIMEOUT' : 'SIGNED_READ_UNAVAILABLE',
+    const classified = classifyRuntimeFailure(error);
+    return res.status(classified.http).json({
+      status: classified.status,
       evidence_class: 'LIVE_SIGNED_READ',
       production: false,
       real_funds: false,
       network: 'Binance Spot Testnet',
-      boundary: 'FAIL-CLOSED SIGNED READ. NO NEW ORDER WAS CREATED.',
+      boundary: classified.boundary,
     });
   }
 }
@@ -141,11 +142,40 @@ async function fetchServerTime() {
     headers: { 'User-Agent': 'valid-until-live-proof-lab/0.4' },
     cache: 'no-store',
   });
-  if (!response.ok) throw new Error(`TIME_HTTP_${response.status}`);
-  const data = await response.json();
+  const text = await response.text();
+  if (!response.ok) {
+    const error = new Error(`TIME_HTTP_${response.status}`);
+    error.statusCode = response.status;
+    error.body = text.slice(0, 500);
+    throw error;
+  }
+  const data = JSON.parse(text);
   const serverTime = Number(data?.serverTime);
   if (!Number.isFinite(serverTime)) throw new Error('INVALID_SERVER_TIME');
   return serverTime;
+}
+
+function classifyRuntimeFailure(error) {
+  const combined = `${error?.message || ''} ${error?.body || ''}`;
+  if (/restricted location|eligibility|service unavailable from a restricted location/i.test(combined)) {
+    return {
+      status: 'VENUE_ELIGIBILITY_UNAVAILABLE',
+      http: 503,
+      boundary: 'VENUE REFUSED THIS SERVER LOCATION. NO BYPASS OR FALLBACK WAS ATTEMPTED. NO NEW ORDER WAS CREATED.',
+    };
+  }
+  if (/abort|timeout/i.test(combined)) {
+    return {
+      status: 'SIGNED_READ_TIMEOUT',
+      http: 504,
+      boundary: 'FAIL-CLOSED SIGNED READ TIMEOUT. NO NEW ORDER WAS CREATED.',
+    };
+  }
+  return {
+    status: 'SIGNED_READ_UNAVAILABLE',
+    http: 503,
+    boundary: 'FAIL-CLOSED SIGNED READ. NO NEW ORDER WAS CREATED.',
+  };
 }
 
 function classifySignedReadFailure(statusCode, body) {
