@@ -3,8 +3,8 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: PBPD
-current_stage: STEP_5_COMPLETE_AWAITING_PBPD_RUNTIME_EVIDENCE_RECONCILIATION
+current_owner: HUMAN_VERCEL_SECRET_BOUNDARY
+current_stage: LIVE_PROOF_LAB_V0_4_CODE_COMPLETE_WAITING_VERCEL_DEPLOY_AND_SECRETS
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -29,7 +29,7 @@ capabilities:
     owner: hackathon-opportunity-intelligence
     status: SATISFIED
     evidence_pointer: product/WINNER-INTELLIGENCE-RERUN-004-X-API.md
-    note: final recheck remains required after PBPD runtime-evidence reconciliation and TRACE delta
+    note: final recheck remains required after the current v0.4 runtime delta closes
 
   - capability: project_authorization
     owner: human / chief-of-staff authority boundary
@@ -49,13 +49,13 @@ capabilities:
   - capability: living_PRD
     owner: PBPD
     status: SATISFIED
-    evidence_pointer: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
-    note: current living PRD is product/PRD.md v0.2 plus normative v0.3 addendum
+    evidence_pointer: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
+    note: current living definition is v0.2 base + v0.3 testnet delta + v0.4 Live Proof Lab delta
 
-  - capability: spec_kit_bounded_execution
+  - capability: spec_kit
     owner: Spec Kit orchestration under PBPD
     status: SATISFIED
-    evidence_pointer: product/specs/001-execution-validity/TESTNET-PROOF-DELTA-0.3.md
+    evidence_pointer: product/specs/001-execution-validity/LIVE-PROOF-LAB-DELTA-0.4.md
     note: authority NONE
 
   - capability: production_build_core
@@ -63,57 +63,22 @@ capabilities:
     status: SATISFIED
     evidence_pointer: product/POST-BUILD-RECONCILIATION.md
 
-  - capability: bounded_spot_testnet_execution_adapter
-    owner: PBPD
-    status: SATISFIED
-    evidence_pointer: src/testnet-executor.mjs
-    note: official Spot Testnet only, BUY only, explicit write gate, max 25 test USDT, one order maximum; boundary tests 7/7
-
-  - capability: pbpd_v0_3_scope_reconciliation
-    owner: PBPD
-    status: SATISFIED
-    evidence_pointer: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
-
-  - capability: hosted_spot_testnet_write_attempt
-    owner: PBPD + human eligibility boundary
-    status: SATISFIED
-    evidence_pointer: evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md
-    note: GitHub-hosted Azure eastus attempt failed closed on venue eligibility before execution; no order sent
-
-  - capability: actual_location_spot_testnet_access
-    owner: human eligibility boundary + PBPD evidence plane
-    status: SATISFIED
-    evidence_pointer: evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md
-    note: native PowerShell signed GET against official Spot Testnet returned PASS; no financial write
-
-  - capability: windows_local_proof_wrapper_runtime
-    owner: PBPD
-    status: SATISFIED
-    evidence_pointer: evidence/live-testnet/ATTEMPT-003-LOCAL-POWERSHELL-PARSER-FAIL.md
-    note: first wrapper attempt failed before execution; remediation is ASCII-safe and passes Windows PowerShell 5.1 parser CI
-
   - capability: authenticated_spot_testnet_write_evidence
     owner: PBPD + human local execution boundary
     status: SATISFIED
     evidence_pointer: evidence/live-testnet/ATTEMPT-004-LOCAL-ALLOW-ORDER-VERIFIED-PUBLISHED.md
-    note: Valid Until ALLOW -> one BUY BTCUSDT 10 test USDT order -> FILLED -> same clientOrderId queried successfully
+    note: ALLOW -> one BUY BTCUSDT 10 test USDT -> FILLED -> same clientOrderId queried successfully
 
   - capability: sanitized_public_testnet_write_proof
     owner: PBPD evidence plane
     status: SATISFIED
     evidence_pointer: web/live-testnet-proof.json
-    note: public artifact contains no credentials; proof class AUTHENTICATED_BINANCE_SPOT_TESTNET_EXECUTION_EVIDENCE
 
   - capability: public_testnet_write_proof_deployment
     owner: PBPD evidence plane
     status: SATISFIED
     evidence_pointer: evidence/live-testnet/ATTEMPT-004-LOCAL-ALLOW-ORDER-VERIFIED-PUBLISHED.md
-    note: Vercel production deployment dpl_2M3AgFyfNRzEdd9z84dzfTzjjcth READY from commit 21ab8508e078595fa964c73521bb7f78c2f2a37a; /live-proof and /live-testnet-proof.json returned HTTP 200
-
-  - capability: deployment_and_runtime_evidence_pre_testnet_delta
-    owner: PBPD + TRACE evidence boundary
-    status: SATISFIED
-    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_EVALUATION_CAPTURE_PASS_001.md
+    note: historical verified execution proof remains live on Vercel; no rerun required
 
   - capability: judge_optimization_evidence
     owner: PBPD / Winning Intelligence / TRACE input
@@ -124,20 +89,49 @@ capabilities:
     owner: PBPD evidence plane
     status: SATISFIED
     evidence_pointer: evidence/live-testnet/ATTEMPT-004-LOCAL-ALLOW-ORDER-VERIFIED-PUBLISHED.md
-    note: core 8/8, Challenge 6/6, MCP 5/5, MCP observation 4/4, execution boundary 7/7, native transport 5/5, controlled BLOCK proof, authentic read-only proof and authenticated Spot Testnet ALLOW write proof now exist
+    note: core 8/8, Challenge 6/6, MCP 5/5, MCP observation 4/4, execution boundary 7/7, native transport 5/5 and authenticated Spot Testnet write proof exist
 
-  - capability: trace_gate_6_5_design_experience_assurance
-    owner: TRACE
+  - capability: live_proof_lab_v0_4_authorization
+    owner: human
     status: SATISFIED
-    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_EVALUATION_CAPTURE_PASS_001.md
+    evidence_pointer: product/HUMAN-DIRECTION-LIVE-PROOF-LAB-002.md
 
-  - capability: pbpd_runtime_evidence_reconciliation_after_access_branch
+  - capability: live_proof_lab_v0_4_frontend
+    owner: PBPD
+    status: SATISFIED
+    evidence_pointer: web/lab.html
+    note: code includes /, /lab, /live-proof, /evaluations and explicit LIVE / CONTROLLED / VERIFIED EXECUTION classes
+
+  - capability: live_proof_lab_v0_4_server_read_layer
+    owner: PBPD
+    status: SATISFIED
+    evidence_pointer: api/order-status.mjs
+    note: public market GET + fixed known-order signed GET; no write route in initial v0.4
+
+  - capability: live_proof_lab_v0_4_secret_browser_boundary
+    owner: PBPD
+    status: SATISFIED
+    evidence_pointer: .github/workflows/ci.yml
+    note: CI run 34256450643 SUCCESS; browser secret boundary and read-only signed refresh assertions pass
+
+  - capability: live_proof_lab_v0_4_vercel_secret_configuration
+    owner: human
+    status: MISSING
+    evidence_pointer: docs/VERCEL-LIVE-PROOF-LAB-ENV.md
+    note: human has not yet confirmed Vercel Sensitive Production variables BINANCE_TESTNET_API_KEY and BINANCE_TESTNET_API_SECRET
+
+  - capability: live_proof_lab_v0_4_runtime_deployment
+    owner: PBPD + Vercel platform
+    status: MISSING
+    evidence_pointer: null
+    note: latest GitHub commit Vercel status failed due Hobby build-rate-limit; stable /lab currently 404 and must not be claimed live yet
+
+  - capability: pbpd_runtime_evidence_reconciliation_after_v0_4
     owner: PBPD
     status: MISSING
     evidence_pointer: null
-    note: next lifecycle step; intentionally not executed because human requested stop after step 5
 
-  - capability: trace_delta_after_live_testnet_scope
+  - capability: trace_delta_after_live_testnet_and_v0_4_scope
     owner: TRACE
     status: MISSING
     evidence_pointer: null
@@ -173,8 +167,10 @@ capabilities:
     not_applicable_reason: project has not yet been officially submitted and no official outcome exists
 
 missing:
-  - pbpd_runtime_evidence_reconciliation_after_access_branch
-  - trace_delta_after_live_testnet_scope
+  - live_proof_lab_v0_4_vercel_secret_configuration
+  - live_proof_lab_v0_4_runtime_deployment
+  - pbpd_runtime_evidence_reconciliation_after_v0_4
+  - trace_delta_after_live_testnet_and_v0_4_scope
   - winning_intelligence_final_recheck
   - trace_gate_6_75_demo_narrative_evidence_film
   - pbpd_candidate_handoff
@@ -184,8 +180,10 @@ missing:
 unknown: []
 
 triggered_but_unresolved:
-  - PBPD_RUNTIME_EVIDENCE_RECONCILIATION_AFTER_BRANCH_A_SUCCESS
-  - TRACE_DELTA_AFTER_LIVE_TESTNET_SCOPE
+  - HUMAN_VERCEL_SENSITIVE_SECRET_CONFIGURATION
+  - VERCEL_DEPLOYMENT_AFTER_HOBBY_BUILD_RATE_LIMIT_RESET
+  - PBPD_RUNTIME_EVIDENCE_RECONCILIATION_AFTER_V0_4
+  - TRACE_DELTA_AFTER_LIVE_TESTNET_AND_LIVE_PROOF_LAB_SCOPE
   - WINNING_INTELLIGENCE_FINAL_RECHECK
   - TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
   - PBPD_CANDIDATE_HANDOFF
@@ -196,50 +194,34 @@ human_overrides: []
 
 current_evidence:
   stable_url: https://valid-until-agent-os.vercel.app
-  live_proof_url: https://valid-until-agent-os.vercel.app/live-proof
-  live_proof_json_url: https://valid-until-agent-os.vercel.app/live-testnet-proof.json
-  testnet_proof_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
-  testnet_proof_ci_run: 34254211176
-  testnet_proof_ci_result: SUCCESS
-  vercel_deployment_id: dpl_2M3AgFyfNRzEdd9z84dzfTzjjcth
-  vercel_deployment_state: READY
+  historical_live_proof_url: https://valid-until-agent-os.vercel.app/live-proof
   testnet_order_id: 13634770
   testnet_client_order_id: vu-mtswxiik-ecb6b093
   testnet_order_status: FILLED
   same_order_verified: true
   production: false
   real_funds: false
-  public_proof_sha256: a318c6a6d8d56cd5ab66ee5beedf3baac32dc33885a963b64fbfe814ccad6b76
-  raw_capture_sha256: 5a67e7e912c2de23a14e23cf28a396520ab9837ae142b2992edf9f37753f826a
-  controlled_challenge_suite: PASS_6_OF_6
-  core_tests: PASS_8_OF_8
-  mcp_tests: PASS_5_OF_5
-  mcp_observation_tests: PASS_4_OF_4
-  testnet_execution_boundary_tests: PASS_7_OF_7
-  native_testnet_transport_tests: PASS_5_OF_5
+  v0_4_ci_run: 34256450643
+  v0_4_ci_result: SUCCESS
+  v0_4_ci_head: 13d71b62cdbb77d24c4468176bcf8afdef0a5369
+  v0_4_vercel_commit_status: FAILURE_BUILD_RATE_LIMIT
+  v0_4_stable_lab_status: 404_NOT_DEPLOYED_YET
 
 non_bypass_rules_reaffirmed:
   - no_cloud_region_hopping
   - no_VPN_or_proxy
   - no_mainnet
-  - no_alternate_client_or_endpoint_for_bypass
   - no_false_trade_claim
   - no_profitability_or_production_safety_claim
-
-requested_stop_boundary:
-  after_step: 5
-  reached: true
-  further_lifecycle_work_started: false
+  - no_public_unrestricted_write_button
+  - no_browser_secret_exposure
+  - do_not_rerun_successful_testnet_order
 
 next_valid_handoff:
-  from: PBPD_EVIDENCE_PLANE
-  to: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
-  required_output: RECONCILE_PRD_V0_3_AND_RUNTIME_EVIDENCE_AFTER_SUCCESSFUL_BRANCH_A
-
-parallel_allowed_work:
-  - none under the current human stop boundary
+  from: PBPD_IMPLEMENTATION
+  to: HUMAN_VERCEL_SECRET_BOUNDARY
+  required_output: VERCEL_SENSITIVE_PRODUCTION_SECRETS_CONFIGURED_WITHOUT_DISCLOSURE
 
 resume_rule: >-
-  Steps 1 through 5 are complete. The successful authenticated Spot Testnet proof is already public on Vercel.
-  Do not rerun the order proof. Resume with PBPD runtime-evidence reconciliation, then TRACE delta, Winning Intelligence final recheck,
-  TRACE Gate 6.75 video, PBPD candidate handoff, Project Finisher and protected human submission in that order.
+  v0.4 code is CI-green but not yet deployed. Add the two Vercel Sensitive Production variables, then trigger a fresh deployment only after the Hobby build-rate limit resets.
+  Verify /, /lab, /live-proof, /evaluations, /api/live-market and /api/order-status before PBPD reconciliation and TRACE.
