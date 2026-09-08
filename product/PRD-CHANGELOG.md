@@ -26,10 +26,15 @@ This file records material product-source changes from the point the retrospecti
 | 2026-09-08 | Obtained deployed desktop/mobile + normal/reduced-motion judge-path evidence | `EVIDENCE_UPDATE` | `NO_VERSION_INCREMENT` | TRACE run `34231934516`, artifact `10058192480`, 4/4 PASS |
 | 2026-09-08 | Upgraded representative judge-workflow proof from pending/partial to obtained | `PROOF_CLASS_RECONCILIATION` | `NO_VERSION_INCREMENT` | `product/POST-BUILD-RECONCILIATION.md`; behavior proof remains scoped to judge workflow only |
 | 2026-09-08 | Winning Intelligence runtime recheck closed sponsor-native/mobile/reduced-motion gaps while preserving final-video gap | `SPECIALIST_EVIDENCE_RECHECK` | `NO_VERSION_INCREMENT` | `product/WINNER-INTELLIGENCE-PRE-SUBMISSION.md` |
+| 2026-09-08 | Reopened Winning Intelligence against current Track A submissions and adjacent Binance Skills Hub verification products | `SAME_EVENT_COLLISION_RECHECK` | `NO_VERSION_INCREMENT` | `product/WINNER-INTELLIGENCE-RERUN-2026-09-08.md`, `evidence/competition/CURRENT-SUBMISSIONS-2026-09-08.md` |
+| 2026-09-08 | Surfaced existing counterfactual: current T1 market checks PASS while T0→T1 premise drift FAILS | `BOUNDED_JUDGE_SURFACING_REWORK` | `NO_VERSION_INCREMENT` | `product/CHANGE-REQUEST-WI-002.md`; underlying engine/fixture unchanged |
+| 2026-09-08 | Added standard portable `skills/valid-until/SKILL.md` + top-level `AGENTS.md` host-agent protocol | `AGENT_NATIVE_PACKAGING_REWORK` | `NO_VERSION_INCREMENT` | same authorized AI-agent / Agent OS / deterministic-authority split; no new execution capability |
 
-These changes did not alter the problem, target user, primary path, authority model, MUST/MUST_NOT product requirements, Agent OS responsibility, or production claim boundary. Therefore the product-source version remains `0.1-retrospective`.
+These changes do not alter the problem, target user, primary path, financial authority model, MUST/MUST_NOT product requirements, read-only submission boundary or production claim boundary. The product-source version therefore remains `0.1-retrospective`.
 
-The evidence state in `product/POST-BUILD-RECONCILIATION.md` is newer than the original pending-evidence wording embedded in PRD sections 11/13/19. This is an evidence reconciliation, not permission to silently mutate product intent.
+The latest Winner Intelligence rerun sharpens **how the existing product is surfaced**: a current-state-only preflight can remain green while the exact old decision expires relative to T0. The deterministic engine already performed this cross-time check before the rerun; no new authorization rule was introduced.
+
+The evidence state in `product/POST-BUILD-RECONCILIATION.md` is older than the currently pending Winner Intelligence delta revalidation. Its prior PASS remains valid for the pre-rerun build but cannot be reused as TRACE evidence for the changed judge surface.
 
 ## Post-PRD rule
 
@@ -37,4 +42,4 @@ Any future material change to problem, target user, primary path, human boundary
 
 `CHANGE_REQUEST → authority check → PRD version increment → Spec Kit/evidence/risk reconciliation → build resumes`
 
-Implementation detail or new evidence that does not alter product intent may proceed without a PRD version change, but must remain traceable in this changelog and the current evidence reconciliation.
+Implementation detail, packaging, judge-surfacing or new evidence that does not alter product intent may proceed without a PRD version change, but must remain traceable in this changelog and current lifecycle state.
