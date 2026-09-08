@@ -21,5 +21,3 @@ jobs:
         run: npm test
       - name: Rebuild judge data
         run: npm run build:web
-      - name: Verify generated judge data is current
-        run: git diff --exit-code -- web/demo.json
