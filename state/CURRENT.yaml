@@ -1,9 +1,9 @@
 project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
-status: PBPD_RUNTIME_RECONCILIATION_COMPLETE
-current_stage: TRACE_BC_DELTA_IMPLEMENTED_AWAITING_RUNTIME_REVIEW
-current_owner: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
+status: TRACE_DELTA_COMPLETE
+current_stage: TRACE_V0_4_DELTA_PASS_AWAITING_WINNING_INTELLIGENCE_FINAL
+current_owner: WINNING_INTELLIGENCE_FINAL_RECHECK
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -50,7 +50,6 @@ preserved_verified_execution:
 v0_4_runtime:
   vercel:
     url: https://valid-until-agent-os-plum.vercel.app
-    deployment_commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
     status: READY
     static_routes_http_200: true
     live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
@@ -63,21 +62,38 @@ v0_4_runtime:
     signed_read_status: LIVE_SIGNED_READ_VERIFIED
     canonical_order_identity_verified: true
     same_order_verified: true
-  runtime_verification_handoff_commit: 0f9ec86b2fce6dc300a6dba5b52f93b1b3fb4f73
-  runtime_verification_ci_run: 34267650642
-  runtime_verification_ci_result: SUCCESS
   financial_write_during_runtime_verification: false
   historical_trade_rerun: false
 
 pbpd_runtime_reconciliation:
   artifact: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
-  post_build_artifact: product/POST-BUILD-RECONCILIATION.md
   verdict: COMPLETE
   v0_4_acceptance: PASS
   scope_expansion: NONE
-  prd_version_increment_required: false
   build_candidate_ready: false
-  reason_build_candidate_not_ready: TRACE_DELTA_WINNING_INTELLIGENCE_FINAL_TRACE_6_75_AND_DOWNSTREAM_GATES_REMAIN
+
+trace_delta:
+  direction: B_EDITORIAL_EXECUTION_INSTRUMENT_PLUS_C_TEMPORAL_DISPLACEMENT
+  product_artifact: product/TRACE-DELTA-BC-001.md
+  specialist_artifact: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_DELTA_RECHECK_LIVE_TESTNET_V0_4_003.md
+  verdict: PASS
+  visual_delta_merge_head: 370e6039f60c41a0e3211666bb44627d494cca85
+  runtime_harness_head: dd5cf611b8ac9efd60443741a7247c373c6dc67d
+  proof_ci_run: 34274047464
+  proof_ci_result: SUCCESS
+  runtime_run: 34274047494
+  runtime_result: SUCCESS
+  runtime_artifact_id: 10074995345
+  runtime_artifact_digest: sha256:0d93d791857166854c81a0a085b87abb6ca191744d460bfb8ef9c2b12606e603
+  desktop_motion: PASS
+  mobile_motion: PASS
+  desktop_reduced_motion: PASS
+  mobile_reduced_motion: PASS
+  cross_time_signature: PASS
+  evidence_class_separation: PASS
+  anti_slop_domain_specificity: PASS
+  further_visual_redesign_required: false
+  final_encoded_video_review_required: true
 
 security_invariants:
   - no_browser_secret_exposure
@@ -94,29 +110,15 @@ security_invariants:
   - do_not_rerun_successful_testnet_order
 
 next_valid_handoff:
-  from: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
-  to: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE_REQUIRED
-  required_output: TRACE_VERDICT_ON_CURRENT_V0_3_EXECUTION_PROOF_AND_V0_4_RUNTIME_DELTA
+  from: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
+  to: WINNING_INTELLIGENCE_FINAL_RECHECK
+  required_output: FINAL_COLLISION_JUDGE_STRATEGY_AND_FREEZE_VERDICT_ON_TRACE_APPROVED_BUILD
 
 then:
-  - Winning Intelligence final recheck
   - TRACE Gate 6.75 final encoded video review
   - PBPD candidate handoff
   - Project Finisher independent terminal assurance
   - protected human submission
 
 resume_rule: >-
-  PBPD runtime evidence reconciliation is complete and PRD v0.4 acceptance is PASS. The historical authenticated Spot Testnet proof is preserved unchanged; no new order occurred during runtime verification. Vercel is a truthful venue-fail-closed runtime and Cloudflare re-verifies the fixed historical order by signed GET. Resume only at the required TRACE delta. Do not skip to Winning Intelligence, Gate 6.75, candidate handoff, Project Finisher or submission.
-
-trace_bc_delta:
-  direction: B_EDITORIAL_STRUCTURE_PLUS_C_TEMPORAL_DISPLACEMENT
-  human_selection: APPROVED_IN_CHAT
-  artifact: product/TRACE-DELTA-BC-001.md
-  verdict: HOLD_PENDING_CI_DEPLOYMENT_AND_RUNTIME_REVIEW
-  owner_retained: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
-  financial_write: false
-  downstream_progression: FORBIDDEN_THIS_WORKSTREAM
-  first_delta_commit: 7ad9f5c9d12b3e7c2db6a258c7d8e72c9a21d468
-  first_delta_ci_run: 34272109934
-  first_delta_ci: PASS
-  runtime_capture_target: https://valid-until-agent-os-plum.vercel.app
+  TRACE v0.4/B+C delta is PASS with desktop/mobile and reduced-motion runtime evidence. Do not reopen visual scope without a concrete Winning Intelligence collision or claim issue. Resume only at Winning Intelligence final recheck, then return the actual final encoded film to TRACE under GATE_6_75_DEMO_NARRATIVE_003.md. No new Binance order is permitted.
