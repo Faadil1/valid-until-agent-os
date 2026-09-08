@@ -3,166 +3,132 @@ project_type: HACKATHON
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 canonical_thesis: Reasoning is not authorization.
-secondary_thesis: A demo is not trust.
+secondary_thesis: A correct decision can expire.
 judge_line: The authorization was still valid. The premise was not.
 
-lifecycle_governance:
-  central_router: Faadil1/faadil-agent-system
-  global_policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
-  project_manifest: product/LIFECYCLE-COVERAGE.yaml
-  terminal_completeness_allowed: false
-  rule: >-
-    Continue only through the next valid owner/handoff. No specialist PASS, CI run,
-    deployment, demo, deadline or human enthusiasm may substitute for another system's owned gate.
+current_stage: LIVE_BINANCE_SPOT_TESTNET_CAPTURE_REQUIRED
+current_owner: HUMAN_EXECUTION_BOUNDARY
+terminal_completeness_allowed: false
 
-historical_reconciliation:
-  problem_worthiness:
-    status: SATISFIED
-    evidence: evidence/problem-discovery/COUNCIL.md
-  authorization:
-    status: SATISFIED_CURRENT_AUTHORIZATION
-    evidence: product/AUTHORIZATION.md
-    historical_prebuild_claim: false
-  prototype_killer:
-    status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
-    evidence: product/PROTOTYPE-KILLER.md
-  living_prd:
-    status: RETROSPECTIVE_CURRENT_STATE_PRD
-    product_source: product/PRD.md
-    evidence_reconciliation: product/POST-BUILD-RECONCILIATION.md
-    changelog: product/PRD-CHANGELOG.md
-    role_now: authoritative product baseline for future material changes
-  spec_kit:
-    status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
-    evidence: product/specs/001-execution-validity/
-    authority: NONE
-    derives_from: product/PRD.md
-  winning_intelligence:
-    status: SATISFIED
-    evidence: product/WINNER-INTELLIGENCE-PRE-SUBMISSION.md
-    runtime_recheck: COMPLETE
-    remaining_gap_owned_elsewhere: FINAL_VIDEO_TRACE_6_75_PLUS_PROTECTED_DELIVERABLES
-  trace_gate_6_5:
-    status: SATISFIED
-    verdict: PASS
-    evidence: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_EVALUATION_CAPTURE_PASS_001.md
-  trace_gate_6_75:
-    status: MISSING
-    contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_001.md
-    reason: actual final encoded video has not yet been reviewed
-  pbpd_post_build_reconciliation:
-    status: SATISFIED
-    evidence: product/POST-BUILD-RECONCILIATION.md
-  pbpd_candidate_handoff:
-    status: MISSING
-    blocked_by: TRACE_GATE_6_75
-  project_finisher:
-    status: MISSING_NOT_YET_ELIGIBLE
-    prerequisite: PBPD_CANDIDATE_HANDOFF
-  protected_submission:
-    owner: HUMAN
-    status: MISSING_NOT_YET_AUTHORIZED_BY_TERMINAL_SEQUENCE
+human_direction:
+  artifact: product/HUMAN-DIRECTION-LIVE-PROOF-001.md
+  decision: >-
+    Final differentiation proof should not stop at read-only authenticity.
+    Add live Binance Spot Testnet execution evidence, without real funds or mainnet trading.
 
 product_contract:
-  thesis: >-
-    Freeze user execution constraints before reading the market, bind a decision to the exact Binance state
-    that justified it, and require deterministic pre-action revalidation so stale reasoning cannot become
-    a consequential action.
   human_role: define/accept policy and retain protected external authority
-  agent_role: interpret intent and propose action; never self-authorize execution
-  agent_os_role: supply fresh Binance observations and capabilities to the agent workflow
-  valid_until_role: deterministically authorize whether the exact proposed action is still valid
-  execution_adapter: intentionally_not_implemented
+  agent_role: interpret intent and propose an exact action; never self-authorize
+  binance_role: provide live observations/capability surface
+  valid_until_role: bind sealed policy + T0 state + exact action and revalidate at T1
+  receipt_contract: valid-until.receipt.v2
   terminal_states: [ALLOW, BLOCK]
+  block_handoff: REPLAN_REQUIRED
 
-verified_product_evidence:
-  core_tests: PASS_7_OF_7
+unique_category:
+  generic_preflight_question: Is this action acceptable now?
+  valid_until_question: Is this exact previously justified action still valid relative to the premise that justified it?
+  memory_sentence: Fresh enough now is not the same as still justified then.
+
+verified_implementation:
+  core_tests: PASS_8_OF_8
   challenge_suite: PASS_6_OF_6
+  mcp_smoke: PASS_5_OF_5
+  mcp_observation_adapter: PASS_4_OF_4
+  testnet_execution_boundary: PASS_5_OF_5
+  full_ci_run: 34242858075
+  full_ci_head: 18e0bd6006134010fca00b4d05667b87703bbb75
+  full_ci_conclusion: SUCCESS
   controlled_replay: ELIGIBLE_TO_BLOCK_AT_35_47_BPS_VS_20_BPS
-  live_binance_cli:
-    version: '2.1.1'
+  prior_public_live_binance_cli:
     run: 34225133745
     result: BLOCK_FAIL_CLOSED
     artifact: 10055364283
     digest: sha256:51b23c621e487be68c81138bd3a24e6c264e4fb00a0c315b88addf8080e6b370
-  public_repo: Faadil1/valid-until-agent-os
 
-production_judge_surface:
-  stable_url: https://valid-until-agent-os.vercel.app
-  validated_deployment: dpl_HC9j3Y8nCAfw1PdHNpAhNjrVdo8G
-  validated_source_head: f6184bf7b7c8e2b93fc712f48fe0d0b081c7e3f3
-  root_http: 200
-  evaluations_http: 200
-  demo_json_http: 200
-  challenges_json_http: 200
-  incident_note: >-
-    The initial Vercel deployment reported READY but served 404 at root/evaluations. PBPD repaired only deployment
-    routing by serving web/ as the build output. TRACE evidence was not captured until the stable alias served 200.
+agent_os_composition:
+  official_remote_mcp_example: config/mcp-composition.example.json
+  local_mcp: src/mcp-server.mjs
+  local_tools: [valid_until_begin, valid_until_revalidate]
+  observation_adapter: src/binance-mcp-observation.mjs
+  distinction: >-
+    Binance MCP/official Binance tools answer what is true now.
+    Valid Until MCP answers whether the exact old action remains justified.
 
-trace_gate_6_5_evidence:
-  run: 34231934516
-  artifact: 10058192480
-  digest: sha256:4f0ba722100568c2a320ade6eda2ce3ba81e4040026c1c946ee71ccc661b66f1
-  automated_cases:
-    desktop_1440x900_motion: PASS
-    mobile_390x844_motion: PASS
-    desktop_1440x900_reduced_motion: PASS
-    mobile_390x844_reduced_motion: PASS
-  browser_console_errors: NONE
-  design_review:
-    judge_video_readability: PASS
-    domain_native_anti_slop: PASS
-    proof_path_visibility: PASS
-    reduced_motion_runtime: PASS
-  closed_findings:
-    - TRACE_VU_001
-    - TRACE_VU_002
-    - TRACE_VU_003
+live_testnet_path:
+  status: IMPLEMENTED_NOT_YET_AUTHENTICATED_CAPTURED
+  official_environment: https://testnet.binance.vision
+  market_capture: src/snapshot.mjs::captureWithBinanceSpotTestnet
+  executor: src/testnet-executor.mjs
+  orchestrator: src/live-testnet.mjs
+  command: npm run live:testnet -- BTCUSDT
+  supported_action: BUY_with_quote_notional_usdt
+  write_confirmation: VALID_UNTIL_TESTNET_WRITE=CONFIRM_TESTNET_WRITE
+  profile_variable: VALID_UNTIL_TESTNET_PROFILE
+  allow_behavior: one signed MARKET BUY then query same clientOrderId
+  block_behavior: zero executor calls
+  target_override_to_mainnet: impossible_by_current_executor_contract
 
-pbpd_reconciliation:
-  artifact: product/POST-BUILD-RECONCILIATION.md
-  prd_must: PASS_11_OF_11
-  prd_should: PASS_4_OF_4
-  prd_must_not: PASS_5_OF_5
-  spec_kit: PASS_RECONCILED
-  technical_proof: OBTAINED
-  behavior_proof: OBTAINED_FOR_REPRESENTATIVE_JUDGE_WORKFLOW
-  outcome_proof: NOT_OBTAINED_NOT_CLAIMED
-  production_evidence: NOT_OBTAINED_NOT_CLAIMED
-  build_candidate_ready: NOT_EMITTED
+security_and_scope:
+  - use only personal development machine for credentials/execution
+  - no API secret in repository/chat/log/screenshot
+  - no mainnet Binance order
+  - no real funds
+  - no geographic bypass
+  - no wallet funding/write
+  - no x402
+  - do not weaken policy to manufacture ALLOW
+  - a BLOCK live run is legitimate evidence and requires fresh replan
 
 claim_boundaries:
-  - no profitable-trading claim
-  - no predictive-alpha claim
-  - controlled replay is synthetic and labelled
-  - live proof is authentic public Binance market data, not a trade
-  - Ed25519 is supporting proof, not the headline value proposition
-  - no API key, account credential, order placement or funding action was used
-  - judge-workflow behavior proof is not customer/outcome/production evidence
+  implemented_claims:
+    - action-bound receipt v2
+    - deterministic cross-time revalidation
+    - testnet executor structurally gated on ALLOW
+    - testnet target hardcoded
+    - full CI green
+  pending_claims:
+    - real authenticated Binance Spot Testnet order placed
+    - real testnet orderId/clientOrderId/status observed
+  forbidden_claims:
+    - mainnet live trade
+    - real-money trade
+    - profitability_or_alpha
+    - reduced_real_world_losses
+    - production_financial_safety
+    - authenticated_remote_mcp_write_without_real_capture
 
-trace_gate_6_75_contract:
-  artifact: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_001.md
-  target_seconds: 60
-  allowed_window_seconds: '58-65'
-  required_sequence: >-
-    problem -> Agent OS role -> exact validity contract -> STILL VALID -> Replay proof ->
-    35.47 bps crosses 20 bps -> NO LONGER VALID -> six-case red team 6/6 -> live Binance authenticity -> bounded close
-  actual_final_video: MISSING
-  gate_7_authorized: false
+competition_evidence:
+  x_api_sweep: evidence/competition/X-OFFICIAL-THREAD-SWEEP-2026-09-08.md
+  posts_captured: 395
+  track_a_explicit_or_likely_rows_before_dedupe: 119
+  latest_winner_intelligence: product/WINNER-INTELLIGENCE-RERUN-004-X-API.md
+  key_correction: >-
+    Do not claim temporal drift/proposal expiry is globally unique. RiskPilot and Trade Preflight
+    contain temporal/freshness controls. Valid Until must win on action-decision contract centrality.
 
-current_state:
-  stage: TRACE_GATE_6_75_FINAL_VIDEO_REQUIRED
-  current_owner: TRACE
-  terminal_completeness_allowed: false
-  exact_blocker: FINAL_ENCODED_VIDEO_NOT_YET_REVIEWED
+lifecycle_effect:
+  previous_trace_6_5: PASS_BEFORE_LIVE_TESTNET_SCOPE_CHANGE
+  previous_trace_6_75: PAUSED
+  reason: material live-proof scope change after previous TRACE state
+  required_sequence:
+    - real_testnet_capture
+    - pbpd_claim_and_prd_reconciliation
+    - deploy_judge_delta
+    - trace_delta_assurance
+    - winning_intelligence_final_recheck
+    - trace_6_75_refreshed_video
+    - pbpd_candidate_handoff
+    - project_finisher
+    - human_protected_submission
 
-next_valid_handoff:
-  from: PBPD / human recording boundary
-  to: TRACE
-  required_output: FINAL_ENCODED_58_TO_65_SECOND_DEMO_FOR_GATE_6_75_REVIEW
+next_action_for_human:
+  - create/select Binance CLI testnet profile locally
+  - never paste the key/secret into chat
+  - run the bounded live:testnet command with explicit confirmation variable
+  - return only sanitized output/result if help interpreting is needed
 
 resume_rule: >-
-  Do not redeploy/reopen TRACE Gate 6.5 or rerun broad product ideation unless concrete new evidence creates a conflict.
-  The next material artifact is the actual final encoded demo. Once provided, TRACE reviews Gate 6.75. Only a PASS
-  permits PBPD final delta reconciliation and candidate handoff. Project Finisher runs after that. Human protected
-  X/repost/reply-or-quote and survey actions remain last.
+  Do not return to final video recording yet. First obtain or fail-close the real authenticated Spot Testnet capture.
+  If the run returns BLOCK, preserve it honestly and start a fresh decision cycle. If it returns ALLOW, capture the
+  sanitized testnet order response and verification response. Mainnet execution remains outside this Track A proof.
