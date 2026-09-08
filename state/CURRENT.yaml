@@ -2,7 +2,7 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: WINNING_INTELLIGENCE_FINAL_COMPLETE
-current_stage: PRODUCT_POSITIONING_FROZEN_AWAITING_TRACE_GATE_6_75_FINAL_FILM
+current_stage: TRACE_GATE_6_75_REMOTION_FILM_BUILD_IN_PROGRESS
 current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
@@ -102,6 +102,21 @@ gate_6_75_packaging_alignment:
   actual_encoded_video_exists: false
   trace_gate_6_75_pass: false
 
+remotion_final_film_build:
+  status: IN_PROGRESS
+  workflow: .github/workflows/final-remotion-film.yml
+  workflow_commit: 983f2f7e96ea25c21836f0b5607270db9df9365d
+  workflow_run: 34277478773
+  render_target: 1920x1080_30fps_62_seconds
+  source_strategy: CURRENT_DEPLOYED_VERCEL_LIVE_SCREENSHOTS_PLUS_ACTUAL_REPLAY_FRAME_SEQUENCE
+  live_source_url: https://valid-until-agent-os-plum.vercel.app
+  voiceover: REQUIRED_FOR_JUDGE_COMPREHENSION
+  voiceover_language: English
+  voiceover_generation: NEURAL_TTS_DRAFT_CAN_BE_REPLACED_BY_HUMAN_VOICE_WITHOUT_VISUAL_REBUILD
+  background_music: NOT_REQUIRED
+  no_new_financial_write: true
+  product_scope_change: NONE
+
 security_invariants:
   - no_browser_secret_exposure
   - no_mainnet
@@ -125,4 +140,4 @@ then:
   - protected human submission
 
 resume_rule: >-
-  Winning Intelligence final recheck is PASS_WITH_FREEZE and the Gate 6.75 script has now been explicitly aligned to RUBRIC → PAIN → PROBLEM → DIFFERENTIATOR → EXECUTION → EVIDENCE → STORY → DEMO → Q&A. Do not add features, trading proof, remote MCP OAuth proof, competitor-chasing scope or visual redesign. Resume by producing the actual encoded 58–65 second film. The differentiator must be audible before receipt/technical detail. No subsystem may infer Gate 6.75 PASS until TRACE reviews that encoded artifact.
+  The Remotion Gate 6.75 film build is active in GitHub Actions run 34277478773. It captures the current deployed Vercel surfaces, including a live replay frame sequence, then renders a 1080p 62-second evidence film with English voiceover. Product, visual direction and positioning remain frozen. If the render succeeds, retrieve the artifact and perform TRACE Gate 6.75 encoded-film review. If it fails, repair only the packaging pipeline; do not reopen product scope or execute a new Binance order.
