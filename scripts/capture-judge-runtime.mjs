@@ -33,11 +33,9 @@ async function runCase({ id, viewport, reducedMotion }) {
   let replayTerminal = false;
   if (replayVisible) {
     await page.getByRole('button', { name: /Replay proof/i }).click();
-    if (reducedMotion === 'reduce') {
-      await page.waitForTimeout(350);
-    } else {
-      await page.waitForTimeout(2700);
-    }
+    // The application keeps the same logical replay duration even when CSS motion is reduced.
+    // Wait for the deterministic terminal state rather than assuming a visual transition duration.
+    await page.getByText('NO LONGER VALID', { exact: true }).waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
     replayTerminal = await page.getByText('NO LONGER VALID', { exact: true }).isVisible().catch(() => false);
   }
   await page.screenshot({ path: path.join(outDir, `${id}-home-after.png`), fullPage: true });
