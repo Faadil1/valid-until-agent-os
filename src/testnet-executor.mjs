@@ -14,10 +14,11 @@ export function executeAllowedTestnetBuy({ validityResult, action, profile, conf
   }
   if (!action || action.side !== 'BUY') throw new Error('testnet proof currently supports exact BUY actions only');
   if (!Number.isFinite(action.notional_usdt) || action.notional_usdt <= 0) throw new Error('action notional_usdt must be positive');
-  if (!profile || typeof profile !== 'string') throw new Error('VALID_UNTIL_TESTNET_PROFILE is required');
+  if (action.notional_usdt > 25) throw new Error('testnet proof notional_usdt is hard-capped at 25');
   if (confirmation !== 'CONFIRM_TESTNET_WRITE') throw new Error('set VALID_UNTIL_TESTNET_WRITE=CONFIRM_TESTNET_WRITE to allow a testnet order');
 
   const clientOrderId = makeClientOrderId();
+  const profileArgs = profile && typeof profile === 'string' ? ['--profile', profile] : [];
   const order = runner([
     'request', 'POST', `${TESTNET_BASE}/api/v3/order`, '--signed',
     '--symbol', action.symbol,
@@ -26,14 +27,14 @@ export function executeAllowedTestnetBuy({ validityResult, action, profile, conf
     '--quoteOrderQty', String(action.notional_usdt),
     '--newClientOrderId', clientOrderId,
     '--newOrderRespType', 'FULL',
-    '--profile', profile,
+    ...profileArgs,
   ]);
 
   const verified = runner([
     'request', 'GET', `${TESTNET_BASE}/api/v3/order`, '--signed',
     '--symbol', action.symbol,
     '--origClientOrderId', clientOrderId,
-    '--profile', profile,
+    ...profileArgs,
   ]);
 
   return {
