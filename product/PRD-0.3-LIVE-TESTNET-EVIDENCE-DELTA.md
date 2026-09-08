@@ -113,16 +113,21 @@ Evidence: `evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md`.
 
 This proves the workflow fails closed on venue refusal. It does **not** satisfy the desired successful testnet write proof.
 
+### Local tooling constraint discovered
+
+The currently available Windows machine has no WSL installation and the user has no administrator right to install it. Binance CLI v2.1.1 publishes macOS/Linux release assets but no native Windows asset was found in the official release. This is treated as a tooling constraint, not a reason to bypass venue restrictions or machine policy.
+
 ## Current evidence strategy
 
 Preferred remaining compliant attempt:
 
-1. Use a **personal development machine at the user's actual location**.
-2. Use the official Binance CLI and the official Spot Testnet endpoint.
-3. No VPN, proxy or location manipulation.
-4. First perform only a signed Spot Testnet account check.
-5. If Binance permits access, execute the bounded v0.3 proof.
-6. If Binance refuses, stop and freeze the final submission around controlled cross-time proof + authentic read-only Binance evidence; do not circumvent.
+1. Use the user's actual-location Windows machine with no VPN/proxy/location manipulation.
+2. Perform a signed `GET /api/v3/account` against the **official Spot Testnet endpoint** using either the official Binance CLI where natively available or native PowerShell HMAC signing against the same official Binance API.
+3. The Windows no-admin path is `scripts/check-testnet-access.ps1`; it performs no financial write, installs nothing and prints no account payload or credentials.
+4. If Binance permits actual-location authenticated access, PBPD may adapt the bounded v0.3 proof to the same official signed API transport and execute at most one authorized Spot Testnet order under MUST-13..21.
+5. If Binance refuses, stop and freeze the final submission around controlled cross-time proof + authentic read-only Binance evidence; do not circumvent.
+
+Using native PowerShell against the official Spot Testnet API is an implementation transport change only. It does not change the endpoint, eligibility boundary, product authorization invariant or claim class.
 
 A successful testnet write is desirable but not allowed to override eligibility constraints.
 
