@@ -55,21 +55,46 @@ jobs:
         working-directory: video/final-film
         run: npm run capture
 
-      - name: Generate and normalize English judge voiceover
+      - name: Generate and normalize calm narrative English voiceover
         shell: bash
         working-directory: video/final-film
         run: |
           set -euo pipefail
           python3 -m pip install --quiet edge-tts
-          edge-tts --voice en-US-GuyNeural --rate='+2%' --file voiceover.txt --write-media public/voiceover-raw.mp3
+
+          # Brian is materially less promotional than the prior Guy voice and
+          # reads closer to a restrained documentary narrator. Keep a safe
+          # fallback so packaging never depends on one catalog entry.
+          if edge-tts --list-voices | grep -q 'en-US-BrianNeural'; then
+            VOICE='en-US-BrianNeural'
+          elif edge-tts --list-voices | grep -q 'en-US-AndrewNeural'; then
+            VOICE='en-US-AndrewNeural'
+          else
+            VOICE='en-GB-RyanNeural'
+          fi
+
+          edge-tts \
+            --voice "$VOICE" \
+            --rate='-6%' \
+            --pitch='-3Hz' \
+            --volume='-2%' \
+            --file voiceover.txt \
+            --write-media public/voiceover-raw.mp3
+
           RAW_DURATION=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 public/voiceover-raw.mp3)
           TEMPO=$(python3 - <<PY
           d=float('${RAW_DURATION}')
-          target=59.2
+          target=60.4
           print(max(0.85,min(1.18,d/target)))
           PY
           )
-          ffmpeg -y -loglevel error -i public/voiceover-raw.mp3 -filter:a "atempo=${TEMPO},loudnorm=I=-16:TP=-1.5:LRA=11" public/voiceover.mp3
+
+          ffmpeg -y -loglevel error -i public/voiceover-raw.mp3 \
+            -filter:a "atempo=${TEMPO},loudnorm=I=-17:TP=-1.8:LRA=12" \
+            public/voiceover.mp3
+
+          echo "VOICE=${VOICE}"
+          echo "VOICE_PROFILE=CALM_NARRATIVE_RESTRAINED"
           echo "RAW_VOICEOVER_SECONDS=${RAW_DURATION}"
           echo "VOICEOVER_TEMPO=${TEMPO}"
           echo -n "NORMALIZED_VOICEOVER_SECONDS="
@@ -90,7 +115,7 @@ jobs:
       - name: Upload final film and live capture package
         uses: actions/upload-artifact@v4
         with:
-          name: valid-until-final-remotion-film
+          name: valid-until-final-remotion-film-narrative-voice
           path: |
             video/final-film/out/valid-until-final.mp4
             video/final-film/out/ffprobe.json
