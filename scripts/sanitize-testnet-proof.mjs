@@ -22,6 +22,9 @@ if (!Number.isFinite(Number(raw.proposed_action.notional_usdt)) || Number(raw.pr
   throw new Error('public proof action exceeds hard testnet cap');
 }
 
+const receipt = raw.receipt ?? raw.eligibility_receipt ?? null;
+const finalSnapshot = raw.final_snapshot ?? raw.revalidation_snapshot ?? null;
+const nextState = raw.next_state ?? raw.validity_result?.next_state ?? null;
 const order = safeOrder(raw.execution?.order_response);
 const verified = safeOrder(raw.execution?.verification_response);
 const orderSent = raw.execution?.order_sent === true;
@@ -55,10 +58,15 @@ const publicProof = {
   network: 'Binance Spot Testnet',
   endpoint: 'https://testnet.binance.vision',
   captured_at: new Date().toISOString(),
+  capture: {
+    source: raw.capture_source ?? process.env.VALID_UNTIL_CAPTURE_SOURCE ?? null,
+    local_actual_location: (raw.capture_source ?? process.env.VALID_UNTIL_CAPTURE_SOURCE ?? '').includes('LOCAL_ACTUAL_LOCATION'),
+    transport: (raw.capture_source ?? '').includes('NATIVE_NODE_HTTPS_HMAC') ? 'NATIVE_NODE_HTTPS_HMAC' : null,
+  },
   workflow: {
     run_id: stringOrNull(process.env.GITHUB_RUN_ID),
     run_attempt: stringOrNull(process.env.GITHUB_RUN_ATTEMPT),
-    source_sha: stringOrNull(process.env.GITHUB_SHA),
+    source_sha: stringOrNull(process.env.GITHUB_SHA) ?? stringOrNull(process.env.VALID_UNTIL_SOURCE_SHA) ?? stringOrNull(raw.source_sha),
     repository: stringOrNull(process.env.GITHUB_REPOSITORY),
     cycle_attempt: numberOrNull(process.env.VALID_UNTIL_PROOF_CYCLE),
   },
@@ -68,15 +76,15 @@ const publicProof = {
     notional_usdt: Number(raw.proposed_action.notional_usdt),
   },
   decision_contract: {
-    decision_id: raw.receipt?.decision_id ?? null,
-    policy_hash: raw.receipt?.policy_hash ?? null,
-    snapshot_hash: raw.receipt?.snapshot_hash ?? null,
-    action_hash: raw.receipt?.action_hash ?? null,
-    receipt_version: raw.receipt?.receipt_version ?? raw.receipt?.version ?? null,
+    decision_id: receipt?.decision_id ?? null,
+    policy_hash: receipt?.policy_hash ?? null,
+    snapshot_hash: receipt?.snapshot_hash ?? null,
+    action_hash: receipt?.action_hash ?? null,
+    receipt_version: receipt?.receipt_version ?? receipt?.version ?? null,
     t0_mid: numberOrNull(raw.initial_snapshot?.mid),
-    t1_mid: numberOrNull(raw.final_snapshot?.mid),
+    t1_mid: numberOrNull(finalSnapshot?.mid),
     validity_status: raw.validity_result?.status ?? null,
-    next_state: raw.next_state ?? null,
+    next_state: nextState,
     failed_checks: failedChecks(raw.validity_result),
   },
   execution: {
@@ -86,6 +94,7 @@ const publicProof = {
     order,
     verification: verified,
     same_order_verified: sameOrderVerified,
+    uncertain_transport_recovered: raw.execution?.uncertain_transport_recovered === true,
     block_zero_write: !orderSent && raw.validity_result?.status === 'BLOCK',
   },
   evidence: {
@@ -106,6 +115,7 @@ console.log(JSON.stringify({
   validity: publicProof.decision_contract.validity_status,
   order_sent: publicProof.execution.order_sent,
   same_order_verified: publicProof.execution.same_order_verified,
+  capture_source: publicProof.capture.source,
   output: outputPath,
 }));
 
