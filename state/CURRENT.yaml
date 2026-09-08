@@ -1,9 +1,9 @@
 project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
-status: SUBMISSION_READY
-current_stage: HUMAN_PROTECTED_SUBMISSION
-current_owner: HUMAN
+status: SUBMITTED
+current_stage: POST_SUBMISSION_FREEZE__AWAITING_OUTCOME_OR_POST_MORTEM
+current_owner: PROJECT_FINISHER_WITH_HOI_PBPD_TRACE_AS_APPLICABLE
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -17,6 +17,18 @@ state_discipline:
   every_meaningful_gate_or_packaging_step_requires_resume_evidence: true
   chat_memory_is_not_authority: true
   falsified_history: forbidden
+
+submission:
+  state: SUBMITTED
+  human_confirmed: true
+  confirmation_date: '2026-09-08'
+  confirmation_artifact: evidence/submission/HUMAN-SUBMISSION-CONFIRMATION-2026-09-08.md
+  confirmation_class: HUMAN_REPORTED_SUBMISSION_CONFIRMATION
+  independently_verified_platform_receipt: false
+  public_repository: https://github.com/Faadil1/valid-until-agent-os
+  live_demo: https://valid-until-agent-os-plum.vercel.app
+  public_video: https://youtu.be/EW0VOoaA2CI
+  submitted_product_scope_frozen: true
 
 living_prd:
   version: '0.4'
@@ -63,6 +75,7 @@ final_film:
   human_visual_verdict: ACCEPTED
   human_voice_verdict: ACCEPTED
   trace_gate_6_75: PASS
+  public_video_url: https://youtu.be/EW0VOoaA2CI
 
 trace:
   direction: B_EDITORIAL_EXECUTION_INSTRUMENT_PLUS_C_TEMPORAL_DISPLACEMENT
@@ -123,6 +136,7 @@ known_limitations:
   - no_production_readiness_claim
   - no_unrestricted_public_financial_write_route
   - cloud_venue_eligibility_can_fail_closed
+  - official_platform_submission_receipt_not_independently_captured
 
 security_invariants:
   - no_browser_secret_exposure
@@ -134,21 +148,20 @@ security_invariants:
   - controlled_replay_is_not_historical_execution
   - do_not_rerun_successful_testnet_order
   - no_profitability_or_production_safety_claim
-  - no_automatic_final_submission
 
 lifecycle:
   trace_gate_6_75: SATISFIED
   winner_intelligence_final_film: SATISFIED
   pbpd_candidate_handoff: SATISFIED
   terminal_assurance: SATISFIED
-  protected_submission: MISSING_HUMAN_ACTION
-  post_mortem: NOT_APPLICABLE_BEFORE_SUBMISSION
+  protected_submission: SATISFIED_HUMAN_CONFIRMED
+  post_mortem: NOW_APPLICABLE_PENDING
 
 next_valid_handoff:
-  from: PROJECT_FINISHER
-  to: HUMAN
-  trigger: SUBMISSION_READY
-  required_output: HUMAN_OFFICIAL_SUBMISSION_CONFIRMATION
+  from: HUMAN_PROTECTED_SUBMISSION
+  to: PROJECT_FINISHER_POST_MORTEM_WITH_HOI_PBPD_TRACE
+  trigger: SUBMITTED
+  required_output: POST_MORTEM_AND_OUTCOME_LEARNING_RECORD
 
 resume_rule: >-
-  The project is SUBMISSION_READY. TRACE Gate 6.75 is PASS, the final 62-second narrative-voice film is human accepted, Winner Intelligence is frozen, PBPD declared BUILD_CANDIDATE_READY, Project Finisher terminal assurance passed, and the final hashed submission archive is assembled. Do not reopen product, visuals, voice or proof scope absent a concrete defect; do not execute another Binance order. The only unresolved lifecycle step is the protected human official Submit action. Record SUBMITTED only after explicit human confirmation.
+  Valid Until is human-confirmed SUBMITTED. All pre-submission lifecycle gates are closed and the submitted product, README, film, positioning and proof package are frozen. Do not reopen or mutate the submitted artifact absent an official competition request or concrete defect, and do not execute another Binance order. The next valid work is post-mortem / outcome learning and later result capture; human-reported submission confirmation must not be misrepresented as an independently verified platform receipt.
