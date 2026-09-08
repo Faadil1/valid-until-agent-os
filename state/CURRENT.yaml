@@ -14,6 +14,7 @@ state_discipline:
   current_file: state/CURRENT.yaml
   handover_file: state/HANDOVER.yaml
   material_transition_requires_both_files_updated: true
+  every_meaningful_gate_or_packaging_step_requires_resume_evidence: true
   chat_memory_is_not_authority: true
   falsified_history: forbidden
 
@@ -82,6 +83,25 @@ winning_intelligence_final:
     - docs/DEMO-SCRIPT.md
   remaining_critical_risk: FINAL_ENCODED_VIDEO_NOT_YET_REVIEWED
 
+gate_6_75_packaging_alignment:
+  status: READY_FOR_RECORDING
+  judge_performance_chain: RUBRIC__PAIN__PROBLEM__DIFFERENTIATOR__EXECUTION__EVIDENCE__STORY__DEMO__Q_AND_A
+  rubric_is_internal_not_literal_video_scene: true
+  pain_problem_target_seconds: 5
+  differentiator_must_be_audible_before_technical_detail: true
+  differentiator_target_seconds: 10
+  differentiator_line: A preflight asks whether an action is acceptable now. Valid Until asks whether this exact old action is still justified by the decision that produced it.
+  execution_flow: AI_AGENT_PROPOSES__BINANCE_AGENT_OS_SUPPLIES_FRESH_STATE__VALID_UNTIL_REVALIDATES_ACTION_DECISION_CONTRACT
+  evidence_story_demo_fused_into_causal_replay: true
+  q_and_a_source: docs/JUDGE-MATRIX.md
+  working_script: docs/DEMO-SCRIPT.md
+  working_script_alignment_commit: a86a6fda4fb7ebf84c52179a6028d92cfc9585c0
+  trace_contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
+  trace_contract_alignment_commit: af1c6f56d91e9112095c34255ea78608dfea3b90
+  film_target_seconds: 58-65
+  actual_encoded_video_exists: false
+  trace_gate_6_75_pass: false
+
 security_invariants:
   - no_browser_secret_exposure
   - no_mainnet
@@ -94,7 +114,7 @@ security_invariants:
   - no_profitability_or_production_safety_claim
 
 next_valid_handoff:
-  from: WINNING_INTELLIGENCE_FINAL_RECHECK
+  from: WINNING_INTELLIGENCE_FINAL_RECHECK_PLUS_FILM_PACKAGING_ALIGNMENT
   to: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
   contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
   required_output: ACTUAL_FINAL_ENCODED_58_65_SECOND_EVIDENCE_FILM_AND_TRACE_VERDICT
@@ -105,4 +125,4 @@ then:
   - protected human submission
 
 resume_rule: >-
-  Winning Intelligence final recheck is PASS_WITH_FREEZE. Do not add new features, trading proof, remote MCP OAuth proof, competitor-chasing scope or visual redesign. The highest remaining leverage and required lifecycle gate is the actual encoded 58–65 second film under TRACE Gate 6.75 contract 003. No downstream subsystem may infer Gate 6.75 PASS until TRACE reviews that encoded artifact.
+  Winning Intelligence final recheck is PASS_WITH_FREEZE and the Gate 6.75 script has now been explicitly aligned to RUBRIC → PAIN → PROBLEM → DIFFERENTIATOR → EXECUTION → EVIDENCE → STORY → DEMO → Q&A. Do not add features, trading proof, remote MCP OAuth proof, competitor-chasing scope or visual redesign. Resume by producing the actual encoded 58–65 second film. The differentiator must be audible before receipt/technical detail. No subsystem may infer Gate 6.75 PASS until TRACE reviews that encoded artifact.
