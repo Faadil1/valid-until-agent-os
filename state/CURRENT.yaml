@@ -43,7 +43,7 @@ step_1_to_5_scope:
   steps:
     1_secret_installation: COMPLETE
     2_manual_testnet_workflow: COMPLETE_CI_VERIFIED
-    3_real_testnet_capture: READY_FOR_LOCAL_BOUNDED_WRITE_PROOF
+    3_real_testnet_capture: READY_FOR_LOCAL_BOUNDED_WRITE_PROOF_RETRY_AFTER_WRAPPER_FIX
     4_sanitized_public_trade_proof: PENDING_SUCCESSFUL_STEP_3
     5_judge_surface_vercel_write_proof: PENDING_SUCCESSFUL_STEP_4
 
@@ -66,6 +66,22 @@ actual_location_access_attempt:
     - ACTUAL_LOCATION_TESTNET_ACCESS=PASS
     - FINANCIAL_WRITE=FALSE
   order_sent: false
+
+local_write_attempt_003:
+  evidence: evidence/live-testnet/ATTEMPT-003-LOCAL-POWERSHELL-PARSER-FAIL.md
+  result: FAIL_BEFORE_EXECUTION
+  failure_stage: WINDOWS_POWERSHELL_PARSER
+  decision_cycle_started: false
+  order_sent: false
+  financial_write: false
+  public_proof_created: false
+  root_cause: WINDOWS_POWERSHELL_5_1_UTF8_WITHOUT_BOM_NON_ASCII_PUNCTUATION_RISK
+  remediation:
+    wrapper_ascii_only: true
+    raw_json_utf8_no_bom_writer: true
+    windows_powershell_5_1_parser_ci: true
+    parser_ci_run: 34253539001
+    parser_ci_conclusion: SUCCESS
 
 local_write_proof_implementation:
   native_transport: src/binance-testnet-http.mjs
@@ -93,6 +109,7 @@ safety_decision:
   - no_policy_weakening_to_force_ALLOW
   - BLOCK_means_zero_order_write
   - one_order_maximum_on_ALLOW
+  - parser_failure_is_not_a_product_BLOCK
 
 verified_implementation:
   core_tests: PASS_8_OF_8
@@ -103,13 +120,15 @@ verified_implementation:
   native_testnet_transport_tests: PASS_IN_TEST_ALL
   native_path_ci_run: 34252867490
   native_path_ci_conclusion: SUCCESS
-  native_path_ci_head: f00d9e24c48d234cd72b554908c3beeb01e88c94
+  windows_powershell_parser_ci_run: 34253539001
+  windows_powershell_parser_ci_conclusion: SUCCESS
 
 proof_status:
   prior_public_readonly_binance: VERIFIED
   controlled_cross_time_block: VERIFIED_35_47_BPS_GT_20
   hosted_testnet_authenticated_access: BLOCKED_BY_HOSTED_RUNNER_ELIGIBILITY
   actual_location_testnet_access: VERIFIED_PASS
+  local_wrapper_parser_failure: RECORDED_NO_WRITE
   real_testnet_order_capture: NOT_OBTAINED_NOT_CLAIMED
   public_testnet_write_proof_on_vercel: NOT_OBTAINED_NOT_CLAIMED
 
@@ -117,11 +136,12 @@ next_valid_handoff:
   from: PBPD
   to: HUMAN_LOCAL_EXECUTION_BOUNDARY
   required_output: >-
-    Pull latest main and run scripts/run-local-testnet-proof.ps1 -Publish from the same actual-location Windows development machine.
+    Pull latest main and rerun scripts/run-local-testnet-proof.ps1 -Publish from the same actual-location Windows development machine.
     Type CONFIRM_TESTNET_WRITE only if willing to permit one BUY BTCUSDT Spot Testnet order for 10 test USDT when Valid Until returns ALLOW.
-    The script must run deterministic assurance first, make zero order calls on BLOCK, send at most one order on ALLOW, query the same clientOrderId,
-    sanitize the proof, and push only web/live-testnet-proof.json. Return only the sanitized terminal summary, never credentials.
+    The wrapper is now ASCII-only and passes Windows PowerShell 5.1 parsing in CI. It must run deterministic assurance first,
+    make zero order calls on BLOCK, send at most one order on ALLOW, query the same clientOrderId, sanitize the proof,
+    and push only web/live-testnet-proof.json. Return only the sanitized terminal summary, never credentials.
 
 resume_rule: >-
-  Do not rerun the GitHub-hosted write workflow and do not alter geography, policy, endpoint or caps. After the local script completes,
-  verify GitHub publication and Vercel /live-proof. Stop exactly after requested step 5 before TRACE/Winning Intelligence final.
+  Do not rerun the GitHub-hosted write workflow and do not alter geography, policy, endpoint or caps. The parser failure sent no order.
+  After the local script completes, verify GitHub publication and Vercel /live-proof. Stop exactly after requested step 5 before TRACE/Winning Intelligence final.
