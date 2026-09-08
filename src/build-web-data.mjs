@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { sealPolicy, evaluateSnapshot, revalidate } from './policy.mjs';
+import { sealPolicy, evaluateInitialDecision, normalizeAction, revalidate } from './policy.mjs';
 import { createDemoSigner, issueReceipt, verifyReceipt } from './receipt.mjs';
 import { fromFixture } from './snapshot.mjs';
 
@@ -11,12 +11,13 @@ const policy = JSON.parse(fs.readFileSync(path.join(root, 'config/policy.example
 const a = JSON.parse(fs.readFileSync(path.join(root, 'data/replay/market-a.json'), 'utf8'));
 const b = JSON.parse(fs.readFileSync(path.join(root, 'data/replay/market-b.json'), 'utf8'));
 const sealed = sealPolicy(policy);
+const proposedAction = normalizeAction({ symbol: policy.symbol, side: 'BUY', notional_usdt: policy.max_notional_usdt });
 const first = fromFixture(a);
-const evaluation = evaluateSnapshot(sealed.policy, first.snapshot);
+const evaluation = evaluateInitialDecision(sealed.policy, first.snapshot, proposedAction);
 const signer = createDemoSigner();
-const receipt = issueReceipt({ policy: sealed.policy, policyHash: sealed.policy_hash, snapshot: first.snapshot, snapshotHash: first.snapshot_hash, evaluation, signer });
+const receipt = issueReceipt({ policy: sealed.policy, policyHash: sealed.policy_hash, snapshot: first.snapshot, snapshotHash: first.snapshot_hash, evaluation, signer, proposedAction });
 const current = fromFixture(b);
-const validityResult = revalidate({ policy: sealed.policy, receipt, initialSnapshot: first.snapshot, currentSnapshot: current.snapshot, receiptSignatureValid: verifyReceipt(receipt, signer.publicKey) });
-const data = { policy, policyHash: sealed.policy_hash, initial: first.snapshot, receipt, current: current.snapshot, validityResult };
+const validityResult = revalidate({ policy: sealed.policy, receipt, initialSnapshot: first.snapshot, currentSnapshot: current.snapshot, receiptSignatureValid: verifyReceipt(receipt, signer.publicKey), proposedAction });
+const data = { policy, policyHash: sealed.policy_hash, proposedAction, initial: first.snapshot, receipt, current: current.snapshot, validityResult };
 fs.writeFileSync(path.join(root, 'web/demo.json'), JSON.stringify(data, null, 2));
 console.log('web/demo.json written');
