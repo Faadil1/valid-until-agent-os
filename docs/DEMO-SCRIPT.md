@@ -1,153 +1,158 @@
-# Valid Until — provisional final demo structure
+# Valid Until — final demo working script
 
-**Status:** `NOT_YET_FROZEN` — do not record the final video until the authenticated Spot Testnet proof and Vercel `/live-proof` surface are closed.
+**Status:** `TRACE_6_75_CONTRACT_READY__FINAL_ENCODED_VIDEO_PENDING`
 
-Judge-optimization source: `product/JUDGE-OPTIMIZATION-EVIDENCE-001.md`.
+Current authoritative film contract:
+`Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md`
 
-The final demo must optimize for:
+Judge optimization source: `product/JUDGE-OPTIMIZATION-EVIDENCE-001.md` + Judge Performance Assurance v1.3.
+
+The final demo optimizes for:
 
 ```text
-Problem → Pain → Execution → Story → Demo
+Problem → Pain → Execution → Story → Demo → Evidence
 ```
 
 not feature count or architecture density.
 
-## First-minute rule
+## Target
 
-The judge should understand the failure in the first 10–15 seconds and see the `NO LONGER VALID` moment before technical internals dominate the screen.
+```text
+58–65 seconds
+primary surface: https://valid-until-agent-os-plum.vercel.app
+desktop first
+do not record localhost
+```
 
-## Provisional narrative
+## Final working sequence
 
-### 0–10s — Problem + pain
+### 0–5s — Memory + problem
 
-Show the product hero / execution instrument.
+Show the compact B+C hero.
 
 Say:
 
-> **Reasoning is not authorization. A correct AI decision can expire before execution.**
+> **A correct decision can expire. Reasoning is not authorization.**
 
-Then make the pain concrete:
+The judge should understand immediately that an agent may have made a valid decision whose premise later expired.
 
-> The agent can still have permission to trade even when the premise that justified this exact action is no longer valid.
+### 5–12s — Agent OS role
 
-Do **not** start with MCP, Ed25519, hashes, CLI or architecture.
+Show the full-width architecture strip.
 
-### 10–18s — Execution model
+Say, in substance:
 
-Show the short flow:
+> The agent proposes. Binance Agent OS supplies fresh observations. Valid Until revalidates the exact action-decision contract.
+
+Do not lead with MCP internals or cryptography.
+
+### 12–20s — T0 contract
+
+Show BTCUSDT and receipt v2.
+
+Make visible:
+- exact action;
+- policy bound;
+- `V2 · ACTION-BOUND`;
+- T0 eligibility.
+
+### 20–32s — Replay
+
+Click **Replay proof**.
+
+Do not cut while the marker crosses the 20 bps limit. Land on `35.47` and the orange terminal sheet.
+
+### 32–43s — Signature reveal
+
+Keep these readable together:
 
 ```text
-AI agent → Binance Agent OS → Valid Until → ALLOW / NO LONGER VALID
-```
-
-Explain only:
-
-- agent interprets and proposes;
-- Binance provides fresh state/capability;
-- Valid Until owns deterministic cross-time authorization.
-
-### 18–35s — The `aha` proof
-
-Run **Replay proof**.
-
-The judge must see:
-
-```text
-CURRENT T1 CHECKS = PASS
-BUT
-T0 → T1 PREMISE DRIFT = 35.47 bps > 20 bps
+CURRENT STATE CHECKS   PASS 4/4
+EXACT ACTION HASH      MATCH
+T0 → T1 PREMISE        FAIL 35.47 > 20 BPS
 
 → NO LONGER VALID
 → REPLAN_REQUIRED
 ```
 
-Memory line:
+Say:
 
-> **The authorization was still valid. The premise was not.**
+> **Fresh does not mean same premise.**
 
-This is the core story. Give it enough screen time.
+This is the main aha moment. Give it more time than any implementation detail.
 
-### 35–44s — Red-team depth
+### 43–49s — Red-team repeatability
 
-Open **6-case red team** and show that the mechanism is not a single price check:
+Open `/evaluations`.
 
-- clean unchanged case → ALLOW;
-- state drift → BLOCK;
-- expiry → BLOCK;
-- tamper → BLOCK;
-- policy mismatch → BLOCK;
-- exact-action / notional mismatch → BLOCK.
+Show `6/6` and mention only the important breadth:
+- clean ALLOW;
+- drift;
+- expiry;
+- tamper;
+- policy mismatch;
+- exact-action mutation inside the policy cap.
 
-Do not explain each test in detail.
+### 49–56s — Verified execution credibility
 
-### 44–54s — Authentic Binance consequence
+Open `/live-proof`.
 
-**This section must be regenerated from the real proof after Step 5.**
-
-Target story when an authenticated Spot Testnet `ALLOW` capture exists:
-
-```text
-Valid Until = ALLOW
-→ one bounded Binance Spot Testnet order sent
-→ same clientOrderId queried back
-→ verified non-production execution
-```
-
-If the real live run closes on `BLOCK`, tell the truth instead:
+Show the already-captured historical authenticated Binance Spot Testnet evidence:
 
 ```text
-Valid Until = BLOCK
-→ zero execution call
-→ REPLAN_REQUIRED
+orderId       13634770
+clientOrderId vu-mtswxiik-ecb6b093
+status        FILLED
+same order    verified
 ```
 
-Never weaken policy or hide a BLOCK to manufacture a more cinematic result.
+Narration boundary:
 
-Spot Testnet must be labeled **non-production / no real funds**.
+> Separately, one authenticated Binance Spot Testnet order was previously executed and queried back under an ALLOW decision — non-production, no real funds. This page does not create a new order.
 
-### 54–60s — Close
+Do **not** click or narrate anything as if a new trade is being sent.
 
-Return to the hero.
+### 56–62s — Close
 
-Close with:
+Return to the core memory line or agent-native card.
 
-> **A current-state preflight asks whether a trade looks acceptable now. Valid Until asks whether this exact old action is still justified by the decision that produced it.**
+> **The model can propose. It cannot authorize itself. Valid Until — a correct decision can expire.**
 
-Then:
+## Recommended narration
 
-> **A correct decision can expire.**
+> A correct decision can expire. Reasoning is not authorization. An AI agent can make the right decision at T0 and still reach execution after the premise that justified that exact action has changed. The agent proposes, Binance Agent OS supplies fresh observations, and Valid Until binds the policy, T0 state and exact action into a short-lived decision contract. Here BTCUSDT starts eligible. Replay. The market moves thirty-five point four seven basis points — beyond the original twenty-basis-point bound. Now the important part: current checks still pass four out of four, and the exact action still matches. Fresh does not mean same premise. The old decision is no longer valid, so the agent must replan. This is repeatable: six deterministic cases cover clean allow, drift, expiry, tamper, policy mismatch and an action mutation that stays inside the policy cap. Separately, one authenticated Binance Spot Testnet order was previously executed and queried back under an ALLOW decision — non-production, no real funds, and this page creates no new order. The model can propose. It cannot authorize itself. Valid Until — a correct decision can expire.
 
-## What NOT to spend video time on
+## Film truth rules
 
-Unless answering a judge objection, do not foreground:
+MUST:
+- controlled replay = synthetic / no money moves;
+- historical execution = real authenticated Binance Spot Testnet evidence;
+- historical execution = non-production / no real funds;
+- current read refresh = read-only and not a new execution;
+- current checks PASS while cross-time premise FAILS;
+- exact action remains MATCH in the signature replay;
+- `ALLOW` means execution validity only.
 
-- Ed25519;
-- SHA-256;
-- receipt field names;
-- terminal installation;
-- source-tree walkthroughs;
-- sponsor-logo accumulation;
-- x402;
-- wallet writes;
-- unrelated indicators;
-- long architecture diagrams.
+MUST NOT:
+- imply the replay is live;
+- imply a new order is placed during the video;
+- say no historical trade exists;
+- call Valid Until generic trade readiness or generic preflight;
+- claim profitability, reduced loss, financial advice, audited security or production reliability;
+- foreground Ed25519, SHA-256, source-tree walkthroughs, x402, wallet breadth or sponsor-logo montage.
 
-## Q&A appendix — prepare, don't lead with it
+## Q&A appendix
 
-Be ready to answer:
-
+Prepare, but do not lead with:
 1. Why not a limit order / stop-loss?
-2. Why not a generic current-state preflight?
-3. Why not 20–30 lines of checks?
+2. Why not generic current-state preflight?
+3. Why not 20–30 lines of deterministic checks?
 4. Why use an AI agent at all?
-5. What exactly does `ALLOW` mean — and what does it **not** mean?
+5. What does `ALLOW` mean and not mean?
+6. Why is the historical Testnet order separate from the controlled BLOCK replay?
 
-Use `docs/JUDGE-MATRIX.md` for the bounded answers.
+Use `docs/JUDGE-MATRIX.md` for the reconciled answers.
 
 ## Freeze rule
 
-After authenticated Spot Testnet evidence + `/live-proof` Vercel verification:
-
-`PBPD reconciliation → TRACE delta → Winning Intelligence final recheck → TRACE 6.75 final script`
-
-Only TRACE 6.75 may convert this provisional structure into the final recording contract.
+This script is packaging, not Gate 6.75 PASS. The actual encoded artifact must still return to TRACE for compression/readability and claim-truth review. No subsystem may infer Gate 6.75 PASS from this file alone.
