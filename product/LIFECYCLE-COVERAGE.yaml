@@ -3,8 +3,8 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: PBPD_PLUS_HUMAN_ELIGIBILITY_BOUNDARY
-current_stage: LIVE_TESTNET_VENUE_ELIGIBILITY_BLOCKED
+current_owner: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
+current_stage: LOCAL_ACTUAL_LOCATION_TESTNET_ACCESS_CHECK_REQUIRED
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -29,13 +29,12 @@ capabilities:
     owner: hackathon-opportunity-intelligence
     status: SATISFIED
     evidence_pointer: product/WINNER-INTELLIGENCE-RERUN-004-X-API.md
-    note: direct X API sweep captured 395 public posts and 119 Track A explicit/likely candidates before qualitative dedupe; final recheck remains required after evidence scope closes
+    note: final recheck remains required after current evidence branch closes
 
   - capability: project_authorization
     owner: human / chief-of-staff authority boundary
     status: SATISFIED
     evidence_pointer: product/AUTHORIZATION.md
-    note: current authorization now explicitly permits bounded official Spot Testnet write proof only when venue access is legitimately available; mainnet/real funds/geo bypass remain forbidden
 
   - capability: problem_worthiness
     owner: PBPD / deep-problem-intelligence route
@@ -49,88 +48,86 @@ capabilities:
 
   - capability: living_PRD
     owner: PBPD
-    status: MISSING
-    evidence_pointer: product/PRD.md
-    note: >-
-      PRD v0.2 is the last reconciled product source, but the later human-authorized Spot Testnet write-proof scope is material and
-      has not yet been reconciled into the living PRD. A current PRD delta/version is required before another execution attempt.
+    status: SATISFIED
+    evidence_pointer: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
+    note: current living PRD is product/PRD.md v0.2 plus normative v0.3 addendum; Spot Testnet protected-boundary change is now explicit
 
   - capability: spec_kit_bounded_execution
     owner: Spec Kit orchestration under PBPD
-    status: MISSING
-    evidence_pointer: product/specs/001-execution-validity/
-    note: >-
-      Existing spec/plan/tasks predate the material Spot Testnet proof delta. Reconcile only after PBPD updates the living PRD;
-      Spec Kit cannot define the product change itself.
+    status: SATISFIED
+    evidence_pointer: product/specs/001-execution-validity/TESTNET-PROOF-DELTA-0.3.md
+    note: v0.3 implementation/evidence rules derived from living PRD; authority NONE
 
   - capability: production_build_core
     owner: PBPD
     status: SATISFIED
     evidence_pointer: product/POST-BUILD-RECONCILIATION.md
-    note: core execution-validity engine, receipt v2, agent skill, MCP companion, challenge suite and judge UI exist
 
   - capability: bounded_spot_testnet_execution_adapter
     owner: PBPD
     status: SATISFIED
     evidence_pointer: src/testnet-executor.mjs
-    note: executor is hardcoded to official Spot Testnet, BUY only, explicit write confirmation, hard-cap 25 test USDT, one order maximum; tests 7/7
+    note: hardcoded official Spot Testnet, BUY only, explicit write gate, max 25 test USDT, one order maximum; tests 7/7
+
+  - capability: pbpd_v0_3_scope_reconciliation
+    owner: PBPD
+    status: SATISFIED
+    evidence_pointer: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
+    note: material live-proof scope, venue failure, no-bypass rule and Branch A/B evidence strategy are now reconciled
+
+  - capability: hosted_spot_testnet_write_attempt
+    owner: PBPD + human eligibility boundary
+    status: SATISFIED
+    evidence_pointer: evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md
+    note: run 34248954040 truthfully established fail-closed venue refusal before execution; it does not satisfy successful write evidence
 
   - capability: authenticated_spot_testnet_write_evidence
     owner: PBPD + human eligibility boundary
     status: MISSING
-    evidence_pointer: evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md
-    note: >-
-      GitHub Actions run 34248954040 reached the authenticated account check with protected secrets and Binance CLI 2.1.1,
-      then Binance rejected the hosted Azure eastus location under Eligibility before any order or Valid Until live decision cycle.
-      This is fail-closed venue evidence, not a successful trade proof.
+    evidence_pointer: null
+    note: next compliant branch requires official Binance CLI access check from user's actual location on a personal development machine without VPN/proxy
 
   - capability: sanitized_public_testnet_write_proof
     owner: PBPD evidence plane
     status: MISSING
     evidence_pointer: web/live-testnet-proof.json
-    note: no public write proof may be created because no authenticated write capture was obtained
 
   - capability: deployment_and_runtime_evidence_pre_testnet_delta
     owner: PBPD + TRACE evidence boundary
     status: SATISFIED
     evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_EVALUATION_CAPTURE_PASS_001.md
-    note: prior deployed product passed desktop/mobile normal/reduced-motion runtime assurance before the live-testnet scope change
 
   - capability: judge_optimization_evidence
     owner: PBPD / Winning Intelligence / TRACE input
     status: SATISFIED
     evidence_pointer: product/JUDGE-OPTIMIZATION-EVIDENCE-001.md
-    note: Problem-Pain-Execution-Story-Demo and judge-objection framing integrated without adding product scope
 
   - capability: evidence_and_evaluation_core
     owner: PBPD evidence plane
     status: SATISFIED
     evidence_pointer: product/POST-BUILD-RECONCILIATION.md
-    note: core 8/8, Challenge 6/6, MCP 5/5, MCP observation 4/4, testnet execution boundary 7/7, controlled replay and public read-only Binance proof exist
+    note: core 8/8, Challenge 6/6, MCP 5/5, MCP observation 4/4, testnet execution boundary 7/7, controlled replay and authentic public Binance read-only proof exist
 
   - capability: trace_gate_6_5_design_experience_assurance
     owner: TRACE
     status: SATISFIED
     evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_EVALUATION_CAPTURE_PASS_001.md
-    note: historical PASS remains valid for that surface, but does not assure the unresolved live-testnet evidence delta
 
   - capability: trace_delta_after_live_testnet_scope
     owner: TRACE
     status: MISSING
     evidence_pointer: null
-    note: cannot run meaningfully until PBPD resolves the evidence strategy and deployed surface after the venue blocker
 
   - capability: trace_gate_6_75_demo_narrative_evidence_film
     owner: TRACE
     status: MISSING
     evidence_pointer: docs/DEMO-SCRIPT.md
-    note: final video remains paused; script is provisional and must be refreshed after current evidence scope is resolved
 
-  - capability: post_build_reconciliation_for_current_material_delta
+  - capability: pbpd_runtime_evidence_reconciliation_after_access_branch
     owner: PBPD
     status: MISSING
     evidence_pointer: null
-    note: previous reconciliation predates the human-authorized Spot Testnet proof scope and the venue eligibility failure
+    note: resolve after Branch A successful testnet proof or Branch B proof ceiling is known
 
   - capability: pbpd_candidate_handoff
     owner: PBPD
@@ -153,13 +150,11 @@ capabilities:
     not_applicable_reason: project has not yet been officially submitted and no official outcome exists
 
 missing:
-  - living_PRD_current_testnet_scope_delta
-  - spec_kit_current_testnet_scope_reconciliation
   - authenticated_spot_testnet_write_evidence
   - sanitized_public_testnet_write_proof
+  - pbpd_runtime_evidence_reconciliation_after_access_branch
   - trace_delta_after_live_testnet_scope
   - trace_gate_6_75_demo_narrative_evidence_film
-  - post_build_reconciliation_for_current_material_delta
   - pbpd_candidate_handoff
   - terminal_assurance
   - protected_submission
@@ -167,9 +162,8 @@ missing:
 unknown: []
 
 triggered_but_unresolved:
-  - PBPD_LIVING_PRD_RECONCILIATION_FOR_SPOT_TESTNET_SCOPE
-  - SPEC_KIT_RECONCILIATION_AFTER_PRD
-  - DECISION_ON_COMPLIANT_LIVE_WRITE_EVIDENCE_PATH_AFTER_VENUE_RESTRICTION
+  - HUMAN_ACTUAL_LOCATION_SIGNED_SPOT_TESTNET_ACCOUNT_CHECK
+  - PBPD_RUNTIME_EVIDENCE_RECONCILIATION_AFTER_BRANCH_A_OR_B
   - TRACE_DELTA_AFTER_EVIDENCE_SCOPE_CLOSE
   - WINNING_INTELLIGENCE_FINAL_RECHECK
   - TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
@@ -182,10 +176,8 @@ human_overrides: []
 current_evidence:
   stable_url: https://valid-until-agent-os.vercel.app
   prior_trace_gate_6_5_run: 34231934516
-  prior_trace_gate_6_5_artifact: 10058192480
   public_readonly_binance_run: 34225133745
   hosted_testnet_write_attempt_run: 34248954040
-  hosted_testnet_write_attempt_job: 102138125899
   hosted_testnet_result: FAIL_CLOSED_RESTRICTED_LOCATION_BEFORE_EXECUTION
   hosted_testnet_order_sent: false
   controlled_challenge_suite: PASS_6_OF_6
@@ -195,19 +187,18 @@ current_evidence:
   testnet_execution_boundary_tests: PASS_7_OF_7
 
 non_bypass_rules_reaffirmed:
-  - do_not_change_cloud_region_to_evade_Binance_eligibility
-  - do_not_use_VPN_or_proxy
-  - do_not_switch_to_mainnet
-  - do_not_use_an_alternate_client_or_endpoint_specifically_to_bypass_the_restriction
-  - do_not_claim_an_order_that_did_not_exist
+  - no_cloud_region_hopping
+  - no_VPN_or_proxy
+  - no_mainnet
+  - no_alternate_client_or_endpoint_for_bypass
+  - no_false_trade_claim
 
 next_valid_handoff:
-  from: PBPD_PLUS_HUMAN_ELIGIBILITY_BOUNDARY
-  to: PBPD
-  required_output: CURRENT_LIVING_PRD_AND_EVIDENCE_STRATEGY_RECONCILIATION
+  from: PBPD
+  to: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
+  required_output: OFFICIAL_BINANCE_CLI_SIGNED_SPOT_TESTNET_ACCOUNT_CHECK_FROM_ACTUAL_LOCATION
 
 parallel_allowed_work:
   - maintain judge optimization and competition evidence
   - preserve existing Vercel/read-only/controlled proof
-  - prepare but do not freeze submission copy
-  - no new write attempt, TRACE final video, BUILD_CANDIDATE_READY, SUBMISSION_READY or PROJECT_COMPLETE until missing owners resolve their gates
+  - no final video, candidate handoff, terminal assurance or submission until this branch resolves
