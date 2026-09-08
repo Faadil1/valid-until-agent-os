@@ -1,6 +1,6 @@
 # Valid Until — Agent Orchestration Contract
 
-This repository is a **Binance Agent OS Track A agent workflow** with a deterministic execution-validity boundary.
+This repository is a **Binance Agent OS Track A agent workflow** with a deterministic, action-bound cross-time execution-validity boundary.
 
 The AI agent is useful for interpreting intent, selecting Binance observations and proposing an exact action. It is **not** the authority that decides whether its own old proposal may still proceed.
 
@@ -16,10 +16,13 @@ AI agent host
 Binance Agent OS / official Binance skill
   supplies fresh Binance observations + capability surface
         ↓
-Valid Until
-  binds T0 decision context + revalidates at T1
+Valid Until skill / MCP companion
+  binds policy + T0 state + exact action
+  revalidates against T1
         ↓
 ALLOW / BLOCK
+        ↓
+BLOCK => REPLAN_REQUIRED
 ```
 
 In this hackathon repository, execution stops at the validity result. No order-placement adapter is implemented.
@@ -32,39 +35,95 @@ When the user asks for a Binance action or an evaluation that could lead to an a
 2. Keep the user's policy/limits explicit and immutable inside the authorization cycle.
 3. Use the official Binance Agent OS / Binance Skills toolchain for market observations.
 4. Keep reasoning/proposal separate from deterministic authorization.
-5. Propose an exact symbol + bounded notional rather than vague prose.
-6. Run the Valid Until evidence path.
-7. If the deterministic result is `BLOCK`, report **NO LONGER VALID** and require fresh reasoning from fresh state.
-8. Never weaken the policy, silently resize the trade, switch symbols or retry stale evidence merely to obtain `ALLOW`.
-9. Never claim `ALLOW` means profit, financial safety or a recommendation.
-10. Never place an order, transfer funds, request account credentials or bypass a geographic/product restriction in this submission.
+5. Propose an exact normalized action: `symbol + BUY/SELL + notional_usdt`.
+6. Create the decision contract through `valid_until_begin` or the equivalent local evidence path.
+7. Before the protected action boundary, obtain fresh Binance state and call `valid_until_revalidate` with the **same exact action**.
+8. If the deterministic result is `BLOCK`, report **NO LONGER VALID**, preserve `REPLAN_REQUIRED`, and begin a genuinely fresh reasoning cycle only from fresh state.
+9. Never weaken policy, silently resize the trade, switch side/symbol or retry stale evidence merely to obtain `ALLOW`.
+10. Never claim `ALLOW` means profit, financial safety or a recommendation.
+11. Never place an order, transfer funds, request account credentials, invoke x402 payments or bypass a geographic/product restriction in this submission.
+
+## Exact-action rule
+
+Receipt v2 cryptographically binds the normalized T0 action.
+
+This distinction is mandatory:
+
+```text
+policy cap = $100
+T0 proposal = BUY BTCUSDT $50
+T1 proposal = BUY BTCUSDT $75
+```
+
+Although both sizes remain under policy, `$75` is **not the same decision contract**. `action_hash_match` must fail and the result must be:
+
+```text
+BLOCK
+next_state = REPLAN_REQUIRED
+```
+
+Model prose cannot reinterpret that BLOCK as advisory.
+
+## MCP companion
+
+Start the local deterministic companion:
+
+```sh
+npm run mcp
+```
+
+It exposes only:
+
+### `valid_until_begin`
+
+Input:
+- policy;
+- normalized T0 Binance snapshot supplied by the host agent;
+- exact action.
+
+Output:
+- `decision_id`;
+- receipt-v2 policy/snapshot/action hashes;
+- initial eligibility;
+- `REVALIDATION_REQUIRED_BEFORE_ACTION` or `REPLAN_REQUIRED`.
+
+### `valid_until_revalidate`
+
+Input:
+- `decision_id`;
+- fresh T1 Binance snapshot;
+- exact action being proposed now.
+
+Output:
+- `ALLOW` + `ACTION_REMAINS_VALID`, or
+- `BLOCK` + `REPLAN_REQUIRED`, with exact failed checks.
+
+The companion deliberately has **no Binance network client and no financial write capability**. Binance Agent OS remains the source of Binance observations/capabilities.
 
 ## Suggested agent prompt
 
 ```text
-Use the Valid Until skill with Binance Agent OS.
+Use Binance Agent OS for fresh public market observations and Valid Until for deterministic authorization.
 
 User intent: evaluate whether a bounded BTCUSDT BUY proposal may remain valid.
 Policy: use config/policy.example.json and do not alter it after market evidence is read.
+Exact proposal: BUY BTCUSDT $50.
 
 First separate your reasoning proposal from authorization.
-Use Binance public market data through the official Binance toolchain.
-Then run Valid Until's deterministic validity workflow.
-Report T0 state, T1 state, cross-time delta and exact failed invariants.
-If BLOCK, say NO LONGER VALID and stop. Do not place an order.
+Create a Valid Until decision contract at T0.
+Immediately before the protected boundary, fetch fresh Binance state and revalidate the same exact action.
+Report current-state checks, exact-action match, T0→T1 delta and the deterministic result separately.
+If BLOCK, say NO LONGER VALID, preserve REPLAN_REQUIRED and stop this authorization cycle.
+Do not place an order.
 ```
 
 ## Portable skill install
-
-From a supported agent environment:
 
 ```sh
 npx skills add Faadil1/valid-until-agent-os --skill valid-until -y
 ```
 
-Then ask the agent to use the `valid-until` skill alongside the official Binance skill.
-
-Official Binance Skills Hub install:
+Official Binance Skills Hub:
 
 ```sh
 npx skills add binance/binance-skills-hub --skill binance -y
@@ -74,9 +133,9 @@ npx skills add binance/binance-skills-hub --skill binance -y
 
 A deterministic script can enforce one fixed check. The agent layer is useful upstream because real user intent and multi-tool workflow context are fuzzy. Valid Until deliberately refuses to make the probabilistic planner the final authority.
 
-The product's distinctive question is not simply “is the market safe now?” or “was the reasoning good?” It is:
+The product's distinctive question is:
 
-> **Is this exact previously-justified action still valid relative to the world and policy that justified it?**
+> **Is this exact previously-justified action still the same valid decision contract relative to the world and policy that justified it?**
 
 ## Canonical memory sentence
 
