@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "binance-agent-os": {
+      "type": "http",
+      "url": "https://agent.binance.com/mcp/agentic"
+    },
+    "valid-until": {
+      "command": "node",
+      "args": ["src/mcp-server.mjs"]
+    }
+  },
+  "notes": {
+    "binance-agent-os": "Official remote Binance Agent OS MCP. Authenticate only in a supported host and grant the minimum read capability needed for the evidence you choose to inspect.",
+    "valid-until": "Local deterministic MCP companion. It has no network fetch, trade, transfer, wallet, funding or payment tools.",
+    "safety": "This file is an example only. It does not authenticate, place orders, or modify a user's MCP configuration automatically."
+  }
+}
