@@ -1,0 +1,59 @@
+name: TRACE Gate 6.5 Runtime Evidence
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'config/judge-url.txt'
+      - 'scripts/capture-judge-runtime.mjs'
+      - '.github/workflows/trace-runtime-evidence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PLAYWRIGHT_VERSION: '1.55.0'
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Resolve deployed judge URL
+        id: url
+        shell: bash
+        run: |
+          URL=$(grep -E '^https://' config/judge-url.txt | head -n1 || true)
+          if [ -z "$URL" ]; then
+            echo "No deployed URL recorded yet; runtime capture remains pending."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            echo "url=$URL" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install Playwright
+        if: steps.url.outputs.ready == 'true'
+        run: |
+          npm install --no-save playwright@${PLAYWRIGHT_VERSION}
+          npx playwright install --with-deps chromium
+
+      - name: Capture desktop, mobile and reduced-motion evidence
+        if: steps.url.outputs.ready == 'true'
+        env:
+          JUDGE_BASE_URL: ${{ steps.url.outputs.url }}
+        run: node scripts/capture-judge-runtime.mjs
+
+      - name: Upload TRACE Gate 6.5 evidence
+        if: steps.url.outputs.ready == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trace-gate-6-5-runtime-evidence
+          path: evidence/runtime/
+          if-no-files-found: error
