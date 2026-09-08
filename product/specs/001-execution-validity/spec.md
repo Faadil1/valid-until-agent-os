@@ -1,33 +1,41 @@
 # Spec 001 — Execution Validity Boundary
 
-Status: `RECONSTRUCTED_FROM_CANONICAL_EVIDENCE`
-Derived from: `product/PRD.md`
+Status: `V0_2_DELTA_RECONCILED`
+Originally: `RECONSTRUCTED_FROM_CANONICAL_EVIDENCE`
+Derived from: `product/PRD.md` v0.2
 Authority: `NONE`
 Production owner: `PBPD`
 
-This specification did not exist before the current build. It is reconstructed from the living PRD and observed implementation so that remaining work can proceed under Spec Kit without pretending historical compliance.
+Historical note: this specification was initially reconstructed after build had begun. The v0.2 delta below is a real forward reconciliation triggered by `product/CHANGE-REQUEST-WI-003.md` and must not be treated as retrospective pre-build compliance.
 
 ## User story
 
-As an operator delegating financial workflow planning to an AI agent, I need the exact proposed action to be revalidated against the sealed intent/policy and fresh Binance state before any consequential boundary, so that stale or drifted reasoning cannot silently retain authority.
+As an operator delegating financial workflow planning to an AI agent, I need the **exact proposed action** to be cryptographically bound to its frozen policy and exact T0 Binance context, then revalidated against fresh T1 state before any consequential boundary, so that stale reasoning or a silently mutated in-policy action cannot inherit old authority.
 
 ## Required behaviors
 
-1. Seal the current policy before using market data to decide eligibility.
-2. Bind the decision receipt to policy identity and exact snapshot identity.
-3. Verify receipt integrity independently from the model.
-4. Re-read fresh Binance state before protected action.
-5. Revalidate freshness, market-state constraints and exact proposed action parameters.
-6. Return exactly `ALLOW` or `BLOCK` as the deterministic terminal validity state.
-7. Present `BLOCK` to the judge as `NO LONGER VALID` with the exact failed invariant.
-8. Require fresh reasoning after BLOCK; do not weaken policy in-cycle.
-9. Preserve a clean unchanged ALLOW case plus adversarial BLOCK cases.
-10. Separate controlled synthetic replay evidence from live public Binance evidence.
+1. Normalize exact action as `symbol + side + notional_usdt`.
+2. Seal current policy before market evidence is used to decide eligibility.
+3. Bind receipt v2 to policy hash, exact T0 snapshot hash and exact normalized action hash.
+4. Verify receipt integrity independently from the model.
+5. Re-read fresh Binance state before protected action.
+6. Revalidate freshness, T0→T1 drift, current market constraints, policy identity and **exact action identity**.
+7. Require both action-policy compliance and `action_hash_match`; one cannot substitute for the other.
+8. Return deterministic `ALLOW` or `BLOCK`.
+9. Map `ALLOW → ACTION_REMAINS_VALID` and `BLOCK → REPLAN_REQUIRED`.
+10. Present BLOCK to judge as `NO LONGER VALID` with exact failed invariant.
+11. Preserve clean ALLOW plus adversarial BLOCK cases, including an in-policy exact-action mutation.
+12. Separate controlled synthetic replay evidence from live public Binance evidence.
+13. Expose the same validity contract through a narrow local stdio MCP companion callable by an agent host.
+14. MCP must not fetch Binance data, trade, transfer, fund, pay, or request credentials.
 
 ## Explicit non-goals
 
 - price prediction / alpha generation;
 - live trading;
+- x402/payment integration;
+- Agentic Wallet writes;
+- duplicating Binance MCP/Skills market or trading tools;
 - replacing Binance native permissioning or order controls;
 - another LLM acting as risk officer / final authorizer;
 - production-readiness or loss-reduction claims.
@@ -35,42 +43,62 @@ As an operator delegating financial workflow planning to an AI agent, I need the
 ## Acceptance scenarios
 
 ### S1 — Clean unchanged
-Given an eligible sealed decision and unchanged valid state, when revalidated before action, then status is `ALLOW`.
+Given eligible T0 policy/state/action and unchanged valid T1 state/action, revalidation returns `ALLOW / ACTION_REMAINS_VALID`.
 
-### S2 — State drift
-Given an initially eligible decision, when mid-price drift exceeds the sealed threshold, then status is `BLOCK` and failed check identifies drift.
+### S2 — Cross-time state drift while current checks pass
+Given an initially eligible decision, when T1 spread/movement/depth remain inside policy but T0→T1 mid drift exceeds the sealed threshold, return `BLOCK / REPLAN_REQUIRED` and identify `mid_drift_bps`.
 
 ### S3 — Expired authorization
-Given an eligible decision receipt, when age exceeds TTL, then status is `BLOCK`.
+Given an eligible decision receipt, when age exceeds TTL, return `BLOCK / REPLAN_REQUIRED`.
 
 ### S4 — Receipt tamper
-Given a signed receipt, when protected receipt content is changed, signature verification fails and action is blocked.
+Given a signed receipt, when protected content changes, signature verification fails and action is blocked.
 
 ### S5 — Policy mismatch
-Given a receipt bound to policy A, when revalidation uses materially different policy B, then policy hash mismatch blocks the action.
+Given receipt bound to policy A, when revalidation uses materially different policy B, policy hash mismatch blocks action.
 
-### S6 — Intent / notional mismatch
-Given sealed maximum notional, when the proposed exact action exceeds it or changes symbol, then the action is invalid before execution.
+### S6 — Exact-action mutation inside the same policy cap
+Given policy max `$100` and T0 action `BUY BTCUSDT $50`, when T1 action becomes `BUY BTCUSDT $75`, then:
+
+```text
+action_notional_usdt <= $100   PASS
+action_hash_match              FAIL
+status                         BLOCK
+next_state                     REPLAN_REQUIRED
+```
+
+This proves “inside the same policy” is not “same authorized action”.
+
+### S7 — Unknown MCP decision
+Given an unknown decision id, MCP revalidation must fail closed with `BLOCK / REPLAN_REQUIRED`.
+
+### S8 — MCP composition
+`valid_until_begin` and `valid_until_revalidate` must be discoverable through MCP initialize/tools/list and must operate only on evidence supplied by the host agent.
 
 ## Judge-facing experience requirements
 
-- first five seconds communicate `Reasoning is not authorization`;
-- one primary action triggers a visible state transition;
-- the 20 bps threshold and 35.47 bps crossing are legible without narration;
+- first five seconds communicate `Reasoning is not authorization` and/or `A correct decision can expire`;
+- Agent OS + Valid Until role split is visible early;
+- receipt v2 action binding is legible without making cryptography the headline;
+- one primary action triggers visible transition;
+- current T1 checks PASS + exact action MATCH + premise EXPIRED are simultaneously legible;
+- 20 bps threshold and 35.47 bps crossing are legible without narration;
+- `REPLAN_REQUIRED` is visible as machine consequence;
+- challenge/evaluation surface exposes within-policy action mutation;
+- portable skill + MCP contract are findable as agent-native integration evidence;
 - controlled vs live evidence is visually separated;
-- challenge/evaluation surface makes repeatability visible;
-- responsive and reduced-motion behavior must remain usable.
+- responsive and reduced-motion behavior remain usable.
 
 ## Proof boundary
 
-Current target proof classes:
-- `TECHNICAL_PROOF`: required;
-- `BEHAVIOR_PROOF`: required for deployed judge path only;
+Target proof classes:
+- `TECHNICAL_PROOF`: core 8/8 + challenge 6/6 + MCP 5/5;
+- `BEHAVIOR_PROOF`: fresh post-v0.2 deployed TRACE delta required;
 - `OUTCOME_PROOF`: not required / not claimed;
 - `PRODUCTION_EVIDENCE`: not required / not claimed.
 
 ## Open clarifications
 
-- Exact deployed first-15-second judge legibility remains pending TRACE/runtime review.
-- Detailed official scoring rubric is not publicly established in the current source set and must not be invented.
-- Production operator thresholds remain unknown and are outside current submission scope.
+- exact deployed v0.2 judge legibility remains pending TRACE delta runtime review;
+- detailed official scoring rubric is not publicly established in the current source set and must not be invented;
+- production operator thresholds/persistence remain unknown and are outside current submission scope.
