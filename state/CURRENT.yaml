@@ -1,8 +1,8 @@
 project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
-status: WINNING_INTELLIGENCE_FINAL_COMPLETE
-current_stage: TRACE_GATE_6_75_ENCODED_CANDIDATE_RENDERED_PENDING_HUMAN_AUDIO_PLAYBACK
+status: TRACE_GATE_6_75_VOICE_REVISION_PACKAGING_REPAIR
+current_stage: TRACE_GATE_6_75_NARRATIVE_VOICE_V2_RENDER_IN_PROGRESS
 current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
@@ -18,14 +18,6 @@ state_discipline:
   chat_memory_is_not_authority: true
   falsified_history: forbidden
 
-human_authorization:
-  source: product/AUTHORIZATION.md
-  bounded_spot_testnet_write_authorized_and_consumed: true
-  public_unrestricted_write_button_authorized: false
-  mainnet_write_authorized: false
-  real_funds_authorized: false
-  geo_bypass_authorized: false
-
 living_prd:
   version: '0.4'
   status: ACCEPTANCE_SATISFIED_RUNTIME_RECONCILED
@@ -34,7 +26,6 @@ living_prd:
 preserved_verified_execution:
   proof_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
   proof_file: web/live-testnet-proof.json
-  proof_blob_sha: e6c85b3119a88699046bd8af83aee09d9f7184b8
   order_id: 13634770
   client_order_id: vu-mtswxiik-ecb6b093
   status: FILLED
@@ -55,8 +46,6 @@ v0_4_runtime:
 trace_delta:
   direction: B_EDITORIAL_EXECUTION_INSTRUMENT_PLUS_C_TEMPORAL_DISPLACEMENT
   verdict: PASS
-  product_artifact: product/TRACE-DELTA-BC-001.md
-  specialist_artifact: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_DELTA_RECHECK_LIVE_TESTNET_V0_4_003.md
   runtime_run: 34274047494
   runtime_artifact_id: 10074995345
   runtime_artifact_digest: sha256:0d93d791857166854c81a0a085b87abb6ca191744d460bfb8ef9c2b12606e603
@@ -70,78 +59,58 @@ winning_intelligence_final:
   visual_freeze: true
   positioning_freeze: true
   defensible_category: ACTION_BOUND_DECISION_CONTRACT_ACROSS_TIME
-  memory_line: A correct decision can expire.
-  signature: CURRENT_CHECKS_PASS_4_OF_4__ACTION_MATCH__T0_T1_PREMISE_FAILS_35_47_GT_20__NO_LONGER_VALID
   generic_trade_readiness_language: REJECT
   generic_risk_preflight_language: REJECT
-  authenticated_remote_mcp_proof_before_submission: DROP_AS_NONESSENTIAL_LATE_RISK
   more_trading_proof: REJECT
   more_sponsor_feature_breadth: REJECT
-  packaging_repairs:
-    - README.md
-    - docs/JUDGE-MATRIX.md
-    - docs/DEMO-SCRIPT.md
-  remaining_critical_risk: FINAL_ENCODED_VIDEO_AUDIO_PLAYBACK_NOT_YET_HUMAN_CONFIRMED
 
 gate_6_75_packaging_alignment:
-  status: ENCODED_CANDIDATE_RENDERED
   judge_performance_chain: RUBRIC__PAIN__PROBLEM__DIFFERENTIATOR__EXECUTION__EVIDENCE__STORY__DEMO__Q_AND_A
-  rubric_is_internal_not_literal_video_scene: true
-  pain_problem_target_seconds: 5
-  differentiator_must_be_audible_before_technical_detail: true
-  differentiator_target_seconds: 10
   differentiator_line: A preflight asks whether an action is acceptable now. Valid Until asks whether this exact old action is still justified by the decision that produced it.
-  execution_flow: AI_AGENT_PROPOSES__BINANCE_AGENT_OS_SUPPLIES_FRESH_STATE__VALID_UNTIL_REVALIDATES_ACTION_DECISION_CONTRACT
-  evidence_story_demo_fused_into_causal_replay: true
-  q_and_a_source: docs/JUDGE-MATRIX.md
-  working_script: docs/DEMO-SCRIPT.md
   trace_contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
   candidate_review: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
   film_target_seconds: 58-65
-  actual_encoded_video_exists: true
-  trace_visual_claim_readability_review: PASS
-  human_audio_playback_confirmation: PENDING
+  visual_claim_readability_review: PASS
+  human_visual_feedback: ACCEPTED_ALL_EXCEPT_VOICE_TONE
+  human_voice_feedback: PREVIOUS_VOICE_TOO_ENTHUSIASTIC__REQUEST_NARRATIVE_CAPTIVATING_RESTRAINED
   trace_gate_6_75_pass: false
 
-remotion_final_film_build:
-  status: SUCCESS_CANDIDATE_RENDERED
-  original_workflow: .github/workflows/final-remotion-film.yml
-  original_run: 34277478773
-  original_run_result: FAILED_PACKAGING_ONLY_FFPROBE_MISSING
-  retry_workflow: .github/workflows/final-remotion-film-retry.yml
-  retry_commit: 5e7992968137d71fb442fa13a6d61f2be6650a84
-  retry_run: 34277730560
-  retry_result: SUCCESS
-  artifact_name: valid-until-final-remotion-film
-  artifact_id: 10076473914
-  artifact_digest: sha256:45889aa6b4331d629769c7e9d3782ff4260a4d742f5fe547e4b78fa3f3a55680
-  encoded_file: valid-until-final.mp4
-  encoded_duration_seconds: 62.058667
-  encoded_size_bytes: 8189370
-  video_codec: H264
-  audio_codec: AAC
-  resolution: 1920x1080
-  fps: 30
-  source_strategy: CURRENT_DEPLOYED_VERCEL_LIVE_SCREENSHOTS_PLUS_ACTUAL_REPLAY_FRAME_SEQUENCE
-  live_source_url: https://valid-until-agent-os-plum.vercel.app
-  voiceover: PRESENT_ENGLISH_NEURAL_TTS
-  voiceover_required_for_judge_comprehension: true
-  voiceover_subjective_naturalness: PENDING_HUMAN_PLAYBACK
-  voiceover_replaceable_without_visual_rebuild: true
-  background_music: OMITTED_BY_DESIGN
-  visual_sample_checkpoints_seconds:
-    - 3
-    - 9
-    - 13
-    - 18
-    - 25
-    - 37
-    - 44
-    - 51
-    - 59
-  visual_sample_review: PASS
-  no_new_financial_write: true
-  product_scope_change: NONE
+remotion_film_history:
+  first_complete_candidate:
+    run: 34277730560
+    artifact_id: 10076473914
+    artifact_digest: sha256:45889aa6b4331d629769c7e9d3782ff4260a4d742f5fe547e4b78fa3f3a55680
+    duration_seconds: 62.058667
+    visual_review: PASS
+    human_voice_verdict: REJECT_TOO_ENTHUSIASTIC
+  narrative_voice_revision_v1:
+    workflow_commit: e18f3f423c140759d5ffa58e69a2722deb57dc34
+    run: 34284256012
+    result: SUCCESS_RENDER_BUT_NOT_VALID_FINAL_CANDIDATE
+    artifact_id: 10078906608
+    artifact_digest: sha256:2c8cbfc9c0cd6d59ab7c0c90a787964acd8e30c5411af455643d5cca04777067
+    selected_voice: en-GB-RyanNeural
+    raw_voice_seconds: 82.848
+    normalized_voice_seconds: 70.224
+    video_seconds: 62.058667
+    defect: AUDIO_LONGER_THAN_VIDEO__END_OF_NARRATION_WOULD_BE_TRUNCATED
+    classification: PACKAGING_ONLY
+    product_or_visual_defect: false
+  narrative_voice_revision_v2:
+    workflow: .github/workflows/final-remotion-film-retry.yml
+    workflow_commit: fd66acb01cf3942a7f7fbc2dd58a2e3a05a6bbe8
+    run: 34284794981
+    status: IN_PROGRESS
+    voice: en-GB-RyanNeural
+    voice_profile: CALM_NARRATIVE_CAPTIVATING
+    generation_rate: '+18%'
+    pitch: '-2Hz'
+    target_normalized_voice_seconds: 59.6
+    accepted_voice_window_seconds: 59.0-60.5
+    expected_video_seconds: 62.058667
+    visuals_changed: false
+    narration_text_changed: false
+    product_scope_changed: false
 
 security_invariants:
   - no_browser_secret_exposure
@@ -155,11 +124,9 @@ security_invariants:
   - no_profitability_or_production_safety_claim
 
 next_valid_handoff:
-  from: REMOTION_FINAL_FILM_BUILD
+  from: NARRATIVE_VOICE_TIMING_REPAIR
   to: HUMAN_AUDIO_PLAYBACK_THEN_TRACE_GATE_6_75_CLOSURE
-  contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
-  candidate_review: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
-  required_output: HUMAN_KEEP_VOICEOVER_OR_CHANGE_VOICE_DECISION_THEN_TRACE_GATE_6_75_FINAL_VERDICT
+  required_output: NARRATIVE_VOICE_V2_MP4_WITH_COMPLETE_AUDIO__HUMAN_AUDIO_VERDICT__TRACE_FINAL_VERDICT
 
 then:
   - PBPD candidate handoff
@@ -167,4 +134,4 @@ then:
   - protected human submission
 
 resume_rule: >-
-  The actual 62.06-second Remotion Gate 6.75 candidate now exists from successful run 34277730560. Visual compression/readability, judge-chain ordering, Agent OS legibility, cross-time signature, 6/6 evidence and controlled-versus-historical execution separation have been reviewed PASS. The only intentionally open subjective check is human playback of the English neural voiceover. If the user says KEEP VOICEOVER and reports no audio defect, TRACE may close Gate 6.75. If the user requests a different voice, rerender audio/packaging only. Do not reopen product scope or execute a new Binance order.
+  The product and visuals are frozen and already accepted. The only active work is the bounded audio packaging repair for Gate 6.75. Narrative voice revision v1 used en-GB-RyanNeural and was calmer, but its 70.224-second audio exceeded the 62.06-second film and would truncate the ending. Revision v2 is rendering in run 34284794981 with the same narration and visuals, Ryan voice, a more natural generated pace and deterministic normalization to 59.6 seconds. On success, download the new artifact, verify the audio duration is within 59.0-60.5 seconds, and give the MP4 to the human for voice-quality confirmation. Do not reopen product/visual scope and do not execute a new Binance order.
