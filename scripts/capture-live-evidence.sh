@@ -20,7 +20,9 @@ fi
 } > "$DIR/METADATA.txt"
 
 npm test > "$DIR/tests.txt" 2>&1
-npm run live -- "$SYMBOL" > "$DIR/live.json" 2> "$DIR/live.stderr.txt"
+# Call the Node entry point directly so stdout is pure JSON. `npm run` adds
+# lifecycle banners to stdout, which would corrupt the evidence file.
+node src/live.mjs "$SYMBOL" > "$DIR/live.json" 2> "$DIR/live.stderr.txt"
 
 node -e "const fs=require('fs'); const p='$DIR/live.json'; const j=JSON.parse(fs.readFileSync(p,'utf8')); if(!['ALLOW','BLOCK'].includes(j.validity_result?.status)) process.exit(2); console.log(j.validity_result.status)" > "$DIR/verdict.txt"
 
