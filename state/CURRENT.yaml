@@ -2,7 +2,7 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: BUILD_ACTIVE
-current_stage: LIVE_AGENT_OS_PROOF_REQUIRED
+current_stage: DEPLOYMENT_AND_SUBMISSION_PACKAGING
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
 problem_statement: >-
@@ -21,14 +21,26 @@ safety_constraints:
   - no_api_secrets_in_repo
 proof_status:
   deterministic_tests: PASS_7_OF_7
-  controlled_replay: PASS_FINAL_BLOCK_ON_35_47_BPS_DRIFT
-  live_binance_cli: NOT_YET_EXECUTED
+  controlled_replay: PASS_INITIAL_ELIGIBLE_FINAL_BLOCK_ON_35_47_BPS_DRIFT
+  live_binance_cli: VERIFIED_GITHUB_ACTIONS_RUN_34225133745
+  live_binance_cli_version: '2.1.1'
+  live_capture_symbol: BTCUSDT
+  live_capture_timestamp_utc: '2026-09-08T12:16:21Z'
+  live_capture_verdict: BLOCK
+  live_capture_note: >-
+    Authentic public Binance capture. Initial state was already BLOCKED because
+    top-5 ask depth was below the demo policy threshold; revalidation also failed
+    receipt-age threshold. This proves live fail-closed behavior, while the
+    controlled replay remains the canonical VALID -> NO LONGER VALID judge story.
+  live_artifact_id: 10055364283
+  live_artifact_digest: 'sha256:51b23c621e487be68c81138bd3a24e6c264e4fb00a0c315b88addf8080e6b370'
   public_repo: PUBLISHED_FAADIL1_VALID_UNTIL_AGENT_OS
+  ci_invariants: PASS
   deployment: NOT_YET_DEPLOYED
   submission: NOT_YET_SUBMITTED
 next_actions:
-  - run live read-only Binance CLI proof on personal development machine
-  - save sanitized live output as evidence
   - deploy judge web view
-  - record 45-75 second demo
+  - verify deployed judge path and mobile readability
+  - record 45-75 second demo using controlled VALID -> NO LONGER VALID replay
+  - include live Binance proof run as supporting evidence
   - publish X submission and complete survey
