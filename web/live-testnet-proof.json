@@ -1,27 +1,73 @@
 {
   "schema": "valid-until.public-testnet-proof.v1",
-  "proof_class": "PENDING_AUTHENTICATED_BINANCE_SPOT_TESTNET_CAPTURE",
+  "proof_class": "AUTHENTICATED_BINANCE_SPOT_TESTNET_EXECUTION_EVIDENCE",
   "production": false,
   "real_funds": false,
   "network": "Binance Spot Testnet",
   "endpoint": "https://testnet.binance.vision",
-  "captured_at": null,
+  "captured_at": "2026-09-08T16:57:43.295Z",
+  "capture": {
+    "source": "LOCAL_ACTUAL_LOCATION_NATIVE_NODE_HTTPS_HMAC",
+    "local_actual_location": true,
+    "transport": "NATIVE_NODE_HTTPS_HMAC"
+  },
   "workflow": {
     "run_id": null,
-    "source_sha": null
+    "run_attempt": null,
+    "source_sha": "8abfb11556771dc4ab76ea79005b2170b5e90547",
+    "repository": null,
+    "cycle_attempt": null
   },
-  "action": null,
+  "action": {
+    "symbol": "BTCUSDT",
+    "side": "BUY",
+    "notional_usdt": 10
+  },
   "decision_contract": {
-    "validity_status": "PENDING",
-    "next_state": "MANUAL_WORKFLOW_DISPATCH_REQUIRED"
+    "decision_id": "d3e6323e-2f25-4b1e-a16a-2b2e0c4af40c",
+    "policy_hash": "dfb6d0f1fdbe0b817a78763466fb4a7c5ba5ae4f2c673db8001eb5193fdb5578",
+    "snapshot_hash": "09bcb3462f776493153b839040174208039ac90106cb76397dfbc08cdc762dc0",
+    "action_hash": "c7887fc9eb2f0168e8c15b29158a77eed3178845e8fa04b59383fb9dea17bcef",
+    "receipt_version": "valid-until.receipt.v2",
+    "t0_mid": 78707.705,
+    "t1_mid": 78707.705,
+    "validity_status": "ALLOW",
+    "next_state": "ACTION_REMAINS_VALID",
+    "failed_checks": []
   },
   "execution": {
-    "order_sent": false,
-    "same_order_verified": false,
+    "order_sent": true,
+    "execution_status": "TESTNET_ORDER_SENT_AND_QUERIED",
+    "client_order_id": "vu-mtswxiik-ecb6b093",
+    "order": {
+      "symbol": "BTCUSDT",
+      "orderId": 13634770,
+      "clientOrderId": "vu-mtswxiik-ecb6b093",
+      "transactTime": 1788886654364,
+      "executedQty": "0.00012000",
+      "cummulativeQuoteQty": "9.44492520",
+      "status": "FILLED",
+      "type": "MARKET",
+      "side": "BUY"
+    },
+    "verification": {
+      "symbol": "BTCUSDT",
+      "orderId": 13634770,
+      "clientOrderId": "vu-mtswxiik-ecb6b093",
+      "executedQty": "0.00012000",
+      "cummulativeQuoteQty": "9.44492520",
+      "status": "FILLED",
+      "type": "MARKET",
+      "side": "BUY"
+    },
+    "same_order_verified": true,
+    "uncertain_transport_recovered": false,
     "block_zero_write": false
   },
   "evidence": {
-    "statement": "Authenticated Binance Spot Testnet evidence has not yet been captured. This placeholder is not execution proof.",
-    "boundary": "NON-PRODUCTION TESTNET. NO REAL FUNDS. NOT A PROFITABILITY OR SAFETY CLAIM."
+    "raw_capture_sha256": "5a67e7e912c2de23a14e23cf28a396520ab9837ae142b2992edf9f37753f826a",
+    "statement": "Valid Until returned ALLOW; the exact bounded action was submitted to Binance Spot Testnet and the same order was queried back.",
+    "boundary": "NON-PRODUCTION TESTNET. NO REAL FUNDS. NOT A PROFITABILITY OR SAFETY CLAIM.",
+    "public_proof_sha256": "a318c6a6d8d56cd5ab66ee5beedf3baac32dc33885a963b64fbfe814ccad6b76"
   }
 }
