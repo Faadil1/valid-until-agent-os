@@ -48,7 +48,7 @@ jobs:
           grep -q 'LIVE · public Spot Testnet observation' web/lab.html
           grep -q 'VERIFIED EXECUTION' web/lab.html
           grep -q 'LIVE SIGNED READ' web/live-proof.html
-          if grep -R -n -E 'NEXT_PUBLIC_BINANCE|VITE_BINANCE' web api src; then
+          if grep -R -n -E 'NEXT_PUBLIC_BINANCE|VITE_BINANCE' web api src functions; then
             echo '::error::Public-prefixed Binance secret reference found'
             exit 1
           fi
@@ -57,12 +57,33 @@ jobs:
             exit 1
           fi
           if grep -q "method: 'POST'" api/order-status.mjs; then
-            echo '::error::Signed known-order refresh must remain read-only'
+            echo '::error::Vercel signed known-order refresh must remain read-only'
             exit 1
           fi
           grep -q "req.method !== 'GET'" api/order-status.mjs
           grep -q "https://testnet.binance.vision" api/order-status.mjs
           echo 'LIVE_PROOF_LAB_SECURITY_BOUNDARY=PASS'
+      - name: Verify Cloudflare Pages fallback boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f functions/api/live-market.js
+          test -f functions/api/order-status.js
+          test -f web/_routes.json
+          test -f docs/CLOUDFLARE-PAGES-FALLBACK.md
+          grep -q 'context.env' functions/api/order-status.js
+          grep -q 'https://testnet.binance.vision' functions/api/order-status.js
+          grep -q 'https://testnet.binance.vision' functions/api/live-market.js
+          grep -q '"/api/\*"' web/_routes.json
+          if grep -q "method: 'POST'" functions/api/order-status.js; then
+            echo '::error::Cloudflare signed known-order refresh must remain read-only'
+            exit 1
+          fi
+          if grep -R -n 'process.env' functions; then
+            echo '::error::Cloudflare Pages Functions must use context.env'
+            exit 1
+          fi
+          echo 'CLOUDFLARE_PAGES_FALLBACK_BOUNDARY=PASS'
 
   windows-powershell-parse:
     runs-on: windows-latest
