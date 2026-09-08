@@ -2,7 +2,9 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: GITHUB_TESTNET_SECRET_INSTALLATION_REQUIRED
+current_stage: PBPD_GITHUB_TESTNET_WORKFLOW_PACKAGING
+current_owner: PBPD
+terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
 secondary_thesis: A correct decision can expire.
@@ -11,149 +13,112 @@ judge_line: The authorization was still valid. The premise was not.
 state_discipline:
   current_file: state/CURRENT.yaml
   handover_file: state/HANDOVER.yaml
-  update_rule: >-
-    Before continuing after any material gate, proof, owner, blocker, scope, claim, deployment,
-    competitor finding, or next-handoff change, update CURRENT and HANDOVER so a new conversation
-    can resume from GitHub canonical state without relying on chat history.
+  rule: >-
+    Update CURRENT and HANDOVER after every material gate, proof, owner, blocker, scope,
+    claim, deployment, competitor finding or next handoff. GitHub canonical state outranks chat memory.
   falsified_history: forbidden
-  minor_chat_acknowledgements_require_state_commit: false
-  material_transition_requires_state_commit: true
 
-material_change:
-  trigger: HUMAN_DIRECTION_LIVE_PROOF_001
-  artifact: product/HUMAN-DIRECTION-LIVE-PROOF-001.md
-  decision: >-
-    Read-only authenticity alone is not sufficient for the final differentiation proof.
-    Add a live Binance Spot Testnet execution proof while preserving no-mainnet/no-real-funds boundaries.
-
-execution_delivery_decision:
-  trigger: HUMAN_GITHUB_ACTIONS_SECRET_ROUTE_001
-  decision: >-
-    Prefer GitHub Actions for the real Binance Spot Testnet proof rather than requiring a local WSL profile.
-    Credentials must be stored only as protected GitHub Actions Environment secrets and must never be
-    committed, printed, copied to Vercel, or returned in artifacts. Only sanitized execution evidence may
-    flow from GitHub Actions to the public judge surface.
-  github_environment: testnet-proof
+human_secret_boundary:
+  environment: testnet-proof
   required_secrets:
     - BINANCE_TESTNET_API_KEY
     - BINANCE_TESTNET_API_SECRET
-  vercel_receives_credentials: false
-  vercel_receives_only_sanitized_proof: true
+  status: CONFIRMED_BY_HUMAN_VALUES_NOT_READ_BY_ASSISTANT
+  confirmed_at: '2026-09-08'
+  credential_values_exposed_to_chat: false
+  credential_values_exposed_to_repo: false
+  credential_values_exposed_to_vercel: false
+  secret_confirmation_is_execution_proof: false
 
-submission_requirements:
-  - follow_binance_on_x
-  - repost_official_announcement
-  - reply_or_quote_with_video_demo_and_github
-  - complete_official_survey
+material_direction:
+  id: HUMAN_DIRECTION_LIVE_PROOF_001
+  decision: >-
+    Final differentiation proof must include a real Binance Spot Testnet execution boundary,
+    not only read-only authenticity, while preserving no-mainnet/no-real-funds constraints.
 
-safety_constraints:
+security_constraints:
   - binance_mainnet_execution_forbidden
   - real_funds_forbidden
   - live_write_allowed_only_on_official_spot_testnet
   - testnet_target_hardcoded_to_https://testnet.binance.vision
-  - testnet_credentials_allowed_only_in_protected_github_environment_or_local_ephemeral_profile
-  - no_testnet_credentials_in_repo
-  - no_testnet_credentials_in_vercel
-  - no_api_secrets_in_logs_chat_screenshots_or_artifacts
-  - github_action_must_not_echo_or_trace_secrets
-  - github_action_must_be_manual_for_write_capture
+  - testnet_credentials_allowed_only_in_protected_github_environment_or_ephemeral_local_profile
+  - no_testnet_credentials_in_repo_logs_chat_screenshots_artifacts_or_vercel
+  - github_write_workflow_must_be_workflow_dispatch_only
+  - no_shell_xtrace_or_secret_echo
   - no_geo_bypass
   - no_wallet_write
   - no_x402
+  - do_not_weaken_policy_to_manufacture_ALLOW
 
-lifecycle:
-  global_policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
-  coverage_manifest: product/LIFECYCLE-COVERAGE.yaml
-  terminal_completeness_allowed: false
-  current_owner: HUMAN_SECRET_BOUNDARY
-  living_prd: product/PRD.md
-  prd_material_scope_changed_since_reconciliation: true
-  winning_intelligence_latest: product/WINNER-INTELLIGENCE-RERUN-004-X-API.md
-  trace_gate_6_5_previous: PASS_BEFORE_LIVE_TESTNET_SCOPE_CHANGE
-  trace_gate_6_75: PAUSED_MUST_REFRESH_AFTER_TESTNET_EVIDENCE
-  pbpd_candidate_handoff: NOT_EMITTED
-  project_finisher: NOT_YET_ELIGIBLE
-  protected_submission_owner: HUMAN
-
-proof_status:
-  core_deterministic_tests: PASS_8_OF_8
+verified_implementation:
+  core_tests: PASS_8_OF_8
   challenge_suite: PASS_6_OF_6
   mcp_companion: PASS_5_OF_5
   mcp_observation_adapter: PASS_4_OF_4
   testnet_execution_boundary: PASS_5_OF_5
-  full_ci_run: 34242858075
-  full_ci_head: 18e0bd6006134010fca00b4d05667b87703bbb75
+  full_ci_run: 34243272141
   full_ci_conclusion: SUCCESS
   controlled_replay: PASS_INITIAL_ELIGIBLE_FINAL_BLOCK_ON_35_47_BPS_DRIFT
-  prior_live_public_binance_cli: VERIFIED_RUN_34225133745
-  real_testnet_authenticated_order_capture: PENDING
+  prior_public_live_binance_cli_run: 34225133745
+
+live_testnet_contract:
+  environment: BINANCE_SPOT_TESTNET_ONLY
+  endpoint: https://testnet.binance.vision
+  market_capture: src/snapshot.mjs::captureWithBinanceSpotTestnet
+  executor: src/testnet-executor.mjs
+  orchestrator: src/live-testnet.mjs
+  command: npm run live:testnet -- BTCUSDT
+  supported_action: BUY_with_quote_notional_usdt
+  default_notional_usdt: 10
+  explicit_write_gate: VALID_UNTIL_TESTNET_WRITE=CONFIRM_TESTNET_WRITE
+  ALLOW_behavior: one_signed_MARKET_BUY_then_query_same_clientOrderId
+  BLOCK_behavior: zero_executor_calls_and_REPLAN_REQUIRED
+  mainnet_override: impossible_by_current_executor_contract
+
+proof_status:
+  github_testnet_environment_secrets: CONFIRMED_BY_HUMAN_VALUES_NOT_READ
+  manual_testnet_workflow: NOT_YET_CREATED
+  real_testnet_authenticated_capture: PENDING
   real_testnet_order_id: NOT_YET_OBTAINED
-  github_testnet_environment_secrets: NOT_YET_CONFIRMED
+  sanitized_public_proof: PENDING
+  vercel_testnet_proof_surface: PENDING
   mainnet_trade: NOT_ALLOWED_NOT_CLAIMED
   outcome_proof: NOT_OBTAINED_NOT_CLAIMED
   production_financial_evidence: NOT_OBTAINED_NOT_CLAIMED
 
-live_testnet_implementation:
-  market_capture: src/snapshot.mjs::captureWithBinanceSpotTestnet
-  execution_boundary: src/testnet-executor.mjs
-  orchestration: src/live-testnet.mjs
-  npm_command: npm run live:testnet -- BTCUSDT
-  exact_supported_action: BUY_with_quote_notional_usdt
-  explicit_write_gate: VALID_UNTIL_TESTNET_WRITE=CONFIRM_TESTNET_WRITE
-  behavior:
-    ALLOW: send_one_signed_market_buy_then_query_same_clientOrderId
-    BLOCK: zero_binance_executor_calls_and_REPLAN_REQUIRED
-
-planned_github_actions_proof_pipeline:
-  environment: testnet-proof
-  trigger: workflow_dispatch_only
-  credentials_source: GitHub_Actions_Environment_Secrets
-  runner_profile: ephemeral
-  endpoint: https://testnet.binance.vision
-  secret_logging: forbidden
-  public_artifact: sanitized_only
-  planned_public_file: web/live-testnet-proof.json
-  planned_vercel_flow: sanitized_proof_commit_or_safe_artifact_to_public_judge_surface
-  current_status: BLOCKED_ON_HUMAN_SECRET_INSTALLATION
+step_1_to_5_scope:
+  requested_by_human: true
+  stop_after_step: 5
+  steps:
+    1_secret_installation: COMPLETE
+    2_manual_testnet_workflow: IN_PROGRESS
+    3_real_testnet_capture: PENDING
+    4_sanitized_proof: PENDING
+    5_judge_surface_vercel: PENDING
+  forbidden_to_continue_in_this_scope_without_new_instruction:
+    - pbpd_final_reconciliation
+    - trace_delta_assurance
+    - winning_intelligence_final_recheck
+    - trace_6_75_video
+    - project_finisher
+    - protected_submission
 
 production_judge_surface:
   stable_url: https://valid-until-agent-os.vercel.app
   status: EXISTING_SURFACE_PRE_TESTNET_REFRESH
-  redeploy_required_after_live_proof_close: true
-
-experience_positioning:
-  contrast: 'Fresh enough now is not the same as still justified by the decision made then.'
-  hero_proof: 'Deterministic 35.47 bps cross-time BLOCK remains canonical failure proof.'
-  live_proof: 'On ALLOW, one real Binance Spot Testnet order reaches the non-production exchange and is queried; on BLOCK, zero write reaches Binance.'
-  design_direction: 'Editorial execution instrument; no generic dark AI dashboard.'
-
-claim_boundaries:
-  - controlled replay is synthetic and labelled
-  - public live Binance reads are authentic
-  - testnet execution boundary is implemented and CI-tested
-  - real Spot Testnet order must not be claimed until captured
-  - Spot Testnet is non-production and uses no real funds
-  - GitHub secret configuration itself is not execution evidence
-  - Vercel must never receive testnet credentials
-  - no mainnet trade claim
-  - ALLOW is execution-validity only, not profitability/recommendation/safety
 
 next_valid_handoff:
-  from: PBPD_IMPLEMENTATION_COMPLETE
-  to: HUMAN_SECRET_BOUNDARY
+  from: HUMAN_SECRET_BOUNDARY
+  to: PBPD
   required_output: >-
-    Configure GitHub Environment testnet-proof with BINANCE_TESTNET_API_KEY and
-    BINANCE_TESTNET_API_SECRET, then confirm only that both secrets exist without sharing values.
+    Create the manual live-binance-spot-testnet-proof workflow, sanitizer and public proof surface.
+    Because the workflow is deliberately manual-only, if the available GitHub integration cannot dispatch it,
+    stop at HUMAN_WORKFLOW_DISPATCH_REQUIRED and request exactly one Run workflow click.
 
 next_actions:
-  - human creates GitHub Environment testnet-proof if needed
-  - human adds BINANCE_TESTNET_API_KEY and BINANCE_TESTNET_API_SECRET as Environment secrets
-  - human confirms secrets are configured without revealing values
-  - PBPD then adds manual live-testnet-proof workflow and sanitizer/public-proof pipeline
-  - run authenticated Binance Spot Testnet capture from GitHub Actions
-  - preserve BLOCK honestly or, on ALLOW, capture sanitized testnet orderId/clientOrderId/status and same-order verification
-  - PBPD reconciles PRD/claims and deploys judge delta
-  - TRACE reruns delta assurance and refreshes Gate 6.75 narrative/video
-  - Winning Intelligence performs final competitor recheck
-  - Project Finisher remains after candidate handoff
-  - protected X and survey submission remain human-owned
+  - create manual-only live testnet workflow bound to GitHub Environment testnet-proof
+  - create sanitizer that publishes no credentials/account data
+  - create public live-proof route and placeholder JSON
+  - validate normal CI
+  - request manual workflow dispatch only if connector cannot dispatch workflow_dispatch
+  - after capture, verify sanitized artifact before public commit/deploy
