@@ -14,10 +14,21 @@ handover_discipline:
   rule: read_both_files_first_then_resume_exact_gate
   update_after_each_meaningful_gate_or_packaging_step: true
 
-current_stage: HUMAN_PROTECTED_SUBMISSION
-current_owner: HUMAN
-project_finisher_state: SUBMISSION_READY
+current_stage: POST_SUBMISSION_FREEZE__AWAITING_OUTCOME_OR_POST_MORTEM
+current_owner: PROJECT_FINISHER_WITH_HOI_PBPD_TRACE_AS_APPLICABLE
+project_finisher_state: SUBMISSION_READY_PRE_SUBMISSION__NOW_HUMAN_CONFIRMED_SUBMITTED
 terminal_completeness_allowed: false
+
+submission_state:
+  status: SUBMITTED
+  human_confirmed: true
+  confirmation_date: '2026-09-08'
+  evidence_pointer: evidence/submission/HUMAN-SUBMISSION-CONFIRMATION-2026-09-08.md
+  evidence_class: HUMAN_REPORTED_SUBMISSION_CONFIRMATION
+  independently_verified_platform_receipt: false
+  public_repository: https://github.com/Faadil1/valid-until-agent-os
+  live_demo: https://valid-until-agent-os-plum.vercel.app
+  public_video: https://youtu.be/EW0VOoaA2CI
 
 material_scope_state:
   living_prd_version: '0.4'
@@ -28,10 +39,12 @@ material_scope_state:
   winning_intelligence_final_film: PASS_WITH_FREEZE
   pbpd_candidate: BUILD_CANDIDATE_READY
   terminal_assurance: PASS
+  protected_submission: SATISFIED_HUMAN_CONFIRMED
   product_scope: FROZEN
   visual_scope: FROZEN
   positioning_scope: FROZEN
   voice_scope: FROZEN
+  submitted_artifact_scope: FROZEN
 
 preserved_verified_execution:
   order_id: 13634770
@@ -72,24 +85,13 @@ final_film:
   delivery: CALM_NARRATIVE_CAPTIVATING
   human_visual_verdict: ACCEPTED
   human_voice_verdict: ACCEPTED
+  public_video_url: https://youtu.be/EW0VOoaA2CI
   trace_closeout: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_FINAL_CLOSEOUT_001.md
 
 final_submission_package:
   local_archive_name: valid-until-final-submission-package.zip
   archive_sha256: 0f43fe320b4521f840eeac325cdfea19e45a04b1bfd6bc163d148bc8325fd7e3
   repository_manifest: docs/FINAL-SUBMISSION-PACKAGE-2026-09-08.md
-  contents:
-    - README-FIRST.md
-    - SUBMISSION-COPY.md
-    - JUDGE-QA.md
-    - MANIFEST.json
-    - SHA256SUMS.txt
-    - video/Valid-Until-Final-Demo-62s.mp4
-    - screenshots/hero.jpg
-    - screenshots/stage-before.jpg
-    - screenshots/stage-after.jpg
-    - screenshots/evaluations.jpg
-    - screenshots/live-proof.jpg
 
 pbpd_handoff:
   artifact: product/PBPD-CANDIDATE-HANDOFF-2026-09-08.md
@@ -122,22 +124,24 @@ truth_boundaries:
   - no_reduced_loss_claim
   - no_production_readiness_claim
   - no_public_unrestricted_write_route
-  - no_automatic_final_submission
+  - human_reported_submission_is_not_verified_platform_receipt
 
 remaining_lifecycle:
   protected_submission:
     owner: HUMAN
-    status: PENDING
-    protected: true
+    status: SATISFIED_HUMAN_CONFIRMED
   post_mortem:
-    status: NOT_APPLICABLE_UNTIL_SUBMISSION_CONFIRMED
+    owner: PROJECT_FINISHER_WITH_HOI_PBPD_TRACE
+    status: NOW_APPLICABLE_PENDING
+  competition_outcome:
+    status: PENDING_EXTERNAL_RESULT
 
 next_valid_handoff:
-  from: PROJECT_FINISHER
-  to: HUMAN
-  trigger: SUBMISSION_READY
+  from: HUMAN_PROTECTED_SUBMISSION
+  to: PROJECT_FINISHER_POST_MORTEM_WITH_HOI_PBPD_TRACE
+  trigger: SUBMITTED
   required_output: >-
-    Use the final package and perform the official hackathon submission. After the actual Submit action succeeds, explicitly confirm submission so canonical state may advance to SUBMITTED. Do not infer submission from package readiness or form preparation.
+    Preserve the submitted artifact as frozen, create a truthful post-mortem / learning record, and later record official competition outcome or evaluator feedback when available. Do not infer a win/loss before external evidence exists.
 
 resume_rule: >-
-  Valid Until is SUBMISSION_READY. All non-human lifecycle gates through Project Finisher are closed: TRACE Gate 6.75 PASS, final narrative voice human accepted, final-film Winner Intelligence PASS_WITH_FREEZE, PBPD BUILD_CANDIDATE_READY, and Project Finisher terminal assurance PASS. The final archive is assembled and hashed. The only next action is the protected human official submission. Do not reopen scope or execute another Binance order unless a concrete blocker is discovered.
+  Valid Until is human-confirmed SUBMITTED. The protected submission gate is satisfied. Product, README, film, voice, positioning and proof package are now frozen as submitted truth. Do not reopen them absent an official competition request or concrete defect, and do not execute another Binance order. The next valid work is post-mortem / outcome learning; any future result must be recorded only when externally evidenced.
