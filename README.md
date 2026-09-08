@@ -7,7 +7,7 @@
 
 An agent can make the right decision at **T0**, keep permission to execute, and reach **T1** after the premise behind that exact action has changed. Valid Until binds the policy, T0 state, and exact action into a short-lived signed receipt, then revalidates the same decision against fresh Binance state before execution.
 
-**[▶ Watch the 62s demo](https://youtu.be/EW0VOoaA2CI) · [↗ Try the live demo](https://valid-until-agent-os-plum.vercel.app) · [✓ Run the 6-case evaluation](https://valid-until-agent-os-plum.vercel.app/evaluations) · [↗ Verified Testnet execution](https://valid-until-agent-os-plum.vercel.app/live-proof)**
+**[▶ Watch the 62s demo](https://youtu.be/EW0VOoaA2CI) · [↗ Try the working live demo](https://valid-until-agent-os.pages.dev) · [✓ Run the 6-case evaluation](https://valid-until-agent-os.pages.dev/evaluations) · [↗ Verified Testnet execution](https://valid-until-agent-os.pages.dev/live-proof)**
 
 ---
 
@@ -119,7 +119,7 @@ The public evaluation surface covers:
 | Policy mismatch | `BLOCK → REPLAN_REQUIRED` |
 | Exact-action mutation inside policy cap | `BLOCK → REPLAN_REQUIRED` |
 
-**[Open the evaluation suite →](https://valid-until-agent-os-plum.vercel.app/evaluations)**
+**[Open the evaluation suite →](https://valid-until-agent-os.pages.dev/evaluations)**
 
 ### Authenticated Binance Spot Testnet execution
 
@@ -137,7 +137,7 @@ real funds     false
 production     false
 ```
 
-**[Inspect the verified execution →](https://valid-until-agent-os-plum.vercel.app/live-proof)**  
+**[Inspect the verified execution →](https://valid-until-agent-os.pages.dev/live-proof)**  
 Canonical sanitized receipt: [`web/live-testnet-proof.json`](web/live-testnet-proof.json)
 
 The current public page is read-only and does **not** place a new order.
@@ -240,12 +240,14 @@ TRACE desktop/mobile × normal/reduced motion  4/4 PASS
 
 Public surfaces:
 
-- **Judge demo:** https://valid-until-agent-os-plum.vercel.app
-- **Live Proof Lab:** https://valid-until-agent-os-plum.vercel.app/lab
-- **Red Team:** https://valid-until-agent-os-plum.vercel.app/evaluations
-- **Verified Execution:** https://valid-until-agent-os-plum.vercel.app/live-proof
-- **Cloudflare mirror:** https://valid-until-agent-os.pages.dev
+- **Primary working judge demo:** https://valid-until-agent-os.pages.dev
+- **Live Proof Lab:** https://valid-until-agent-os.pages.dev/lab
+- **Red Team:** https://valid-until-agent-os.pages.dev/evaluations
+- **Verified Execution:** https://valid-until-agent-os.pages.dev/live-proof
+- **Secondary Vercel deployment:** https://valid-until-agent-os-plum.vercel.app
 - **62-second film:** https://youtu.be/EW0VOoaA2CI
+
+> Runtime routing note: after submission, the working live path was confirmed on Cloudflare Pages. The Vercel deployment is retained as a secondary/static/fail-closed reference; this routing correction does not change the submitted product semantics or proof claims.
 
 ---
 
