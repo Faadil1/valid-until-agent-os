@@ -13,8 +13,8 @@ handover_discipline:
   chat_memory_is_not_authority: true
   rule: read_both_files_first_then_resume_exact_gate
 
-current_stage: LIVE_PROOF_LAB_V0_4_CODE_COMPLETE_WAITING_VERCEL_DEPLOY_AND_SECRETS
-current_owner: HUMAN_VERCEL_SECRET_BOUNDARY
+current_stage: LIVE_PROOF_LAB_V0_4_SECRETS_CONFIGURED_WAITING_VERCEL_DEPLOY
+current_owner: VERCEL_PLATFORM_DEPLOYMENT_BOUNDARY
 terminal_completeness_allowed: false
 
 material_scope_state:
@@ -24,7 +24,7 @@ material_scope_state:
   living_prd_addendum: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
   spec_kit_delta: product/specs/001-execution-validity/LIVE-PROOF-LAB-DELTA-0.4.md
   code_status: COMPLETE_CI_VERIFIED
-  runtime_status: BLOCKED_BY_VERCEL_HOBBY_BUILD_RATE_LIMIT
+  runtime_status: WAITING_FOR_VERCEL_BUILD_RATE_LIMIT_TO_PERMIT_DEPLOY
 
 preserved_verified_execution:
   proof_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
@@ -80,6 +80,17 @@ v0_4_server:
     write: false
     arbitrary_order_target_from_browser: forbidden
 
+vercel_secret_configuration:
+  project: valid-until-agent-os
+  environment: Production
+  variable_type: Sensitive
+  variables:
+    - BINANCE_TESTNET_API_KEY
+    - BINANCE_TESTNET_API_SECRET
+  status: HUMAN_CONFIRMED_CONFIGURED_VALUES_NOT_READ_BY_ASSISTANT
+  values_source: existing_Binance_Spot_Testnet_HMAC_pair
+  share_values_in_chat: forbidden
+
 assurance:
   full_ci_run: 34256450643
   conclusion: SUCCESS
@@ -93,26 +104,15 @@ assurance:
 vercel_blocker:
   project_id: prj_G4gsIiXTRxOTLhXf8ZMqqVDRJSYs
   stable_domain: https://valid-until-agent-os.vercel.app
-  github_commit_status_for_13d71b6:
+  previous_github_commit_status:
     context: Vercel
     state: failure
     target: https://vercel.com/faadil1s-projects?upgradeToPro=build-rate-limit
   blocker: HOBBY_BUILD_RATE_LIMIT
   latest_successful_deployment: dpl_HYcUki7UJgFBYFrMt7Fm541qF8yN
   latest_successful_deployment_commit: 90cf6c3441e48f7ad916d476639d00544ad1db3e
-  current_lab_route: 404
-  product_interpretation: CODE_READY_NOT_YET_DEPLOYED
-
-human_secret_action:
-  guide: docs/VERCEL-LIVE-PROOF-LAB-ENV.md
-  project: valid-until-agent-os
-  environment: Production
-  variable_type: Sensitive
-  variables:
-    - BINANCE_TESTNET_API_KEY
-    - BINANCE_TESTNET_API_SECRET
-  values_source: existing_Binance_Spot_Testnet_HMAC_pair
-  share_values_in_chat: forbidden
+  current_lab_route_last_verified: 404
+  product_interpretation: CODE_READY_SECRETS_READY_NOT_YET_DEPLOYED
 
 security_boundary:
   public_unrestricted_write_button: forbidden
@@ -126,21 +126,20 @@ security_boundary:
   new_order_claim_from_signed_refresh: forbidden
 
 next_valid_handoff:
-  from: PBPD_IMPLEMENTATION
-  to: HUMAN_VERCEL_SECRET_BOUNDARY
-  required_output: VERCEL_SENSITIVE_PRODUCTION_SECRETS_CONFIGURED_WITHOUT_DISCLOSURE
+  from: VERCEL_PLATFORM_DEPLOYMENT_BOUNDARY
+  to: PBPD_RUNTIME_VERIFICATION
+  required_output: >-
+    When Vercel accepts a production build from current main, verify HTTP 200 for /, /lab, /live-proof and /evaluations; verify /api/live-market returns live sanitized market data or an explicit venue-unavailable fail-closed response; verify /api/order-status returns a sanitized signed read of the fixed canonical order or an explicit venue eligibility/auth failure. Never create a new order.
 
 then:
-  - wait for Vercel Hobby build-rate limit reset
-  - trigger fresh current-main deployment
-  - verify HTTP 200 for /, /lab, /live-proof, /evaluations
-  - verify /api/live-market returns LIVE or explicit venue-unavailable fail-closed state
-  - verify /api/order-status returns LIVE_SIGNED_READ_VERIFIED or explicit venue eligibility state
-  - record runtime evidence
+  - record v0.4 runtime evidence
   - PBPD reconciliation
   - TRACE delta
   - Winning Intelligence final recheck
+  - TRACE Gate 6.75 final video
+  - PBPD candidate handoff
+  - Project Finisher
+  - protected human submission
 
 resume_rule: >-
-  v0.4 is implemented and CI green but not yet live. Do not report /lab as deployed until verified on the stable domain.
-  The next human action is only Vercel Sensitive Production secret configuration; no new Binance order is required.
+  v0.4 code is CI-green and the two required Vercel Production secret names are human-confirmed configured, with values never exposed to chat. The only current blocker is Vercel Hobby build-rate-limit/runtime deployment. Do not report /lab as live until verified on the stable domain. No new Binance order is required.
