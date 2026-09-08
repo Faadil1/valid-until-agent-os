@@ -13,8 +13,8 @@ handover_discipline:
   chat_memory_is_not_authority: true
   rule: read_both_files_first_then_resume_exact_gate
 
-current_stage: WINDOWS_NATIVE_TESTNET_ACCESS_CHECK_READY
-current_owner: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
+current_stage: LOCAL_BOUNDED_TESTNET_WRITE_PROOF_READY
+current_owner: PBPD
 terminal_completeness_allowed: false
 
 material_scope_state:
@@ -25,18 +25,17 @@ material_scope_state:
   living_prd_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
   spec_kit_delta: product/specs/001-execution-validity/TESTNET-PROOF-DELTA-0.3.md
   scope_reconciliation_status: COMPLETE
-  transport_clarification: OFFICIAL_SIGNED_SPOT_TESTNET_API_MAY_BE_USED_NATIVELY_ON_WINDOWS
 
 completed:
   judge_optimization: INTEGRATED
   protected_testnet_secrets: CONFIRMED_BY_HUMAN_VALUES_NOT_READ_BY_ASSISTANT
   hosted_workflow_packaging: COMPLETE
-  sanitizer: COMPLETE
-  public_surface_placeholder: COMPLETE
-  no_admin_windows_access_script:
-    file: scripts/check-testnet-access.ps1
-    install_required: false
-    admin_required: false
+  sanitizer: UPDATED_FOR_LOCAL_NATIVE_CAPTURE
+  judge_surface: UPDATED_FOR_LOCAL_ACTUAL_LOCATION_SOURCE
+  actual_location_access_check:
+    evidence: evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md
+    result: PASS
+    financial_write: false
 
 hosted_write_attempt:
   run_id: 34248954040
@@ -45,20 +44,43 @@ hosted_write_attempt:
   failure_stage: AUTHENTICATED_SPOT_TESTNET_ACCOUNT_CHECK
   runner: GitHub_hosted_Azure_eastus
   venue_response: RESTRICTED_LOCATION_ELIGIBILITY
-  protected_secrets_present: true
-  deterministic_assurance: PASS
-  Binance_CLI: 2.1.1
-  decision_cycles_started: false
   order_sent: false
-  public_trade_proof_created: false
+  interpretation: HOSTED_RUNNER_LOCATION_BLOCKER_NOT_PRODUCT_BLOCK
 
-local_machine_discovery:
+local_machine:
   platform: Windows_PowerShell
   WSL_installed: false
   admin_rights: false
-  WSL_installation_attempt: CANCELED_NOT_AUTHORIZED
-  official_cli_v2_1_1_native_windows_asset: NOT_FOUND
-  interpretation: TOOLING_CONSTRAINT_NOT_VENUE_VERDICT
+  actual_location_authenticated_Spot_Testnet_access: PASS
+  no_admin_native_path_required: true
+
+local_proof_path:
+  transport: src/binance-testnet-http.mjs
+  runner: src/live-testnet-native.mjs
+  wrapper: scripts/run-local-testnet-proof.ps1
+  sanitizer: scripts/sanitize-testnet-proof.mjs
+  public_file: web/live-testnet-proof.json
+  judge_route: https://valid-until-agent-os.vercel.app/live-proof
+  official_endpoint: https://testnet.binance.vision
+  exact_action: BUY_BTCUSDT_10_TEST_USDT
+  hard_cap_test_usdt: 25
+  max_order_posts: 1
+  confirmation_token: CONFIRM_TESTNET_WRITE
+  block_behavior: ZERO_ORDER_WRITE
+  uncertain_post_behavior: NEVER_RETRY_POST_QUERY_SAME_CLIENT_ORDER_ID_ONLY
+  raw_capture: WINDOWS_TEMP_ONLY_DELETED_AFTER_SANITIZATION
+
+current_evidence:
+  deterministic_core: PASS_8_OF_8
+  challenge_suite: PASS_6_OF_6
+  local_mcp: PASS_5_OF_5
+  mcp_observation: PASS_4_OF_4
+  testnet_execution_boundary: PASS_7_OF_7
+  native_transport_tests: ADDED_TO_TEST_ALL
+  actual_location_access: PASS
+  successful_testnet_order: NOT_YET_OBTAINED
+  same_order_verification: NOT_YET_OBTAINED
+  public_write_proof: NOT_YET_OBTAINED
 
 non_bypass_boundary:
   forbidden:
@@ -68,68 +90,39 @@ non_bypass_boundary:
     - mainnet_execution
     - alternate_endpoint_used_specifically_to_bypass_eligibility
     - weakening_Valid_Until_policy_to_force_ALLOW
-
-next_permitted_check:
-  script: scripts/check-testnet-access.ps1
-  machine: current_actual_location_Windows_machine
-  shell: ordinary_PowerShell
-  privileges: standard_user_only
-  endpoint: https://testnet.binance.vision
-  actions:
-    - GET_/api/v3/time
-    - SIGNED_GET_/api/v3/account
-  financial_write: false
-  credential_handling: local_secure_prompts_only
-  output_to_share: sanitized_status_line_only
-
-branch_logic:
-  if_ACTUAL_LOCATION_TESTNET_ACCESS_PASS:
-    - PBPD adapts existing v0.3 proof to direct official signed Spot Testnet API transport
-    - retain one-order maximum, 10 test USDT canonical notional, 25 hard cap
-    - preserve deterministic ALLOW before execution and same-clientOrderId verification
-    - sanitize proof
-    - publish safe proof to Vercel
-    - stop at requested step 5
-  if_RESTRICTED_BY_VENUE_ELIGIBILITY:
-    - stop live write proof branch
-    - no circumvention
-    - retain controlled 35.47 bps proof + authentic public read-only Binance evidence
-    - later Winning Intelligence and TRACE reassess evidence ceiling
-  if_AUTH_OR_PERMISSION_ERROR:
-    - correct only credential/permission configuration without changing location or venue
-    - repeat signed GET only
+    - retrying_a_PossiblyAccepted_POST
 
 human_requested_step_1_to_5_scope:
   step_1_secret_installation: COMPLETE
   step_2_manual_workflow_packaging: COMPLETE
-  step_3_real_testnet_capture: PENDING_ACTUAL_LOCATION_ACCESS_CHECK
-  step_4_sanitized_public_trade_proof: PENDING
-  step_5_vercel_public_trade_proof: PENDING
+  step_3_real_testnet_capture: READY_FOR_LOCAL_EXECUTION
+  step_4_sanitized_public_trade_proof: PENDING_STEP_3
+  step_5_vercel_public_trade_proof: PENDING_STEP_4
   requested_stop_after_step_5: true
-
-claim_boundaries:
-  can_claim:
-    - deterministic_core_8_of_8
-    - challenge_suite_6_of_6
-    - local_mcp_5_of_5
-    - mcp_observation_4_of_4
-    - testnet_execution_boundary_7_of_7
-    - authentic_public_readonly_Binance_evidence
-    - controlled_35_47_bps_cross_time_BLOCK
-    - GitHub_hosted_write_attempt_failed_closed_before_order_due_to_venue_eligibility
-  cannot_claim:
-    - successful_actual_location_authenticated_Spot_Testnet_access
-    - real_Spot_Testnet_order
-    - orderId_or_same_order_verification
-    - mainnet_trade
-    - real_money_trade
-    - production_financial_safety
 
 next_valid_handoff:
   from: PBPD
-  to: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
-  required_output: SANITIZED_STATUS_FROM_SCRIPTS_CHECK_TESTNET_ACCESS_PS1
+  to: HUMAN_LOCAL_EXECUTION_BOUNDARY
+  required_output: SANITIZED_SUMMARY_FROM_RUN_LOCAL_TESTNET_PROOF_PS1_PUBLISH
+
+exact_next_commands:
+  - git pull
+  - .\scripts\run-local-testnet-proof.ps1 -Publish
+
+expected_terminal_success:
+  - LOCAL_TESTNET_PROOF=ALLOW_ORDER_VERIFIED
+  - TESTNET_ORDER_ID=<sanitized id>
+  - CLIENT_ORDER_ID=<sanitized id>
+  - SAME_ORDER_VERIFIED=TRUE
+  - PUBLICATION=GITHUB_PUSH_COMPLETE
+  - VERCEL_DEPLOYMENT=TRIGGERED_BY_MAIN_PUSH
+
+acceptable_block_result:
+  - LOCAL_TESTNET_PROOF=BLOCK_ZERO_WRITE
+  - REPLAN_REQUIRED=TRUE
+  - PUBLICATION=SKIPPED_NO_VERIFIED_ALLOW_WRITE
 
 resume_rule: >-
-  First read CURRENT/HANDOVER. Do not install WSL, elevate privileges, rerun the GitHub-hosted write workflow or use a VPN/proxy.
-  Run the native PowerShell signed access check from the user's actual location. No order is authorized during this check.
+  First read CURRENT/HANDOVER. The access gate is already PASS and must not be repeated unless credentials change. Do not rerun GitHub-hosted write workflow.
+  The next action is the bounded local proof from the same actual-location machine. After the user returns the sanitized terminal summary, verify the pushed public artifact and Vercel /live-proof.
+  Stop exactly after step 5 before TRACE delta, Winning Intelligence final, video freeze or Project Finisher.
