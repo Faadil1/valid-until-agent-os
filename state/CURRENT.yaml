@@ -2,14 +2,18 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: TRACE_GATE_6_75_FINAL_VIDEO_REQUIRED
+current_stage: LIVE_BINANCE_SPOT_TESTNET_CAPTURE_REQUIRED
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
-secondary_thesis: A demo is not trust.
+secondary_thesis: A correct decision can expire.
 judge_line: The authorization was still valid. The premise was not.
-problem_statement: >-
-  AI agents can retain execution authority after the market state, user intent,
-  or policy conditions that justified a decision have materially changed.
+
+material_change:
+  trigger: HUMAN_DIRECTION_LIVE_PROOF_001
+  artifact: product/HUMAN-DIRECTION-LIVE-PROOF-001.md
+  decision: >-
+    Read-only authenticity alone is not sufficient for the final differentiation proof.
+    Add a live Binance Spot Testnet execution proof while preserving no-mainnet/no-real-funds boundaries.
 
 submission_requirements:
   - follow_binance_on_x
@@ -18,133 +22,92 @@ submission_requirements:
   - complete_official_survey
 
 safety_constraints:
-  - read_only_market_data_only
-  - no_trade_execution
-  - no_account_funding
+  - binance_mainnet_execution_forbidden
+  - real_funds_forbidden
+  - live_write_allowed_only_on_official_spot_testnet
+  - testnet_target_hardcoded_to_https://testnet.binance.vision
+  - testnet_credentials_local_only
+  - no_api_secrets_in_repo_logs_chat_or_screenshots
   - no_geo_bypass
-  - no_api_secrets_in_repo
+  - no_wallet_write
+  - no_x402
 
 lifecycle:
   global_policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
   coverage_manifest: product/LIFECYCLE-COVERAGE.yaml
   terminal_completeness_allowed: false
-  current_owner: TRACE
+  current_owner: HUMAN_EXECUTION_BOUNDARY
   living_prd: product/PRD.md
-  living_prd_evidence_reconciliation: product/POST-BUILD-RECONCILIATION.md
-  prd_status: RETROSPECTIVE_CURRENT_STATE_PRD
-  prd_material_scope_changed_since_reconciliation: false
-  prototype_killer: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
-  spec_kit: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
-  winning_intelligence: SATISFIED_RUNTIME_RECHECK_COMPLETE
-  trace_gate_6_5: SATISFIED
-  trace_gate_6_75: MISSING_FINAL_VIDEO_VERDICT
-  pbpd_post_build_reconciliation: SATISFIED
-  pbpd_candidate_handoff: NOT_EMITTED_TRACE_6_75_BLOCKS
+  prd_material_scope_changed_since_reconciliation: true
+  winning_intelligence_latest: product/WINNER-INTELLIGENCE-RERUN-004-X-API.md
+  trace_gate_6_5_previous: PASS_BEFORE_LIVE_TESTNET_SCOPE_CHANGE
+  trace_gate_6_75: PAUSED_MUST_REFRESH_AFTER_TESTNET_EVIDENCE
+  pbpd_candidate_handoff: NOT_EMITTED
   project_finisher: NOT_YET_ELIGIBLE
   protected_submission_owner: HUMAN
 
 proof_status:
-  core_deterministic_tests: PASS_7_OF_7
+  core_deterministic_tests: PASS_8_OF_8
   challenge_suite: PASS_6_OF_6
+  mcp_companion: PASS_5_OF_5
+  mcp_observation_adapter: PASS_4_OF_4
+  testnet_execution_boundary: PASS_5_OF_5
+  full_ci_run: 34242858075
+  full_ci_head: 18e0bd6006134010fca00b4d05667b87703bbb75
+  full_ci_conclusion: SUCCESS
   controlled_replay: PASS_INITIAL_ELIGIBLE_FINAL_BLOCK_ON_35_47_BPS_DRIFT
-  live_binance_cli: VERIFIED_GITHUB_ACTIONS_RUN_34225133745
-  live_binance_cli_version: '2.1.1'
-  live_capture_symbol: BTCUSDT
-  live_capture_verdict: BLOCK
-  live_artifact_id: 10055364283
-  live_artifact_digest: 'sha256:51b23c621e487be68c81138bd3a24e6c264e4fb00a0c315b88addf8080e6b370'
-  technical_proof: OBTAINED
-  behavior_proof: OBTAINED_FOR_REPRESENTATIVE_JUDGE_WORKFLOW
+  prior_live_public_binance_cli: VERIFIED_RUN_34225133745
+  real_testnet_authenticated_order_capture: PENDING
+  real_testnet_order_id: NOT_YET_OBTAINED
+  mainnet_trade: NOT_ALLOWED_NOT_CLAIMED
   outcome_proof: NOT_OBTAINED_NOT_CLAIMED
-  production_evidence: NOT_OBTAINED_NOT_CLAIMED
+  production_financial_evidence: NOT_OBTAINED_NOT_CLAIMED
+
+live_testnet_implementation:
+  market_capture: src/snapshot.mjs::captureWithBinanceSpotTestnet
+  execution_boundary: src/testnet-executor.mjs
+  orchestration: src/live-testnet.mjs
+  npm_command: npm run live:testnet -- BTCUSDT
+  exact_supported_action: BUY_with_quote_notional_usdt
+  explicit_write_gate: VALID_UNTIL_TESTNET_WRITE=CONFIRM_TESTNET_WRITE
+  profile_env: VALID_UNTIL_TESTNET_PROFILE
+  behavior:
+    ALLOW: send_one_signed_market_buy_then_query_same_clientOrderId
+    BLOCK: zero_binance_executor_calls_and_REPLAN_REQUIRED
 
 production_judge_surface:
   stable_url: https://valid-until-agent-os.vercel.app
-  validated_deployment: dpl_HC9j3Y8nCAfw1PdHNpAhNjrVdo8G
-  validated_source_head: f6184bf7b7c8e2b93fc712f48fe0d0b081c7e3f3
-  root_http: 200
-  evaluations_http: 200
-  demo_json_http: 200
-  challenges_json_http: 200
-  challenges_json_result: PASS_6_OF_6
-  deployment_routing_incident:
-    initial_ready_but_root_404: true
-    resolved: true
-    repair: 'vercel build -> npm run build:web; outputDirectory -> web; cleanUrls -> true'
-    classification: IMPLEMENTATION_EVIDENCE_ROUTING_REPAIR_NOT_PRODUCT_SCOPE_CHANGE
-
-trace_gate_6_5:
-  verdict: PASS
-  verdict_artifact: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_EVALUATION_CAPTURE_PASS_001.md
-  runtime_run: 34231934516
-  runtime_artifact: 10058192480
-  runtime_artifact_digest: 'sha256:4f0ba722100568c2a320ade6eda2ce3ba81e4040026c1c946ee71ccc661b66f1'
-  cases:
-    desktop_1440x900_motion: PASS
-    mobile_390x844_motion: PASS
-    desktop_1440x900_reduced_motion: PASS
-    mobile_390x844_reduced_motion: PASS
-  console_errors: NONE
-  closed_findings:
-    - TRACE_VU_001_AGENT_OS_ROLE_ABOVE_FOLD
-    - TRACE_VU_002_EVALUATIONS_REACHABLE_FROM_HERO
-    - TRACE_VU_003_DEPLOYED_RUNTIME_EVIDENCE
-
-trace_gate_6_75:
-  status: FINAL_VIDEO_REQUIRED
-  contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_001.md
-  target_duration_seconds: '58-65'
-  target_seconds: 60
-  required_story:
-    - thesis_problem
-    - Agent_OS_role_within_first_15_seconds
-    - exact_validity_contract
-    - Replay_proof_click
-    - '35.47_bps_crosses_20_bps_limit'
-    - NO_LONGER_VALID
-    - six_case_red_team_6_of_6
-    - controlled_vs_live_truth_boundary
-    - bounded_close
-  forbidden_claims:
-    - controlled_replay_is_live
-    - live_trade_was_placed
-    - profitability_or_alpha
-    - safer_investment_outcome
-    - production_financial_control_proven
-  gate_7_authorized: false
-
-pbpd_post_build_reconciliation:
-  artifact: product/POST-BUILD-RECONCILIATION.md
-  prd_must: PASS_11_OF_11
-  prd_should: PASS_4_OF_4
-  prd_must_not: PASS_5_OF_5
-  spec_kit_reconciliation: PASS
-  build_candidate_ready_emitted: false
-  block_reason: TRIGGERED_TRACE_GATE_6_75_VERDICT_MISSING
+  status: EXISTING_SURFACE_PRE_TESTNET_REFRESH
+  redeploy_required_after_live_proof_close: true
 
 experience_positioning:
-  contrast: 'Most agents ask: Should I trade? Valid Until asks: Is this exact action still valid?'
-  agent_os_architecture_line: 'AI agent interprets + proposes -> Binance Agent OS supplies fresh observations + capabilities -> Valid Until deterministically authorizes the exact action.'
-  hero_interaction: 'Replay proof moves 0 -> 35.47 bps across a 20 bps validity boundary and ends NO LONGER VALID.'
-  evaluation_interaction: 'Six deterministic cases show one clean ALLOW and five distinct BLOCK failure classes.'
-  live_proof_role: 'Supporting authenticity proof, visually separated from the controlled hero replay.'
-  design_direction: 'Editorial execution-instrument aesthetic; warm paper, acid validity band, orange failure state; no generic dark AI dashboard.'
+  contrast: 'Fresh enough now is not the same as still justified by the decision made then.'
+  hero_proof: 'Deterministic 35.47 bps cross-time BLOCK remains canonical failure proof.'
+  live_proof: 'On ALLOW, one real Binance Spot Testnet order reaches the non-production exchange and is queried; on BLOCK, zero write reaches Binance.'
+  design_direction: 'Editorial execution instrument; no generic dark AI dashboard.'
 
 claim_boundaries:
   - controlled replay is synthetic and labelled
-  - live proof is authentic public Binance market data and read-only
-  - no execution adapter exists
-  - ALLOW is execution-validity only, not recommendation/profitability/safety
-  - technical and judge-workflow behavior proof do not imply outcome proof or production evidence
+  - public live Binance reads are authentic
+  - testnet execution boundary is implemented and CI-tested
+  - real Spot Testnet order must not be claimed until captured
+  - Spot Testnet is non-production and uses no real funds
+  - no mainnet trade claim
+  - ALLOW is execution-validity only, not profitability/recommendation/safety
 
 next_valid_handoff:
-  from: PBPD / human recording boundary
-  to: TRACE
-  required_output: FINAL_ENCODED_58_TO_65_SECOND_DEMO_FOR_GATE_6_75_REVIEW
+  from: PBPD_IMPLEMENTATION_COMPLETE
+  to: HUMAN_EXECUTION_BOUNDARY
+  required_output: REAL_AUTHENTICATED_BINANCE_SPOT_TESTNET_ALLOW_OR_BLOCK_CAPTURE
 
 next_actions:
-  - record the final 58-65 second video using the frozen TRACE Gate 6.75 contract
-  - provide the encoded video or stable video URL to TRACE for actual film review
-  - if TRACE Gate 6.75 passes, PBPD performs final delta reconciliation and emits candidate handoff
-  - Project Finisher then performs independent terminal assurance
-  - only after terminal assurance does the human perform protected X/repost/reply-or-quote and survey actions
+  - create or select a local Binance CLI profile with env testnet on the personal development machine
+  - run npm run live:testnet with the explicit CONFIRM_TESTNET_WRITE gate
+  - save sanitized stdout as canonical evidence without credentials
+  - if ALLOW, verify returned testnet clientOrderId/orderId/status
+  - if BLOCK, preserve the zero-write result and begin a fresh decision cycle rather than weakening policy
+  - after real testnet capture, PBPD reconciles PRD/claims and deploys judge delta
+  - TRACE reruns delta assurance and refreshes Gate 6.75 narrative/video
+  - Winning Intelligence performs final competitor recheck
+  - Project Finisher remains after candidate handoff
+  - protected X and survey submission remain human-owned
