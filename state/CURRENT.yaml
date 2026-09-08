@@ -1,8 +1,8 @@
 project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
-status: TRACE_GATE_6_75_VOICE_REVISION_PACKAGING_REPAIR
-current_stage: TRACE_GATE_6_75_NARRATIVE_VOICE_V2_RENDER_IN_PROGRESS
+status: TRACE_GATE_6_75_VOICE_REVISION_RENDERED
+current_stage: TRACE_GATE_6_75_NARRATIVE_VOICE_V2_AWAITING_HUMAN_AUDIO_VERDICT
 current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
@@ -100,17 +100,26 @@ remotion_film_history:
     workflow: .github/workflows/final-remotion-film-retry.yml
     workflow_commit: fd66acb01cf3942a7f7fbc2dd58a2e3a05a6bbe8
     run: 34284794981
-    status: IN_PROGRESS
+    result: SUCCESS
+    artifact_name: valid-until-final-remotion-film-narrative-voice-v2
+    artifact_id: 10079108948
+    artifact_digest: sha256:37b36cb284e80659dabdaea51982bcc0e6aacc435e1ac7f7acb61f99f8ee6f8d
     voice: en-GB-RyanNeural
     voice_profile: CALM_NARRATIVE_CAPTIVATING
     generation_rate: '+18%'
     pitch: '-2Hz'
-    target_normalized_voice_seconds: 59.6
+    raw_voice_seconds: 66.0
+    tempo_factor: 1.10738255
+    normalized_voice_seconds: 59.616
     accepted_voice_window_seconds: 59.0-60.5
-    expected_video_seconds: 62.058667
+    video_seconds: 62.0
+    audio_finishes_before_visual_close_seconds: 2.384
+    resolution: 1920x1080
     visuals_changed: false
     narration_text_changed: false
     product_scope_changed: false
+    technical_timing_gate: PASS
+    human_audio_quality_verdict: PENDING
 
 security_invariants:
   - no_browser_secret_exposure
@@ -124,9 +133,9 @@ security_invariants:
   - no_profitability_or_production_safety_claim
 
 next_valid_handoff:
-  from: NARRATIVE_VOICE_TIMING_REPAIR
+  from: NARRATIVE_VOICE_V2_RENDER
   to: HUMAN_AUDIO_PLAYBACK_THEN_TRACE_GATE_6_75_CLOSURE
-  required_output: NARRATIVE_VOICE_V2_MP4_WITH_COMPLETE_AUDIO__HUMAN_AUDIO_VERDICT__TRACE_FINAL_VERDICT
+  required_output: HUMAN_KEEP_OR_CHANGE_VOICE_VERDICT_ON_ARTIFACT_10079108948
 
 then:
   - PBPD candidate handoff
@@ -134,4 +143,4 @@ then:
   - protected human submission
 
 resume_rule: >-
-  The product and visuals are frozen and already accepted. The only active work is the bounded audio packaging repair for Gate 6.75. Narrative voice revision v1 used en-GB-RyanNeural and was calmer, but its 70.224-second audio exceeded the 62.06-second film and would truncate the ending. Revision v2 is rendering in run 34284794981 with the same narration and visuals, Ryan voice, a more natural generated pace and deterministic normalization to 59.6 seconds. On success, download the new artifact, verify the audio duration is within 59.0-60.5 seconds, and give the MP4 to the human for voice-quality confirmation. Do not reopen product/visual scope and do not execute a new Binance order.
+  The revised narrative voice v2 is successfully rendered and technically valid: en-GB-RyanNeural, 59.616 seconds of complete narration inside a 62.0-second film. Product, visuals and narration text remain frozen. The only unresolved Gate 6.75 item is the human subjective audio verdict on artifact 10079108948. If the human approves the voice, close TRACE Gate 6.75 and hand off to PBPD candidate review. If rejected, revise voice delivery only. No new Binance order is permitted.
