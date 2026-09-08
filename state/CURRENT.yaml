@@ -2,8 +2,8 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: LOCAL_BOUNDED_TESTNET_WRITE_PROOF_READY
-current_owner: PBPD
+current_stage: STEP_5_COMPLETE_AWAITING_PBPD_RUNTIME_EVIDENCE_RECONCILIATION
+current_owner: PBPD_NEXT_NOT_STARTED
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -29,7 +29,7 @@ living_prd:
   version: '0.3'
   base: product/PRD.md
   normative_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
-  status: CURRENT
+  status: CURRENT_PENDING_RUNTIME_EVIDENCE_RECONCILIATION
   actual_location_access: PASS
   local_transport: NATIVE_NODE_HTTPS_HMAC_AGAINST_OFFICIAL_SPOT_TESTNET
 
@@ -40,64 +40,103 @@ spec_kit:
 
 step_1_to_5_scope:
   requested_stop_after_step: 5
+  stop_boundary_reached: true
   steps:
     1_secret_installation: COMPLETE
     2_manual_testnet_workflow: COMPLETE_CI_VERIFIED
-    3_real_testnet_capture: READY_FOR_LOCAL_BOUNDED_WRITE_PROOF_RETRY_AFTER_WRAPPER_FIX
-    4_sanitized_public_trade_proof: PENDING_SUCCESSFUL_STEP_3
-    5_judge_surface_vercel_write_proof: PENDING_SUCCESSFUL_STEP_4
+    3_real_testnet_capture: COMPLETE_ALLOW_ORDER_VERIFIED
+    4_sanitized_public_trade_proof: COMPLETE_GITHUB_PUBLISHED
+    5_judge_surface_vercel_write_proof: COMPLETE_HTTP_200_VERIFIED
 
-hosted_write_attempt:
-  run_id: 34248954040
-  job_id: 102138125899
-  evidence: evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md
-  runner: GitHub_hosted_Azure_eastus
-  result: FAIL_CLOSED_RESTRICTED_LOCATION_BEFORE_EXECUTION
-  order_sent: false
+historical_attempts:
+  hosted_attempt_001:
+    evidence: evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md
+    result: FAIL_CLOSED_RESTRICTED_LOCATION_BEFORE_EXECUTION
+    order_sent: false
+  local_access_attempt_002:
+    evidence: evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md
+    result: PASS
+    financial_write: false
+  local_wrapper_attempt_003:
+    evidence: evidence/live-testnet/ATTEMPT-003-LOCAL-POWERSHELL-PARSER-FAIL.md
+    result: FAIL_BEFORE_EXECUTION
+    order_sent: false
+  local_execution_attempt_004:
+    evidence: evidence/live-testnet/ATTEMPT-004-LOCAL-ALLOW-ORDER-VERIFIED-PUBLISHED.md
+    result: ALLOW_ORDER_VERIFIED_AND_PUBLISHED
+    order_sent: true
+    same_order_verified: true
 
-actual_location_access_attempt:
-  evidence: evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md
-  machine: USER_ACTUAL_LOCATION_WINDOWS_DEVELOPMENT_MACHINE
-  privileges: STANDARD_USER
-  transport: NATIVE_POWERSHELL_HTTPS_HMAC
+successful_live_testnet_proof:
+  captured_at: '2026-09-08T16:57:43.295Z'
   endpoint: https://testnet.binance.vision
-  result: PASS
-  sanitized_output:
-    - ACTUAL_LOCATION_TESTNET_ACCESS=PASS
-    - FINANCIAL_WRITE=FALSE
-  order_sent: false
+  network: Binance Spot Testnet
+  production: false
+  real_funds: false
+  action:
+    symbol: BTCUSDT
+    side: BUY
+    notional_usdt: 10
+  decision_contract:
+    receipt_version: valid-until.receipt.v2
+    validity_status: ALLOW
+    next_state: ACTION_REMAINS_VALID
+    failed_checks: []
+    t0_mid: 78707.705
+    t1_mid: 78707.705
+    policy_hash: dfb6d0f1fdbe0b817a78763466fb4a7c5ba5ae4f2c673db8001eb5193fdb5578
+    snapshot_hash: 09bcb3462f776493153b839040174208039ac90106cb76397dfbc08cdc762dc0
+    action_hash: c7887fc9eb2f0168e8c15b29158a77eed3178845e8fa04b59383fb9dea17bcef
+  execution:
+    order_id: 13634770
+    client_order_id: vu-mtswxiik-ecb6b093
+    status: FILLED
+    executed_qty: '0.00012000'
+    cumulative_quote_qty: '9.44492520'
+    same_order_verified: true
+    uncertain_transport_recovered: false
+  evidence_digests:
+    raw_capture_sha256: 5a67e7e912c2de23a14e23cf28a396520ab9837ae142b2992edf9f37753f826a
+    public_proof_sha256: a318c6a6d8d56cd5ab66ee5beedf3baac32dc33885a963b64fbfe814ccad6b76
 
-local_write_attempt_003:
-  evidence: evidence/live-testnet/ATTEMPT-003-LOCAL-POWERSHELL-PARSER-FAIL.md
-  result: FAIL_BEFORE_EXECUTION
-  failure_stage: WINDOWS_POWERSHELL_PARSER
-  decision_cycle_started: false
-  order_sent: false
-  financial_write: false
-  public_proof_created: false
-  root_cause: WINDOWS_POWERSHELL_5_1_UTF8_WITHOUT_BOM_NON_ASCII_PUNCTUATION_RISK
-  remediation:
-    wrapper_ascii_only: true
-    raw_json_utf8_no_bom_writer: true
-    windows_powershell_5_1_parser_ci: true
-    parser_ci_run: 34253539001
-    parser_ci_conclusion: SUCCESS
+publication:
+  github:
+    commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
+    commit_message: evidence: publish local authenticated Binance Spot Testnet proof
+    changed_files:
+      - web/live-testnet-proof.json
+    proof_ci_run: 34254211176
+    proof_ci_conclusion: SUCCESS
+  vercel:
+    project_id: prj_G4gsIiXTRxOTLhXf8ZMqqVDRJSYs
+    deployment_id: dpl_2M3AgFyfNRzEdd9z84dzfTzjjcth
+    deployment_state: READY
+    deployment_target: production
+    deployment_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
+    stable_live_proof: https://valid-until-agent-os.vercel.app/live-proof
+    stable_live_proof_status: 200
+    stable_live_json: https://valid-until-agent-os.vercel.app/live-testnet-proof.json
+    stable_live_json_status: 200
 
-local_write_proof_implementation:
-  native_transport: src/binance-testnet-http.mjs
-  native_runner: src/live-testnet-native.mjs
-  powershell_wrapper: scripts/run-local-testnet-proof.ps1
-  sanitizer: scripts/sanitize-testnet-proof.mjs
-  public_artifact: web/live-testnet-proof.json
-  judge_surface: web/live-proof.html
-  endpoint: https://testnet.binance.vision
-  action: BUY_BTCUSDT_10_TEST_USDT
-  hard_cap_test_usdt: 25
-  maximum_order_posts: 1
-  explicit_confirmation: CONFIRM_TESTNET_WRITE
-  uncertain_post_rule: NEVER_RETRY_POST_QUERY_SAME_CLIENT_ORDER_ID_ONLY
-  raw_capture: LOCAL_TEMP_ONLY_DELETE_AFTER_SANITIZATION
-  publishable_file_only: web/live-testnet-proof.json
+verified_implementation:
+  core_tests: PASS_8_OF_8
+  challenge_suite: PASS_6_OF_6
+  mcp_companion: PASS_5_OF_5
+  mcp_observation_adapter: PASS_4_OF_4
+  testnet_execution_boundary: PASS_7_OF_7
+  native_testnet_transport_tests: PASS_5_OF_5
+  windows_powershell_parser_ci: PASS
+
+proof_status:
+  prior_public_readonly_binance: VERIFIED
+  controlled_cross_time_block: VERIFIED_35_47_BPS_GT_20
+  actual_location_testnet_access: VERIFIED_PASS
+  authenticated_spot_testnet_allow_write: VERIFIED
+  same_order_verification: VERIFIED
+  sanitized_public_write_proof: VERIFIED
+  vercel_public_write_proof: VERIFIED
+  mainnet_trade: NOT_PERFORMED_NOT_AUTHORIZED
+  real_money_trade: NOT_PERFORMED_NOT_AUTHORIZED
 
 safety_decision:
   - no_admin_elevation
@@ -107,41 +146,23 @@ safety_decision:
   - no_mainnet
   - no_alternate_endpoint_used_to_bypass_eligibility
   - no_policy_weakening_to_force_ALLOW
-  - BLOCK_means_zero_order_write
-  - one_order_maximum_on_ALLOW
-  - parser_failure_is_not_a_product_BLOCK
+  - no_profitability_claim
+  - no_production_financial_safety_claim
+  - do_not_rerun_successful_testnet_order_proof_without_new_explicit_authorization
 
-verified_implementation:
-  core_tests: PASS_8_OF_8
-  challenge_suite: PASS_6_OF_6
-  mcp_companion: PASS_5_OF_5
-  mcp_observation_adapter: PASS_4_OF_4
-  testnet_execution_boundary: PASS_7_OF_7
-  native_testnet_transport_tests: PASS_IN_TEST_ALL
-  native_path_ci_run: 34252867490
-  native_path_ci_conclusion: SUCCESS
-  windows_powershell_parser_ci_run: 34253539001
-  windows_powershell_parser_ci_conclusion: SUCCESS
-
-proof_status:
-  prior_public_readonly_binance: VERIFIED
-  controlled_cross_time_block: VERIFIED_35_47_BPS_GT_20
-  hosted_testnet_authenticated_access: BLOCKED_BY_HOSTED_RUNNER_ELIGIBILITY
-  actual_location_testnet_access: VERIFIED_PASS
-  local_wrapper_parser_failure: RECORDED_NO_WRITE
-  real_testnet_order_capture: NOT_OBTAINED_NOT_CLAIMED
-  public_testnet_write_proof_on_vercel: NOT_OBTAINED_NOT_CLAIMED
+requested_stop_boundary:
+  after_step: 5
+  reached: true
+  further_lifecycle_work_started: false
 
 next_valid_handoff:
-  from: PBPD
-  to: HUMAN_LOCAL_EXECUTION_BOUNDARY
+  from: PBPD_EVIDENCE_PLANE
+  to: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
   required_output: >-
-    Pull latest main and rerun scripts/run-local-testnet-proof.ps1 -Publish from the same actual-location Windows development machine.
-    Type CONFIRM_TESTNET_WRITE only if willing to permit one BUY BTCUSDT Spot Testnet order for 10 test USDT when Valid Until returns ALLOW.
-    The wrapper is now ASCII-only and passes Windows PowerShell 5.1 parsing in CI. It must run deterministic assurance first,
-    make zero order calls on BLOCK, send at most one order on ALLOW, query the same clientOrderId, sanitize the proof,
-    and push only web/live-testnet-proof.json. Return only the sanitized terminal summary, never credentials.
+    Reconcile the successful Branch A Spot Testnet evidence into PRD v0.3 / post-build evidence state without changing the core thesis,
+    then hand off to TRACE delta. This next handoff is recorded but intentionally NOT STARTED because the human requested a stop after step 5.
 
 resume_rule: >-
-  Do not rerun the GitHub-hosted write workflow and do not alter geography, policy, endpoint or caps. The parser failure sent no order.
-  After the local script completes, verify GitHub publication and Vercel /live-proof. Stop exactly after requested step 5 before TRACE/Winning Intelligence final.
+  Steps 1 through 5 are complete and verified. Do not rerun the Spot Testnet order proof. On the next authorized continuation,
+  start with PBPD runtime-evidence reconciliation, then TRACE delta, Winning Intelligence final recheck, TRACE Gate 6.75 video,
+  PBPD candidate handoff, Project Finisher and protected human submission. No one may skip or substitute those owners.
