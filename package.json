@@ -7,8 +7,11 @@
   "scripts": {
     "demo": "node src/demo.mjs",
     "live": "node src/live.mjs",
+    "challenge": "node src/challenge-suite.mjs",
     "test": "node tests/run.mjs",
-    "build:web": "node src/build-web-data.mjs"
+    "test:challenge": "node tests/challenge-suite.mjs",
+    "test:all": "npm test && npm run test:challenge",
+    "build:web": "node src/build-web-data.mjs && node src/challenge-suite.mjs --write-web"
   },
   "engines": {
     "node": ">=20"
