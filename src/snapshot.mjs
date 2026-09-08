@@ -11,19 +11,20 @@ function runBinanceCli(args) {
   }
 }
 
-export function captureWithBinanceCli(symbol) {
-  const base = 'https://data-api.binance.vision';
+export function captureWithBinanceCli(symbol, options = {}) {
+  const base = options.base || 'https://data-api.binance.vision';
+  const source = options.source || 'Binance Agent OS toolchain: binance-cli → data-api.binance.vision';
   const book = runBinanceCli(['request', 'GET', `${base}/api/v3/ticker/bookTicker`, '--symbol', symbol]);
   const depth = runBinanceCli(['request', 'GET', `${base}/api/v3/depth`, '--symbol', symbol, '--limit', '5']);
   const klines = runBinanceCli(['request', 'GET', `${base}/api/v3/klines`, '--symbol', symbol, '--interval', '1m', '--limit', '2']);
   const time = runBinanceCli(['request', 'GET', `${base}/api/v3/time`]);
-  return normalize({
-    symbol,
-    book,
-    depth,
-    klines,
-    time,
-    source: 'Binance Agent OS toolchain: binance-cli → data-api.binance.vision',
+  return normalize({ symbol, book, depth, klines, time, source });
+}
+
+export function captureWithBinanceSpotTestnet(symbol) {
+  return captureWithBinanceCli(symbol, {
+    base: 'https://testnet.binance.vision',
+    source: 'Binance official Spot Testnet via binance-cli',
   });
 }
 
