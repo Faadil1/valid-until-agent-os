@@ -1,54 +1,153 @@
-# Valid Until — 60-second Track A demo script
+# Valid Until — provisional final demo structure
 
-**0–7s — Hook**
+**Status:** `NOT_YET_FROZEN` — do not record the final video until the authenticated Spot Testnet proof and Vercel `/live-proof` surface are closed.
 
-Show the AI agent with the Valid Until skill loaded.
+Judge-optimization source: `product/JUDGE-OPTIMIZATION-EVIDENCE-001.md`.
 
-Say: *Reasoning is not authorization. An AI agent can make the right decision, then reach execution after the conditions that justified it have changed.*
-
-**7–16s — Give the agent the bounded job**
-
-Prompt:
+The final demo must optimize for:
 
 ```text
-Use the Valid Until skill and Binance Agent OS / Binance Skills.
-Evaluate BTCUSDT under the sealed policy.
-Do not place any order.
-Separate the reasoning proposal from the deterministic validity result.
+Problem → Pain → Execution → Story → Demo
 ```
 
-Briefly show `SKILL.md` so the judge sees the agent contract and the explicit read-only boundary.
+not feature count or architecture density.
 
-**16–27s — Freeze the rules + read Binance**
+## First-minute rule
 
-Show `policy.example.json` and the resulting policy hash. Spread, drift, freshness and liquidity constraints are frozen **before** market state is evaluated. The agent uses the Binance toolchain for market observations.
+The judge should understand the failure in the first 10–15 seconds and see the `NO LONGER VALID` moment before technical internals dominate the screen.
 
-**27–39s — Decision is valid**
+## Provisional narrative
 
-Show the initial state and `ELIGIBLE / VALID`. The decision receipt binds the policy and exact snapshot to a short validity window. Do not explain Ed25519 unless asked; it is supporting proof.
+### 0–10s — Problem + pain
 
-**39–52s — The world changes**
+Show the product hero / execution instrument.
 
-Advance to the deterministic revalidation state. The market has moved **35.47 bps**, beyond the user's **20 bps** tolerance. The model's original reasoning can still look sensible and the receipt can remain intact, but its premise is no longer current.
+Say:
 
-**52–60s — The moment**
+> **Reasoning is not authorization. A correct AI decision can expire before execution.**
 
-Show **NO LONGER VALID** / `BLOCK`.
+Then make the pain concrete:
+
+> The agent can still have permission to trade even when the premise that justified this exact action is no longer valid.
+
+Do **not** start with MCP, Ed25519, hashes, CLI or architecture.
+
+### 10–18s — Execution model
+
+Show the short flow:
+
+```text
+AI agent → Binance Agent OS → Valid Until → ALLOW / NO LONGER VALID
+```
+
+Explain only:
+
+- agent interprets and proposes;
+- Binance provides fresh state/capability;
+- Valid Until owns deterministic cross-time authorization.
+
+### 18–35s — The `aha` proof
+
+Run **Replay proof**.
+
+The judge must see:
+
+```text
+CURRENT T1 CHECKS = PASS
+BUT
+T0 → T1 PREMISE DRIFT = 35.47 bps > 20 bps
+
+→ NO LONGER VALID
+→ REPLAN_REQUIRED
+```
+
+Memory line:
+
+> **The authorization was still valid. The premise was not.**
+
+This is the core story. Give it enough screen time.
+
+### 35–44s — Red-team depth
+
+Open **6-case red team** and show that the mechanism is not a single price check:
+
+- clean unchanged case → ALLOW;
+- state drift → BLOCK;
+- expiry → BLOCK;
+- tamper → BLOCK;
+- policy mismatch → BLOCK;
+- exact-action / notional mismatch → BLOCK.
+
+Do not explain each test in detail.
+
+### 44–54s — Authentic Binance consequence
+
+**This section must be regenerated from the real proof after Step 5.**
+
+Target story when an authenticated Spot Testnet `ALLOW` capture exists:
+
+```text
+Valid Until = ALLOW
+→ one bounded Binance Spot Testnet order sent
+→ same clientOrderId queried back
+→ verified non-production execution
+```
+
+If the real live run closes on `BLOCK`, tell the truth instead:
+
+```text
+Valid Until = BLOCK
+→ zero execution call
+→ REPLAN_REQUIRED
+```
+
+Never weaken policy or hide a BLOCK to manufacture a more cinematic result.
+
+Spot Testnet must be labeled **non-production / no real funds**.
+
+### 54–60s — Close
+
+Return to the hero.
 
 Close with:
 
-*The model was still allowed to trade. The trade was no longer allowed to happen. Valid Until forces fresh reasoning before a stale decision can become a consequential action.*
+> **A current-state preflight asks whether a trade looks acceptable now. Valid Until asks whether this exact old action is still justified by the decision that produced it.**
 
-Closing card:
+Then:
 
-`AI REASONS → POLICY + STATE BOUND → REVALIDATE → STILL VALID / NO LONGER VALID`
+> **A correct decision can expire.**
 
-## Optional 10-second technical appendix
+## What NOT to spend video time on
 
-Show the green GitHub Actions proof and the live read-only evidence directory produced by:
+Unless answering a judge objection, do not foreground:
 
-```sh
-bash scripts/capture-live-evidence.sh BTCUSDT
-```
+- Ed25519;
+- SHA-256;
+- receipt field names;
+- terminal installation;
+- source-tree walkthroughs;
+- sponsor-logo accumulation;
+- x402;
+- wallet writes;
+- unrelated indicators;
+- long architecture diagrams.
 
-No order placement is implemented in the submission.
+## Q&A appendix — prepare, don't lead with it
+
+Be ready to answer:
+
+1. Why not a limit order / stop-loss?
+2. Why not a generic current-state preflight?
+3. Why not 20–30 lines of checks?
+4. Why use an AI agent at all?
+5. What exactly does `ALLOW` mean — and what does it **not** mean?
+
+Use `docs/JUDGE-MATRIX.md` for the bounded answers.
+
+## Freeze rule
+
+After authenticated Spot Testnet evidence + `/live-proof` Vercel verification:
+
+`PBPD reconciliation → TRACE delta → Winning Intelligence final recheck → TRACE 6.75 final script`
+
+Only TRACE 6.75 may convert this provisional structure into the final recording contract.
