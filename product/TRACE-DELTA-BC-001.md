@@ -9,6 +9,7 @@ B supplies compact editorial hierarchy and grouped evidence. C supplies a single
 
 ## Bounded implementation
 - Compact serif hero, explicit Lab entry and isolated Replay proof command.
+- Full-width Agent OS composition strip to shorten the hero and make sponsor-native architecture legible early.
 - Fixed T0 receipt; T1 sheet displaces at the threshold, terminal remains NO LONGER VALID / REPLAN_REQUIRED.
 - Larger PASS 4/4 and FAIL 35.47 > 20 BPS, light counterproof surface.
 - Controlled Lab scenarios precede independent live observations.
@@ -17,14 +18,49 @@ B supplies compact editorial hierarchy and grouped evidence. C supplies a single
 - Responsive CSS and reduced-motion instant replay; visible keyboard focus.
 
 ## Immutable boundaries
-No engine, tests, financial endpoints, policies, historical receipt or PRD changed. Order 13634770 / vu-mtswxiik-ecb6b093 must not be rerun.
+No engine, financial endpoints, policies, historical receipt or PRD changed. Order 13634770 / vu-mtswxiik-ecb6b093 must not be rerun.
 
-## Evidence
-Local existing test:all: PASS (8 core, 6 challenge, 5 MCP, 4 observation, 7 executor, 5 transport, 6 Vercel, 12 Cloudflare). These are deterministic tests, not a new venue execution.
-Desktop/mobile runtime and final encoded video: pending. Image concepts from the prior conversation are illustrative and contain rejected microcopy; source implementation follows canonical data.
+## Runtime evidence
+Current judge URL: `https://valid-until-agent-os-plum.vercel.app`.
 
-## Verdict
-HOLD_PENDING_CI_DEPLOYMENT_AND_RUNTIME_REVIEW. No Winning Intelligence, final Gate 6.75, Project Finisher or submission progression authorized in this workstream.
+Visual delta merge: `370e6039f60c41a0e3211666bb44627d494cca85`.
 
-## First deployed review
-PR 1 merged at 7ad9f5c9d12b3e7c2db6a258c7d8e72c9a21d468 after proof CI 34272109934 passed both jobs. Vercel build status success. Four desktop surfaces inspected on the temporary domain; layout/copy delta served. Follow-up: move architecture strip to full width to shorten hero and update config/judge-url.txt so the existing unmodified runtime capture targets the actual temporary production.
+Final runtime-harness semantic assertion repair: `dd5cf611b8ac9efd60443741a7247c373c6dc67d`. This changed only the evidence matcher for the already-visible `#actionHash` field; it did not modify the product surface or engine.
+
+Proof CI:
+- `34274047464` — SUCCESS.
+
+TRACE runtime capture:
+- run `34274047494` — SUCCESS;
+- artifact `10074995345`;
+- digest `sha256:0d93d791857166854c81a0a085b87abb6ca191744d460bfb8ef9c2b12606e603`;
+- evidence version `valid-until.trace-gate-6-5-runtime.v3`.
+
+Desktop/mobile × normal/reduced-motion: **4/4 PASS**. All four cases verified thesis, memory line, Agent OS role, portable skill, MCP contract, receipt v2, visible action hash, Replay proof, terminal `NO LONGER VALID`, `PASS 4/4`, exact-action `MATCH`, `FAIL 35.47 > 20 BPS`, `REPLAN_REQUIRED`, exact-action mutation red-team case and zero console errors.
+
+The two prior runtime attempts failed only because the harness used a brittle text matcher for the abbreviated action-hash rendering. All product assertions except that matcher were already passing. The final element-based assertion closed the evidence gap without product rework.
+
+## Visual verdict
+- Desktop: PASS.
+- Mobile: PASS.
+- Reduced motion: PASS.
+- Anti-slop / domain specificity: PASS.
+- Cross-time signature readability: PASS.
+- Evidence-class separation: PASS.
+
+The B+C surface is now stronger than the pre-delta build without becoming a redesign. Further visual expansion before the final film is not recommended.
+
+## TRACE verdict
+
+```text
+TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE = PASS
+B_C_VISUAL_DELTA = PASS
+NEW_PRODUCT_REWORK_REQUIRED = FALSE
+FINAL_ENCODED_VIDEO_REVIEW_REQUIRED = TRUE
+```
+
+Specialist verdict is recorded in `Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_DELTA_RECHECK_LIVE_TESTNET_V0_4_003.md`.
+
+Next owner: `WINNING_INTELLIGENCE_FINAL_RECHECK`.
+
+Gate 6.75 remains open. No Project Finisher or submission authority is emitted here.
