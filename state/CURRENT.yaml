@@ -2,8 +2,8 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: LIVE_PROOF_LAB_V0_4_CODE_COMPLETE_WAITING_VERCEL_DEPLOY_AND_SECRETS
-current_owner: HUMAN_VERCEL_SECRET_BOUNDARY
+current_stage: LIVE_PROOF_LAB_V0_4_SECRETS_CONFIGURED_WAITING_VERCEL_DEPLOY
+current_owner: VERCEL_PLATFORM_DEPLOYMENT_BOUNDARY
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -84,26 +84,27 @@ v0_4_implementation:
   secret_browser_boundary_ci: PASS
   signed_refresh_read_only_ci: PASS
 
+vercel_secret_boundary:
+  guide: docs/VERCEL-LIVE-PROOF-LAB-ENV.md
+  environment: Production
+  variable_type: Sensitive
+  required_variables:
+    - BINANCE_TESTNET_API_KEY
+    - BINANCE_TESTNET_API_SECRET
+  configured_status: HUMAN_CONFIRMED_BOTH_PRODUCTION_VALUES_PRESENT_VALUES_NOT_READ_BY_ASSISTANT
+  browser_exposure: FORBIDDEN
+  values_in_chat: FORBIDDEN
+
 vercel_runtime_status:
   project_id: prj_G4gsIiXTRxOTLhXf8ZMqqVDRJSYs
   stable_domain: https://valid-until-agent-os.vercel.app
   latest_successful_deployment_before_full_v0_4_code: dpl_HYcUki7UJgFBYFrMt7Fm541qF8yN
   latest_successful_deployment_commit: 90cf6c3441e48f7ad916d476639d00544ad1db3e
-  latest_code_commit_status_context: Vercel
-  latest_code_commit_status: FAILURE_BUILD_RATE_LIMIT
-  failure_target: https://vercel.com/faadil1s-projects?upgradeToPro=build-rate-limit
-  lab_route_current_status: 404_NOT_DEPLOYED_YET
+  previous_full_v0_4_commit_status: FAILURE_BUILD_RATE_LIMIT
+  previous_failure_target: https://vercel.com/faadil1s-projects?upgradeToPro=build-rate-limit
+  lab_route_last_verified_status: 404_NOT_DEPLOYED_YET
   interpretation: PLATFORM_HOBBY_BUILD_RATE_LIMIT_NOT_PRODUCT_FAILURE
-  deployment_retry_required_after_rate_limit_resets: true
-
-vercel_secret_boundary:
-  guide: docs/VERCEL-LIVE-PROOF-LAB-ENV.md
-  required_sensitive_production_variables:
-    - BINANCE_TESTNET_API_KEY
-    - BINANCE_TESTNET_API_SECRET
-  configured_status: HUMAN_ACTION_NOT_YET_CONFIRMED
-  browser_exposure: FORBIDDEN
-  signed_order_refresh_without_secrets: SERVER_CREDENTIALS_NOT_CONFIGURED
+  current_state_commit_is_single_deployment_retry_trigger: true
 
 security_invariants:
   - no_browser_secret_exposure
@@ -118,13 +119,11 @@ security_invariants:
   - do_not_rerun_successful_testnet_order
 
 next_valid_handoff:
-  from: PBPD_IMPLEMENTATION
-  to: HUMAN_VERCEL_SECRET_BOUNDARY
+  from: HUMAN_VERCEL_SECRET_BOUNDARY
+  to: VERCEL_PLATFORM_DEPLOYMENT_BOUNDARY
   required_output: >-
-    Add BINANCE_TESTNET_API_KEY and BINANCE_TESTNET_API_SECRET as Vercel Sensitive Production environment variables without sharing values in chat.
-    After the Vercel Hobby build-rate limit resets, trigger a fresh deployment from current main and verify /, /lab, /live-proof, /evaluations,
-    /api/live-market and /api/order-status. Do not create a new testnet order.
+    Verify a production deployment from current main after the Hobby build-rate limit permits it, then verify HTTP behavior for /, /lab, /live-proof, /evaluations, /api/live-market and /api/order-status. Do not create a new testnet order.
 
 resume_rule: >-
-  v0.4 code and CI are complete. Do not claim the new multi-page surface is deployed until Vercel serves it.
-  The current blocker is Vercel Hobby build-rate-limit plus human secret configuration for the signed read. No new financial write is required.
+  Both Vercel Production secret names are human-confirmed configured; values were not read by the assistant. v0.4 code and CI are complete.
+  Do not claim the new multi-page surface is deployed until Vercel serves it. No new financial write is required.
