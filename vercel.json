@@ -1,10 +1,7 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:web",
+  "outputDirectory": "web",
   "cleanUrls": true,
-  "trailingSlash": false,
-  "rewrites": [
-    { "source": "/", "destination": "/web/index.html" },
-    { "source": "/evaluations", "destination": "/web/evaluations.html" },
-    { "source": "/demo.json", "destination": "/web/demo.json" },
-    { "source": "/challenges.json", "destination": "/web/challenges.json" }
-  ]
+  "trailingSlash": false
 }
