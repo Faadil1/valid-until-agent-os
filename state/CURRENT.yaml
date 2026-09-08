@@ -1,0 +1,34 @@
+project: Valid Until
+hackathon: Binance Agent OS Mini Hackathon
+track: A
+status: BUILD_ACTIVE
+current_stage: LIVE_AGENT_OS_PROOF_REQUIRED
+deadline_utc: '2026-09-08T23:59:00Z'
+canonical_thesis: Reasoning is not authorization.
+problem_statement: >-
+  AI agents can retain execution authority after the market state and policy
+  conditions that justified a decision have materially changed.
+submission_requirements:
+  - follow_binance_on_x
+  - repost_official_announcement
+  - reply_or_quote_with_video_demo_and_github
+  - complete_official_survey
+safety_constraints:
+  - read_only_market_data_only
+  - no_trade_execution
+  - no_account_funding
+  - no_geo_bypass
+  - no_api_secrets_in_repo
+proof_status:
+  deterministic_tests: PASS_7_OF_7
+  controlled_replay: PASS_FINAL_BLOCK_ON_35_47_BPS_DRIFT
+  live_binance_cli: NOT_YET_EXECUTED
+  public_repo: PUBLISHED_FAADIL1_VALID_UNTIL_AGENT_OS
+  deployment: NOT_YET_DEPLOYED
+  submission: NOT_YET_SUBMITTED
+next_actions:
+  - run live read-only Binance CLI proof on personal development machine
+  - save sanitized live output as evidence
+  - deploy judge web view
+  - record 45-75 second demo
+  - publish X submission and complete survey
