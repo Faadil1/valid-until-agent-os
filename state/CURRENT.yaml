@@ -2,7 +2,7 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: LOCAL_ACTUAL_LOCATION_TESTNET_ACCESS_CHECK_REQUIRED
+current_stage: WINDOWS_NATIVE_TESTNET_ACCESS_CHECK_READY
 current_owner: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
@@ -17,13 +17,6 @@ state_discipline:
   chat_memory_is_not_authority: true
   falsified_history: forbidden
 
-judge_optimization:
-  status: INTEGRATED_AS_NARRATIVE_AND_QA_EVIDENCE
-  evidence: product/JUDGE-OPTIMIZATION-EVIDENCE-001.md
-  judge_matrix: docs/JUDGE-MATRIX.md
-  provisional_demo_structure: docs/DEMO-SCRIPT.md
-  final_video_script_frozen: false
-
 human_authorization:
   source: product/AUTHORIZATION.md
   latest_direction: product/HUMAN-DIRECTION-LIVE-PROOF-001.md
@@ -36,8 +29,8 @@ living_prd:
   version: '0.3'
   base: product/PRD.md
   normative_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
-  changelog: product/PRD-CHANGELOG.md
   status: CURRENT
+  local_transport_clarification: NATIVE_WINDOWS_SIGNED_OFFICIAL_API_ALLOWED
 
 spec_kit:
   delta: product/specs/001-execution-validity/TESTNET-PROOF-DELTA-0.3.md
@@ -49,7 +42,7 @@ step_1_to_5_scope:
   steps:
     1_secret_installation: COMPLETE
     2_manual_testnet_workflow: COMPLETE_CI_VERIFIED
-    3_real_testnet_capture: HOSTED_ATTEMPT_FAIL_CLOSED_NEXT_COMPLIANT_ACTUAL_LOCATION_CHECK_REQUIRED
+    3_real_testnet_capture: PENDING_ACTUAL_LOCATION_ACCESS_CHECK
     4_sanitized_public_trade_proof: PENDING_SUCCESSFUL_STEP_3
     5_judge_surface_vercel_write_proof: PENDING_SUCCESSFUL_STEP_4
 
@@ -65,6 +58,40 @@ hosted_write_attempt:
   order_sent: false
   public_trade_proof_created: false
 
+local_machine_constraint:
+  operating_system: Windows
+  WSL_installed: false
+  administrator_rights_available: false
+  admin_elevation_or_WSL_installation: NOT_ALLOWED
+  official_binance_cli_native_windows_asset_found_in_v2_1_1_release: false
+  response: USE_NO_INSTALL_NATIVE_POWERSHELL_SIGNED_API_CHECK
+
+actual_location_check:
+  script: scripts/check-testnet-access.ps1
+  installation_required: false
+  admin_required: false
+  endpoint: https://testnet.binance.vision
+  public_time_call: GET_/api/v3/time
+  authenticated_call: SIGNED_GET_/api/v3/account
+  financial_write: false
+  credentials_output: forbidden
+  account_payload_output: forbidden
+  expected_outputs:
+    - ACTUAL_LOCATION_TESTNET_ACCESS=PASS
+    - ACTUAL_LOCATION_TESTNET_ACCESS=RESTRICTED_BY_VENUE_ELIGIBILITY
+    - ACTUAL_LOCATION_TESTNET_ACCESS=AUTH_OR_PERMISSION_ERROR
+    - ACTUAL_LOCATION_TESTNET_ACCESS=ERROR
+
+safety_decision:
+  - no_admin_elevation
+  - no_WSL_installation_on_this_machine
+  - no_cloud_region_hopping
+  - no_VPN_or_proxy
+  - no_mainnet
+  - no_alternate_endpoint_used_to_bypass_eligibility
+  - no_policy_weakening_to_force_ALLOW
+  - any_future_write_attempt_requires_legitimate_venue_permission_from_actual_execution_location
+
 verified_implementation:
   core_tests: PASS_8_OF_8
   challenge_suite: PASS_6_OF_6
@@ -74,24 +101,6 @@ verified_implementation:
   packaging_ci_run: 34247316936
   packaging_ci_conclusion: SUCCESS
 
-safety_decision:
-  - no_cloud_region_hopping
-  - no_VPN_or_proxy
-  - no_mainnet
-  - no_alternate_client_or_endpoint_used_to_bypass_eligibility
-  - no_policy_weakening_to_force_ALLOW
-  - any_future_write_attempt_requires_legitimate_venue_permission_from_actual_execution_location
-
-next_protected_check:
-  machine: PERSONAL_DEVELOPMENT_MACHINE_ONLY
-  location_rule: USER_ACTUAL_LOCATION_NO_VPN_NO_PROXY
-  tool: OFFICIAL_BINANCE_CLI
-  command_class: SIGNED_SPOT_TESTNET_ACCOUNT_CHECK_ONLY
-  write_allowed_during_check: false
-  decision:
-    if_allowed: proceed_to_bounded_v0_3_testnet_write_proof
-    if_restricted: stop_write_proof_branch_and_preserve_readonly_plus_controlled_evidence
-
 proof_status:
   prior_public_readonly_binance: VERIFIED
   controlled_cross_time_block: VERIFIED_35_47_BPS_GT_20
@@ -100,23 +109,13 @@ proof_status:
   real_testnet_order_capture: NOT_OBTAINED_NOT_CLAIMED
   public_testnet_write_proof_on_vercel: NOT_OBTAINED_NOT_CLAIMED
 
-lifecycle:
-  global_policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
-  coverage_manifest: product/LIFECYCLE-COVERAGE.yaml
-  trace_delta_after_live_testnet_scope: MISSING
-  winning_intelligence_final_recheck: MISSING
-  trace_gate_6_75: PAUSED
-  pbpd_candidate_handoff: NOT_EMITTED
-  project_finisher: NOT_YET_ELIGIBLE
-
 next_valid_handoff:
   from: PBPD
   to: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
   required_output: >-
-    On a personal development machine at the user's actual location, without VPN/proxy, use the official Binance CLI to perform
-    only a signed GET Spot Testnet account check. Do not place an order yet. If Binance permits access, return the sanitized success
-    status and PBPD can run the bounded v0.3 write proof. If Binance refuses, stop the write-proof branch with no circumvention.
+    Pull latest main and run scripts/check-testnet-access.ps1 in ordinary PowerShell on the user's actual-location Windows machine,
+    without VPN/proxy and without elevation. The script performs only a signed official Spot Testnet account GET and no order.
+    Return only the sanitized status line. If PASS, PBPD may adapt and run the bounded v0.3 write proof; if restricted, stop the write branch.
 
 resume_rule: >-
-  Do not rerun the GitHub-hosted write workflow. First resolve actual-location Spot Testnet access with the official CLI on a personal machine.
-  No order exists yet. Step 4 and 5 remain pending.
+  Do not install WSL and do not rerun the GitHub-hosted write workflow. No order exists yet. Step 4 and 5 remain pending.
