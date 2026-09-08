@@ -13,7 +13,7 @@ handover_discipline:
   chat_memory_is_not_authority: true
   rule: read_both_files_first_then_resume_exact_gate
 
-current_stage: PBPD_RUNTIME_EVIDENCE_RECONCILED_AWAITING_TRACE_DELTA
+current_stage: TRACE_BC_DELTA_IMPLEMENTED_AWAITING_RUNTIME_REVIEW
 current_owner: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
 terminal_completeness_allowed: false
 
@@ -98,3 +98,12 @@ then:
 
 resume_rule: >-
   PBPD v0.4 runtime reconciliation is closed. The next owner is TRACE for the current v0.3/v0.4 delta. Historical Gate 6.5 PASS is not sufficient for the new runtime/proof state. No new Binance order is permitted. Do not jump directly to Winning Intelligence, Gate 6.75, candidate handoff, Project Finisher or submission.
+
+trace_bc_delta:
+  direction: B_EDITORIAL_STRUCTURE_PLUS_C_TEMPORAL_DISPLACEMENT
+  human_selection: APPROVED_IN_CHAT
+  artifact: product/TRACE-DELTA-BC-001.md
+  verdict: HOLD_PENDING_CI_DEPLOYMENT_AND_RUNTIME_REVIEW
+  owner_retained: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
+  financial_write: false
+  downstream_progression: FORBIDDEN_THIS_WORKSTREAM
