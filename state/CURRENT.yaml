@@ -1,9 +1,9 @@
 project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
-status: TRACE_DELTA_COMPLETE
-current_stage: TRACE_V0_4_DELTA_PASS_AWAITING_WINNING_INTELLIGENCE_FINAL
-current_owner: WINNING_INTELLIGENCE_FINAL_RECHECK
+status: WINNING_INTELLIGENCE_FINAL_COMPLETE
+current_stage: PRODUCT_POSITIONING_FROZEN_AWAITING_TRACE_GATE_6_75_FINAL_FILM
+current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -19,7 +19,6 @@ state_discipline:
 
 human_authorization:
   source: product/AUTHORIZATION.md
-  latest_direction: product/HUMAN-DIRECTION-LIVE-PROOF-LAB-002.md
   bounded_spot_testnet_write_authorized_and_consumed: true
   public_unrestricted_write_button_authorized: false
   mainnet_write_authorized: false
@@ -28,11 +27,8 @@ human_authorization:
 
 living_prd:
   version: '0.4'
-  base: product/PRD.md
-  v0_3_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
-  v0_4_addendum: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
-  changelog: product/PRD-CHANGELOG.md
   status: ACCEPTANCE_SATISFIED_RUNTIME_RECONCILED
+  scope_frozen_for_submission_candidate: true
 
 preserved_verified_execution:
   proof_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
@@ -48,77 +44,65 @@ preserved_verified_execution:
   rerun_without_new_authorization: FORBIDDEN
 
 v0_4_runtime:
-  vercel:
-    url: https://valid-until-agent-os-plum.vercel.app
-    status: READY
-    static_routes_http_200: true
-    live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
-    signed_read_status: VENUE_ELIGIBILITY_UNAVAILABLE
-    interpretation: VERIFIED_FAIL_CLOSED_ON_EXTERNAL_VENUE_ELIGIBILITY
-  cloudflare:
-    url: https://valid-until-agent-os.pages.dev
-    status: VERIFIED_MIRROR
-    live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
-    signed_read_status: LIVE_SIGNED_READ_VERIFIED
-    canonical_order_identity_verified: true
-    same_order_verified: true
-  financial_write_during_runtime_verification: false
-  historical_trade_rerun: false
-
-pbpd_runtime_reconciliation:
-  artifact: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
-  verdict: COMPLETE
-  v0_4_acceptance: PASS
-  scope_expansion: NONE
-  build_candidate_ready: false
+  primary_judge_url: https://valid-until-agent-os-plum.vercel.app
+  cloudflare_mirror: https://valid-until-agent-os.pages.dev
+  vercel_static_surfaces: VERIFIED
+  vercel_binance_api_state: VENUE_ELIGIBILITY_UNAVAILABLE_FAIL_CLOSED
+  cloudflare_signed_known_order_read: LIVE_SIGNED_READ_VERIFIED
+  no_new_order_from_public_runtime: true
 
 trace_delta:
   direction: B_EDITORIAL_EXECUTION_INSTRUMENT_PLUS_C_TEMPORAL_DISPLACEMENT
+  verdict: PASS
   product_artifact: product/TRACE-DELTA-BC-001.md
   specialist_artifact: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_DELTA_RECHECK_LIVE_TESTNET_V0_4_003.md
-  verdict: PASS
-  visual_delta_merge_head: 370e6039f60c41a0e3211666bb44627d494cca85
-  runtime_harness_head: dd5cf611b8ac9efd60443741a7247c373c6dc67d
-  proof_ci_run: 34274047464
-  proof_ci_result: SUCCESS
   runtime_run: 34274047494
-  runtime_result: SUCCESS
   runtime_artifact_id: 10074995345
   runtime_artifact_digest: sha256:0d93d791857166854c81a0a085b87abb6ca191744d460bfb8ef9c2b12606e603
-  desktop_motion: PASS
-  mobile_motion: PASS
-  desktop_reduced_motion: PASS
-  mobile_reduced_motion: PASS
-  cross_time_signature: PASS
-  evidence_class_separation: PASS
-  anti_slop_domain_specificity: PASS
+  desktop_mobile_normal_reduced_motion: PASS_4_OF_4
   further_visual_redesign_required: false
-  final_encoded_video_review_required: true
+
+winning_intelligence_final:
+  artifact: product/WINNER-INTELLIGENCE-FINAL-2026-09-08.md
+  verdict: PASS_WITH_FREEZE
+  product_freeze: true
+  visual_freeze: true
+  positioning_freeze: true
+  defensible_category: ACTION_BOUND_DECISION_CONTRACT_ACROSS_TIME
+  memory_line: A correct decision can expire.
+  signature: CURRENT_CHECKS_PASS_4_OF_4__ACTION_MATCH__T0_T1_PREMISE_FAILS_35_47_GT_20__NO_LONGER_VALID
+  generic_trade_readiness_language: REJECT
+  generic_risk_preflight_language: REJECT
+  authenticated_remote_mcp_proof_before_submission: DROP_AS_NONESSENTIAL_LATE_RISK
+  more_trading_proof: REJECT
+  more_sponsor_feature_breadth: REJECT
+  packaging_repairs:
+    - README.md
+    - docs/JUDGE-MATRIX.md
+    - docs/DEMO-SCRIPT.md
+  remaining_critical_risk: FINAL_ENCODED_VIDEO_NOT_YET_REVIEWED
 
 security_invariants:
   - no_browser_secret_exposure
-  - no_public_prefixed_binance_secrets
-  - no_raw_account_payload_to_browser
-  - no_secret_logging
-  - official_spot_testnet_only_for_authenticated_financial_proof
   - no_mainnet
   - no_real_funds
   - no_geo_bypass
   - no_public_unrestricted_write_button
   - signed_read_is_not_new_execution
-  - venue_eligibility_failure_is_not_valid_until_block
+  - controlled_replay_is_not_historical_execution
   - do_not_rerun_successful_testnet_order
+  - no_profitability_or_production_safety_claim
 
 next_valid_handoff:
-  from: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
-  to: WINNING_INTELLIGENCE_FINAL_RECHECK
-  required_output: FINAL_COLLISION_JUDGE_STRATEGY_AND_FREEZE_VERDICT_ON_TRACE_APPROVED_BUILD
+  from: WINNING_INTELLIGENCE_FINAL_RECHECK
+  to: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
+  contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
+  required_output: ACTUAL_FINAL_ENCODED_58_65_SECOND_EVIDENCE_FILM_AND_TRACE_VERDICT
 
 then:
-  - TRACE Gate 6.75 final encoded video review
   - PBPD candidate handoff
   - Project Finisher independent terminal assurance
   - protected human submission
 
 resume_rule: >-
-  TRACE v0.4/B+C delta is PASS with desktop/mobile and reduced-motion runtime evidence. Do not reopen visual scope without a concrete Winning Intelligence collision or claim issue. Resume only at Winning Intelligence final recheck, then return the actual final encoded film to TRACE under GATE_6_75_DEMO_NARRATIVE_003.md. No new Binance order is permitted.
+  Winning Intelligence final recheck is PASS_WITH_FREEZE. Do not add new features, trading proof, remote MCP OAuth proof, competitor-chasing scope or visual redesign. The highest remaining leverage and required lifecycle gate is the actual encoded 58–65 second film under TRACE Gate 6.75 contract 003. No downstream subsystem may infer Gate 6.75 PASS until TRACE reviews that encoded artifact.
