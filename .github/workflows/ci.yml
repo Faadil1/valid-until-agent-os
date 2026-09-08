@@ -32,6 +32,37 @@ jobs:
           test -f src/binance-mcp-observation.mjs
       - name: Rebuild judge data and challenge evidence
         run: npm run build:web
+      - name: Verify Live Proof Lab routes and server-only secret boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f web/index.html
+          test -f web/lab.html
+          test -f web/live-proof.html
+          test -f web/evaluations.html
+          test -f api/live-market.mjs
+          test -f api/order-status.mjs
+          grep -q 'href="/lab"' web/index.html
+          grep -q 'href="/live-proof"' web/index.html
+          grep -q 'href="/evaluations"' web/index.html
+          grep -q 'LIVE · public Spot Testnet observation' web/lab.html
+          grep -q 'VERIFIED EXECUTION' web/lab.html
+          grep -q 'LIVE SIGNED READ' web/live-proof.html
+          if grep -R -n -E 'NEXT_PUBLIC_BINANCE|VITE_BINANCE' web api src; then
+            echo '::error::Public-prefixed Binance secret reference found'
+            exit 1
+          fi
+          if grep -R -n 'BINANCE_TESTNET_API_SECRET' web; then
+            echo '::error::Server secret name referenced by browser surface'
+            exit 1
+          fi
+          if grep -q "method: 'POST'" api/order-status.mjs; then
+            echo '::error::Signed known-order refresh must remain read-only'
+            exit 1
+          fi
+          grep -q "req.method !== 'GET'" api/order-status.mjs
+          grep -q "https://testnet.binance.vision" api/order-status.mjs
+          echo 'LIVE_PROOF_LAB_SECURITY_BOUNDARY=PASS'
 
   windows-powershell-parse:
     runs-on: windows-latest
