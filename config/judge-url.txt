@@ -1,0 +1,3 @@
+# Set this file to the deployed Vercel base URL only after the preview exists.
+# Example: https://valid-until-agent-os.vercel.app
+PENDING
