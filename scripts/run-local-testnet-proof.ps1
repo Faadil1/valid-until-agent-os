@@ -5,22 +5,34 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-# Valid Until — bounded live Binance Spot Testnet proof
+# Valid Until - bounded live Binance Spot Testnet proof
 # - ordinary Windows PowerShell / PowerShell 7
 # - no WSL/admin install required
 # - official Spot Testnet only
 # - at most one BUY order, canonical 10 test USDT, hard cap enforced in Node
 # - raw proof stays in TEMP and is deleted
 # - only sanitized web/live-testnet-proof.json may be committed/pushed
+#
+# IMPORTANT: this file is intentionally ASCII-only so Windows PowerShell 5.1
+# does not misdecode UTF-8 punctuation before parsing.
 
 function Convert-SecureToPlain([Security.SecureString]$Secure) {
     $ptr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secure)
-    try { return [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr) }
-    finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr) }
+    try {
+        return [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr)
+    }
+    finally {
+        [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr)
+    }
 }
 
-Write-Host 'Valid Until — bounded Binance Spot Testnet execution proof'
-Write-Host 'NON-PRODUCTION TESTNET ONLY — NO REAL FUNDS'
+function Write-Utf8NoBom([string]$Path, [string]$Text) {
+    $utf8 = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($Path, $Text, $utf8)
+}
+
+Write-Host 'Valid Until - bounded Binance Spot Testnet execution proof'
+Write-Host 'NON-PRODUCTION TESTNET ONLY - NO REAL FUNDS'
 Write-Host 'Exact action: BUY BTCUSDT, 10 test USDT'
 Write-Host 'Maximum order count: 1'
 Write-Host 'Endpoint: https://testnet.binance.vision'
@@ -43,7 +55,7 @@ $apiKeySecure = Read-Host 'Paste Binance Spot Testnet API Key' -AsSecureString
 $secretSecure = Read-Host 'Paste Binance Spot Testnet API Secret' -AsSecureString
 $apiKey = $null
 $secret = $null
-$rawPath = Join-Path $env:TEMP ("valid-until-testnet-raw-" + [Guid]::NewGuid().ToString('N') + '.json')
+$rawPath = Join-Path $env:TEMP ('valid-until-testnet-raw-' + [Guid]::NewGuid().ToString('N') + '.json')
 $publicPath = Join-Path (Get-Location) 'web\live-testnet-proof.json'
 
 try {
@@ -54,7 +66,9 @@ try {
     }
 
     $sourceSha = (& git rev-parse HEAD 2>$null).Trim()
-    if (-not $sourceSha) { $sourceSha = 'UNKNOWN' }
+    if (-not $sourceSha) {
+        $sourceSha = 'UNKNOWN'
+    }
 
     $env:BINANCE_API_KEY = $apiKey
     $env:BINANCE_SECRET_KEY = $secret
@@ -67,14 +81,24 @@ try {
 
     Write-Host 'Running deterministic assurance...'
     & npm run test:all
-    if ($LASTEXITCODE -ne 0) { throw 'Deterministic assurance failed; no live proof was attempted.' }
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Deterministic assurance failed; no live proof was attempted.'
+    }
 
-    Write-Host 'Running one fresh T0→T1 Valid Until cycle...'
-    & node src/live-testnet-native.mjs BTCUSDT | Out-File -FilePath $rawPath -Encoding utf8
-    if ($LASTEXITCODE -ne 0 -or -not (Test-Path $rawPath)) { throw 'Native Spot Testnet proof failed.' }
+    Write-Host 'Running one fresh T0-to-T1 Valid Until cycle...'
+    $rawText = (& node src/live-testnet-native.mjs BTCUSDT | Out-String)
+    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($rawText)) {
+        throw 'Native Spot Testnet proof failed.'
+    }
+    Write-Utf8NoBom -Path $rawPath -Text $rawText
+    if (-not (Test-Path $rawPath)) {
+        throw 'Native Spot Testnet proof output was not written.'
+    }
 
     & node scripts/sanitize-testnet-proof.mjs $rawPath $publicPath
-    if ($LASTEXITCODE -ne 0) { throw 'Sanitization failed.' }
+    if ($LASTEXITCODE -ne 0) {
+        throw 'Sanitization failed.'
+    }
 
     $proof = Get-Content $publicPath -Raw | ConvertFrom-Json
     $validity = [string]$proof.decision_contract.validity_status
@@ -101,18 +125,28 @@ try {
             Write-Host 'PUBLICATION=SKIPPED_NO_VERIFIED_ALLOW_WRITE'
             exit 6
         }
+
         Write-Host 'Publishing sanitized proof only...'
         & git add -- web/live-testnet-proof.json
-        if ($LASTEXITCODE -ne 0) { throw 'git add failed.' }
+        if ($LASTEXITCODE -ne 0) {
+            throw 'git add failed.'
+        }
+
         & git diff --cached --quiet
         if ($LASTEXITCODE -eq 0) {
             Write-Host 'PUBLICATION=NO_CHANGE'
         }
         else {
             & git commit -m 'evidence: publish local authenticated Binance Spot Testnet proof'
-            if ($LASTEXITCODE -ne 0) { throw 'git commit failed.' }
+            if ($LASTEXITCODE -ne 0) {
+                throw 'git commit failed.'
+            }
+
             & git push origin HEAD:main
-            if ($LASTEXITCODE -ne 0) { throw 'git push failed.' }
+            if ($LASTEXITCODE -ne 0) {
+                throw 'git push failed.'
+            }
+
             Write-Host 'PUBLICATION=GITHUB_PUSH_COMPLETE'
             Write-Host 'VERCEL_DEPLOYMENT=TRIGGERED_BY_MAIN_PUSH'
         }
@@ -127,7 +161,9 @@ finally {
     Remove-Item Env:VALID_UNTIL_RECHECK_MS -ErrorAction SilentlyContinue
     Remove-Item Env:VALID_UNTIL_SOURCE_SHA -ErrorAction SilentlyContinue
     Remove-Item Env:VALID_UNTIL_CAPTURE_SOURCE -ErrorAction SilentlyContinue
-    if (Test-Path $rawPath) { Remove-Item $rawPath -Force -ErrorAction SilentlyContinue }
+    if (Test-Path $rawPath) {
+        Remove-Item $rawPath -Force -ErrorAction SilentlyContinue
+    }
     $apiKey = $null
     $secret = $null
     $apiKeySecure = $null
