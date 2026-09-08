@@ -14,7 +14,7 @@ handover_discipline:
   rule: read_both_files_first_then_resume_exact_gate
   update_after_each_meaningful_gate_or_packaging_step: true
 
-current_stage: TRACE_GATE_6_75_REMOTION_FILM_BUILD_IN_PROGRESS
+current_stage: TRACE_GATE_6_75_ENCODED_CANDIDATE_RENDERED_PENDING_HUMAN_AUDIO_PLAYBACK
 current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
 terminal_completeness_allowed: false
 
@@ -24,6 +24,7 @@ material_scope_state:
   trace_delta: PASS
   winning_intelligence_final: PASS_WITH_FREEZE
   gate_6_75_judge_chain_alignment: COMPLETE
+  remotion_candidate_render: SUCCESS
   product_scope: FROZEN
   visual_scope: FROZEN
   positioning_scope: FROZEN
@@ -64,59 +65,66 @@ winning_intelligence_final:
   competitor_proof_line: Fresh enough now is not the same as still justified by the decision made then.
   judge_memory: A correct decision can expire.
   final_aha: PASS_4_OF_4_PLUS_ACTION_MATCH_BUT_PREMISE_FAIL_35_47_GT_20
-  final_day_collision_result: GENERIC_PREFLIGHT_TRADE_READINESS_MORE_CROWDED__NARROW_CROSS_TIME_CONTRACT_REMAINS_DEFENSIBLE_IN_REVIEWED_EVIDENCE
   remote_authenticated_mcp_proof: NOT_REQUIRED_BEFORE_SUBMISSION
   new_feature_scope: REJECT
   more_testnet_orders: REJECT
-  packaging_consistency_repairs:
-    - README.md
-    - docs/JUDGE-MATRIX.md
-    - docs/DEMO-SCRIPT.md
 
 gate_6_75_recording_contract:
-  status: READY_FOR_RECORDING__REMOTION_RENDER_IN_PROGRESS
+  status: ENCODED_CANDIDATE_EXISTS__HUMAN_AUDIO_PLAYBACK_PENDING
   judge_performance_chain: RUBRIC__PAIN__PROBLEM__DIFFERENTIATOR__EXECUTION__EVIDENCE__STORY__DEMO__Q_AND_A
   chain_application:
     rubric: INTERNAL_PROOF_MAP_NOT_LITERAL_SCENE
-    pain: FIRST_5_SECONDS
-    problem: FIRST_5_SECONDS
-    differentiator: EXPLICIT_BEFORE_TECHNICAL_DETAIL_BY_APPROX_10_SECONDS
-    execution: AGENT_PROPOSES__BINANCE_AGENT_OS_FRESH_STATE__VALID_UNTIL_REVALIDATES
-    evidence: CROSS_TIME_COUNTERFACTUAL_PLUS_6_OF_6_PLUS_HISTORICAL_TESTNET
-    story: A_CORRECT_DECISION_CAN_EXPIRE__FRESH_DOES_NOT_MEAN_SAME_PREMISE
-    demo: REPLAY_PROOF_CAUSAL_REVEAL
+    pain: FIRST_5_SECONDS_PASS
+    problem: FIRST_5_SECONDS_PASS
+    differentiator: EXPLICIT_BEFORE_TECHNICAL_DETAIL_PASS
+    execution: AGENT_PROPOSES__BINANCE_AGENT_OS_FRESH_STATE__VALID_UNTIL_REVALIDATES_PASS
+    evidence: CROSS_TIME_COUNTERFACTUAL_PLUS_6_OF_6_PLUS_HISTORICAL_TESTNET_PASS
+    story: A_CORRECT_DECISION_CAN_EXPIRE__FRESH_DOES_NOT_MEAN_SAME_PREMISE_PASS
+    demo: DEPLOYED_REPLAY_PROOF_CAUSAL_REVEAL_PASS
     q_and_a: PREPARED_IN_DOCS_JUDGE_MATRIX
-  differentiator_line: A preflight asks whether an action is acceptable now. Valid Until asks whether this exact old action is still justified by the decision that produced it.
-  working_script: docs/DEMO-SCRIPT.md
   trace_contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
+  candidate_review: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
   target_seconds: 58-65
-  actual_encoded_video_required: true
+  actual_encoded_video_exists: true
+  visual_claim_readability: PASS
   trace_gate_6_75_pass: false
 
 remotion_render_handoff:
-  workflow_file: .github/workflows/final-remotion-film.yml
-  workflow_commit: 983f2f7e96ea25c21836f0b5607270db9df9365d
-  workflow_run: 34277478773
-  current_status: IN_PROGRESS
+  successful_workflow: .github/workflows/final-remotion-film-retry.yml
+  successful_commit: 5e7992968137d71fb442fa13a6d61f2be6650a84
+  successful_run: 34277730560
+  successful_result: SUCCESS
   target_artifact_name: valid-until-final-remotion-film
-  expected_video: video/final-film/out/valid-until-final.mp4
-  expected_duration_seconds: 62
+  artifact_id: 10076473914
+  artifact_digest: sha256:45889aa6b4331d629769c7e9d3782ff4260a4d742f5fe547e4b78fa3f3a55680
+  video: valid-until-final.mp4
+  duration_seconds: 62.058667
   resolution: 1920x1080
   fps: 30
+  video_codec: H264
+  audio_codec: AAC
   source_assets: LIVE_DEPLOYED_VERCEL_SCREENSHOTS_AND_ACTUAL_REPLAY_FRAME_SEQUENCE
   replay_capture: CONTROLLED_REPLAY_ONLY__NO_FINANCIAL_WRITE
+  visual_sample_review: PASS
   voiceover:
     required: true
     language: English
-    current_mode: NEURAL_TTS_DRAFT
+    current_mode: NEURAL_TTS
+    technical_presence: PASS
+    script_truth: PASS
+    timing_contract: PASS
+    subjective_naturalness: PENDING_HUMAN_PLAYBACK
     replaceable_with_human_voice_without_visual_rebuild: true
-    reason: >-
-      The causal distinction between current-state preflight and cross-time decision validity is too dense to leave to silent screenshots. Voiceover carries the judge through pain, differentiator, execution and evidence while the live product remains on screen.
   music:
-    required: false
-    recommendation: OMIT_FOR_FIRST_GATE_6_75_CUT
+    included: false
+    recommendation: KEEP_OMITTED_UNLESS_HUMAN_REVIEW_FINDS_FILM_TOO_DRY
+  first_failed_run:
+    run: 34277478773
+    cause: SYSTEM_FFPROBE_MISSING_DURING_TTS_NORMALIZATION
+    classification: PACKAGING_ONLY
+    product_defect: false
   repair_boundary: >-
-    If the workflow fails, repair only screenshot capture, TTS, Remotion timing/rendering or packaging. Do not modify the Valid Until engine, deployed product, policy, historical proof, eligibility behavior, or add a new financial write.
+    If the user requests a different voice, change only audio generation/timing and rerender the same frozen Remotion visual composition. Do not modify the Valid Until engine, deployed product, policy, historical proof, eligibility behavior or create a financial write.
 
 truth_boundaries:
   - controlled_replay_is_synthetic_and_creates_no_order
@@ -131,10 +139,11 @@ truth_boundaries:
 
 next_valid_handoff:
   from: REMOTION_FINAL_FILM_BUILD
-  to: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
+  to: HUMAN_AUDIO_PLAYBACK_THEN_TRACE_GATE_6_75_CLOSURE
   required_contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
+  candidate_review: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
   required_output: >-
-    Retrieve the encoded MP4 from GitHub Actions run 34277478773 if successful. TRACE must inspect the actual file for 58-65 second duration, compression/readability, differentiator before technical detail, Agent OS legibility, PASS 4/4 + MATCH versus FAIL 35.47 > 20 BPS, controlled replay versus historical verified-execution separation, truthful Testnet language and no implication of a new trade. If failed, perform bounded packaging repair and rerender.
+    Human watches/listens to the current 62.06-second MP4 and returns KEEP VOICEOVER, CHANGE VOICE, or REPLACE WITH MY VOICE. If KEEP VOICEOVER and no audio defect is reported, TRACE can finalize Gate 6.75 based on the already-PASS visual/claim review. If voice changes, perform bounded audio-only rerender and repeat the playback check.
 
 then:
   - PBPD_CANDIDATE_HANDOFF
@@ -142,4 +151,4 @@ then:
   - HUMAN_PROTECTED_SUBMISSION
 
 resume_rule: >-
-  The final film is actively rendering through GitHub Actions run 34277478773 using Remotion and current deployed screenshots. Wait only for that foreground render result; do not reopen product scope. On success, download the artifact and begin TRACE Gate 6.75 encoded-film review. On failure, inspect the job logs and patch the packaging workflow only. No new Binance order is permitted.
+  The actual Remotion film has rendered successfully and its visual/claim evidence review is PASS. Do not rebuild product or visual design. The only open Gate 6.75 check is subjective human playback of the English voiceover. After that decision, either close TRACE Gate 6.75 or rerender audio-only. No new Binance order is permitted.
