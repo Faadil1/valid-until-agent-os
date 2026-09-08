@@ -4,7 +4,7 @@ profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
 current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
-current_stage: PRODUCT_POSITIONING_FROZEN_AWAITING_TRACE_GATE_6_75_FINAL_FILM
+current_stage: TRACE_GATE_6_75_ENCODED_CANDIDATE_RENDERED_PENDING_HUMAN_AUDIO_PLAYBACK
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -135,8 +135,9 @@ capabilities:
   - capability: trace_gate_6_75_demo_narrative_evidence_film
     owner: TRACE
     status: MISSING
-    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
-    note: current-truth film contract exists; actual final encoded 58–65 second artifact and TRACE review are still required
+    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
+    note: >-
+      Actual encoded 62.058667-second Remotion candidate now exists from run 34277730560 / artifact 10076473914. Visual compression/readability, judge-chain ordering, Agent OS role, cross-time signature, 6/6 proof, and controlled-vs-historical execution separation are reviewed PASS. Gate remains open only for subjective human playback confirmation of the English neural voiceover; Gate 7 is not authorized.
 
   - capability: pbpd_candidate_handoff
     owner: PBPD
@@ -167,7 +168,7 @@ missing:
 unknown: []
 
 triggered_but_unresolved:
-  - TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
+  - TRACE_GATE_6_75_HUMAN_AUDIO_PLAYBACK_AND_FINAL_CLOSURE
   - PBPD_CANDIDATE_HANDOFF
   - PROJECT_FINISHER
   - HUMAN_PROTECTED_SUBMISSION
@@ -186,6 +187,16 @@ current_evidence:
   winning_intelligence_final_artifact: product/WINNER-INTELLIGENCE-FINAL-2026-09-08.md
   winning_intelligence_final_verdict: PASS_WITH_FREEZE
   product_visual_positioning_freeze: true
+  remotion_retry_run: 34277730560
+  remotion_retry_result: SUCCESS
+  remotion_artifact_id: 10076473914
+  remotion_artifact_digest: sha256:45889aa6b4331d629769c7e9d3782ff4260a4d742f5fe547e4b78fa3f3a55680
+  remotion_encoded_duration_seconds: 62.058667
+  remotion_resolution: 1920x1080
+  remotion_fps: 30
+  remotion_audio_present: true
+  remotion_visual_encoded_review: PASS
+  remotion_human_audio_playback: PENDING
   cloudflare_signed_read_status: LIVE_SIGNED_READ_VERIFIED
   testnet_order_id: 13634770
   testnet_client_order_id: vu-mtswxiik-ecb6b093
@@ -209,9 +220,9 @@ non_bypass_rules_reaffirmed:
   - no_cloudflare_or_vercel_placement_manipulation_for_venue_bypass
 
 next_valid_handoff:
-  from: WINNING_INTELLIGENCE_FINAL_RECHECK
-  to: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
-  required_output: ACTUAL_FINAL_ENCODED_58_65_SECOND_EVIDENCE_FILM_AND_TRACE_VERDICT
+  from: REMOTION_FINAL_FILM_BUILD
+  to: HUMAN_AUDIO_PLAYBACK_THEN_TRACE_GATE_6_75_CLOSURE
+  required_output: HUMAN_KEEP_VOICEOVER_OR_CHANGE_VOICE_DECISION_THEN_TRACE_GATE_6_75_FINAL_VERDICT
 
 resume_rule: >-
-  PBPD runtime reconciliation, TRACE v0.4/B+C delta and Winning Intelligence final recheck are SATISFIED. Product, visual direction and positioning are frozen. Resume at TRACE Gate 6.75 final encoded film only. No new product scope, remote MCP OAuth proof, trading proof or redesign should be added before submission absent a new material defect.
+  The encoded Remotion candidate exists and its visual/claim review is PASS. Lifecycle capability Gate 6.75 remains MISSING only because the final subjective human voiceover playback confirmation has not yet occurred. If KEEP VOICEOVER is confirmed with no audio defect, TRACE can close Gate 6.75 and then hand off to PBPD candidate review. If voice changes are requested, rerender audio/packaging only. No new product scope or Binance order is permitted.
