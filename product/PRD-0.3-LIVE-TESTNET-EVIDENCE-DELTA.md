@@ -97,7 +97,7 @@ Obtained:
 - testnet execution boundary `7/7`;
 - workflow packaging CI `34247316936` SUCCESS.
 
-### Real venue attempt
+### Hosted venue attempt
 
 GitHub-hosted write attempt:
 - run `34248954040`;
@@ -113,23 +113,53 @@ Evidence: `evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md`.
 
 This proves the workflow fails closed on venue refusal. It does **not** satisfy the desired successful testnet write proof.
 
-### Local tooling constraint discovered
+### Actual-location authenticated access
 
-The currently available Windows machine has no WSL installation and the user has no administrator right to install it. Binance CLI v2.1.1 publishes macOS/Linux release assets but no native Windows asset was found in the official release. This is treated as a tooling constraint, not a reason to bypass venue restrictions or machine policy.
+The user then executed the no-admin native Windows signed access check from the current actual-location development machine:
+
+```text
+ACTUAL_LOCATION_TESTNET_ACCESS=PASS
+FINANCIAL_WRITE=FALSE
+```
+
+Evidence: `evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md`.
+
+Interpretation:
+- authenticated Spot Testnet access from the actual execution location is available;
+- no financial write occurred during the check;
+- PBPD may now proceed to the already-authorized bounded execution proof;
+- this does not itself establish a successful order claim.
+
+### Local tooling constraint and transport resolution
+
+The currently available Windows machine has no WSL installation and the user has no administrator right to install it. Binance CLI v2.1.1 publishes macOS/Linux release assets but no native Windows asset was found in the official release.
+
+PBPD therefore uses a native Node HTTPS/HMAC transport against the **same official Spot Testnet endpoint** for the bounded local proof. This is an implementation transport change only; it does not change venue, eligibility, authorization, endpoint, notional cap or claim class.
+
+The local proof runner must:
+- use `https://testnet.binance.vision` only;
+- make a signed account check before the decision cycle;
+- use public Spot Testnet state for T0/T1;
+- place no order on `BLOCK`;
+- send at most one POST order on `ALLOW` after explicit `CONFIRM_TESTNET_WRITE`;
+- never retry an uncertain POST; recover only by querying the exact same `clientOrderId`;
+- query the same `clientOrderId` after a successful send;
+- delete raw capture from local temporary storage after sanitization;
+- publish only `web/live-testnet-proof.json`.
 
 ## Current evidence strategy
 
-Preferred remaining compliant attempt:
+The next permitted proof is now:
 
-1. Use the user's actual-location Windows machine with no VPN/proxy/location manipulation.
-2. Perform a signed `GET /api/v3/account` against the **official Spot Testnet endpoint** using either the official Binance CLI where natively available or native PowerShell HMAC signing against the same official Binance API.
-3. The Windows no-admin path is `scripts/check-testnet-access.ps1`; it performs no financial write, installs nothing and prints no account payload or credentials.
-4. If Binance permits actual-location authenticated access, PBPD may adapt the bounded v0.3 proof to the same official signed API transport and execute at most one authorized Spot Testnet order under MUST-13..21.
-5. If Binance refuses, stop and freeze the final submission around controlled cross-time proof + authentic read-only Binance evidence; do not circumvent.
+1. run `scripts/run-local-testnet-proof.ps1 -Publish` from the same actual-location Windows machine;
+2. preserve exact BUY BTCUSDT 10 test USDT and the 25 test USDT hard cap;
+3. if Valid Until returns `BLOCK`, perform zero order writes and do not publish as a successful write proof;
+4. if Valid Until returns `ALLOW`, send one Spot Testnet order maximum and query the same `clientOrderId`;
+5. sanitize the raw local proof;
+6. push only the sanitized artifact to `main`, allowing Vercel to redeploy;
+7. stop at requested step 5 before TRACE/Winning Intelligence final.
 
-Using native PowerShell against the official Spot Testnet API is an implementation transport change only. It does not change the endpoint, eligibility boundary, product authorization invariant or claim class.
-
-A successful testnet write is desirable but not allowed to override eligibility constraints.
+A successful testnet write is desirable but not allowed to override product or eligibility constraints.
 
 ## Acceptance delta
 
