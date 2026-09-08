@@ -19,12 +19,16 @@ jobs:
           node-version: '20'
       - name: Run deterministic invariants and red-team suite
         run: npm run test:all
-      - name: Verify portable Agent OS skill packaging
+      - name: Verify portable Agent OS skill and MCP composition packaging
         run: |
           test -f skills/valid-until/SKILL.md
           grep -q '^name: valid-until$' skills/valid-until/SKILL.md
           grep -q 'Reasoning is not authorization' skills/valid-until/SKILL.md
           test -f AGENTS.md
           grep -q 'NO LONGER VALID' AGENTS.md
+          test -f config/mcp-composition.example.json
+          grep -q 'https://agent.binance.com/mcp/agentic' config/mcp-composition.example.json
+          grep -q 'src/mcp-server.mjs' config/mcp-composition.example.json
+          test -f src/binance-mcp-observation.mjs
       - name: Rebuild judge data and challenge evidence
         run: npm run build:web
