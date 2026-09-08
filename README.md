@@ -1,188 +1,180 @@
 # Valid Until — execution integrity for AI agents
 
-> **Reasoning is not authorization.**
->
+> **Reasoning is not authorization.**  
 > **A correct decision can expire.**
 
-**Valid Until** is a cross-time execution-validity agent workflow built for the **Binance Agent OS Mini Hackathon — Track A**.
+**Valid Until** is a cross-time execution-validity agent workflow for the **Binance Agent OS Mini Hackathon — Track A**.
 
-**Live judge surface:** https://valid-until-agent-os.vercel.app  
+**Judge surface:** https://valid-until-agent-os.vercel.app  
 **Red-team surface:** https://valid-until-agent-os.vercel.app/evaluations  
-**Portable agent skill:** [`skills/valid-until/SKILL.md`](skills/valid-until/SKILL.md)  
-**Agent-native companion:** `npm run mcp`
+**Portable skill:** [`skills/valid-until/SKILL.md`](skills/valid-until/SKILL.md)  
+**Local contract MCP:** `npm run mcp`
 
-An AI agent can make a correct decision at T0, then reach execution at T1 after the market state or policy conditions that justified that decision have changed. The capability can still exist. Current market checks can still look acceptable. The **old action can still be invalid because it no longer belongs to the premise that justified it**.
+## The problem
 
-Valid Until now binds **three things into one short-lived decision contract**:
+An AI agent can make a correct decision at T0 and reach the action boundary at T1 after the state that justified that decision has changed.
 
-1. the frozen user policy;
-2. the exact T0 Binance state;
-3. the exact normalized proposed action (`symbol + side + notional`).
+The capability may still exist. The action may still fit the user's standing limits. Current-state checks may even still look acceptable.
 
-That is the product.
+That does **not** mean the old decision is still authorized.
 
-## The signature proof
+Valid Until binds three things into one short-lived action-decision contract:
 
-The controlled replay is deliberately constructed so that a generic current-state preflight is **not enough**.
+1. sealed policy;
+2. exact T0 Binance state;
+3. exact normalized action (`symbol + side + notional_usdt`).
 
-At T1:
+At T1 the same exact action must still satisfy both current constraints **and** the sealed relationship to the T0 premise.
 
-| Check | Result |
+## Signature deterministic proof
+
+The controlled replay is constructed so a generic current-state preflight passes while the old premise expires.
+
+| Check at T1 | Result |
 |---|---:|
 | Receipt signature | PASS |
 | Policy identity | PASS |
-| **Exact action hash** | **PASS** |
+| Exact action hash | PASS |
 | Receipt age: `3s <= 5s` | PASS |
 | Current spread: `0.37 <= 8 bps` | PASS |
 | Current abs 1m movement: `47.2 <= 80 bps` | PASS |
-| Current top-5 bid depth: `$171k >= $50k` | PASS |
-| Current top-5 ask depth: `$168k >= $50k` | PASS |
+| Current bid depth: `$171k >= $50k` | PASS |
+| Current ask depth: `$168k >= $50k` | PASS |
 | **T0 → T1 mid drift: `35.47 > 20 bps`** | **FAIL** |
 
-So the engine returns:
+Result:
 
 ```text
-CURRENT-STATE CHECKS: PASS
+CURRENT STATE: PASS
 EXACT ACTION: MATCH
-ORIGINAL DECISION PREMISE: EXPIRED
+OLD PREMISE: EXPIRED
 → NO LONGER VALID
 → REPLAN_REQUIRED
 ```
 
-**Fresh does not mean same premise.**
+**The authorization was still available. The premise was not.**
 
-## The second proof: exact action really means exact action
+## Exact-action proof
 
-A policy cap alone is not enough. The red-team suite now tests a subtler mutation:
+A policy cap is not an action authorization.
 
 ```text
 policy max = $100
 T0 signed action = BUY BTCUSDT $50
-T1 proposed action = BUY BTCUSDT $75
+T1 action        = BUY BTCUSDT $75
 ```
 
-Both `$50` and `$75` are legal under the `$100` policy cap. A generic max-notional check therefore passes.
-
-Valid Until still returns `BLOCK` because receipt v2 signed the exact T0 action hash:
+Both are under the cap. Valid Until still blocks `$75` because receipt v2 signed the exact `$50` action hash.
 
 ```text
-action_notional_usdt <= $100   PASS
-action_hash_match              FAIL
+notional <= policy max   PASS
+action_hash_match        FAIL
 → BLOCK / REPLAN_REQUIRED
 ```
 
-This closes the gap between “inside the same policy” and “the same authorized decision contract.”
+## Live proof strategy
 
-## Four different questions
+Read-only authenticity is useful, but it is no longer the final proof target.
 
-Valid Until is intentionally narrower than the crowded “AI safety / trade readiness” category.
-
-| Layer | Question |
-|---|---|
-| Reasoning verifier | Was the model's reasoning supported? |
-| Current-state preflight | Is the action acceptable under current conditions? |
-| Permission layer | May the agent use this capability? |
-| **Valid Until** | **Is this exact previously-justified action still valid relative to its original premise now?** |
-
-This is why the project binds the T0 decision state **and exact T0 action**, not just the latest market state.
-
-## Agent OS architecture
+Valid Until now includes a **Binance Spot Testnet execution boundary**:
 
 ```text
-Human
-  defines / accepts bounded policy
+LIVE BINANCE SPOT TESTNET T0
         ↓
-AI agent host
-  interprets intent + proposes exact action
+seal policy + exact action
         ↓
-Binance Agent OS / official Binance skill
-  supplies fresh observations + capability surface
+LIVE BINANCE SPOT TESTNET T1
         ↓
-Valid Until MCP / deterministic engine
-  seals policy + T0 state + exact action
-  revalidates exact action at T1
+Valid Until revalidation
         ↓
-ALLOW / BLOCK
-        ↓
-BLOCK => REPLAN_REQUIRED
-```
-
-The same probabilistic model that proposes an action is not allowed to self-authorize it.
-
-### Install the portable skill
-
-```bash
-npx skills add Faadil1/valid-until-agent-os --skill valid-until -y
-```
-
-Install the official Binance skill alongside it:
-
-```bash
-npx skills add binance/binance-skills-hub --skill binance -y
-```
-
-The host-agent contract is documented in [`AGENTS.md`](AGENTS.md).
-
-### Run the Valid Until MCP companion
-
-```bash
-npm run mcp
-```
-
-It exposes exactly two stdio MCP tools:
-
-- `valid_until_begin` — seal policy + normalized T0 Binance snapshot + exact action into an Ed25519-signed receipt v2;
-- `valid_until_revalidate` — recheck a fresh T1 snapshot and the exact action now being proposed.
-
-The companion deliberately **does not fetch Binance data itself**. The host agent obtains sponsor-native observations from Binance Agent OS, then passes normalized snapshots into the Valid Until contract. It also has no order, transfer, wallet, x402 or funding capability.
-
-This gives an agent host a real callable authority surface without duplicating Binance's tools.
-
-## Why Agent OS matters
-
-Binance Agent OS is the sponsor-native observation/capability environment. Valid Until does not replace Binance permissions or wallet controls. It adds a different boundary:
-
-```text
-Binance controls what capability may exist.
-Valid Until controls whether this exact old proposal is still the same valid decision contract now.
-```
-
-Live mode uses the official `binance-cli` for Binance public market data instead of hand-rolling a separate exchange client.
-
-## 60-second judge story
-
-```text
-USER POLICY + EXACT ACTION
-  BUY BTCUSDT $100
-  max spread      8 bps
-  max mid drift  20 bps
-  max age          5 sec
-  min top-5 depth $50k/side
+       ALLOW ───────────────→ signed MARKET BUY to Binance Spot Testnet
+        │                       ↓
+        │                    query same clientOrderId
+        │                       ↓
+        │                    exchange status evidence
         │
-        ▼
-[1] POLICY + ACTION FROZEN BEFORE MARKET READ
-        │ policy hash + action hash
-        ▼
-[2] BINANCE MARKET SNAPSHOT / T0
-        │ via official binance-cli in live mode
-        ▼
-[3] DECISION RECEIPT V2
-        │ Ed25519-signed + state-bound + action-bound + short-lived
-        ▼
-[4] PRE-ACTION REVALIDATION / T1
-        │ current checks still pass
-        │ exact action still matches
-        │ T0→T1 market moved 35.47 bps
-        ▼
-[5] NO LONGER VALID
-    REPLAN_REQUIRED
+       BLOCK ───────────────→ ZERO EXECUTOR CALL
+        ↓
+REPLAN_REQUIRED
 ```
 
-**The authorization was still valid. The premise was not.**
+The executor is deliberately hardcoded to:
 
-The included controlled replay is intentionally deterministic so judges can see the failure path immediately. The separate live command captures real public Binance market data but performs **no order placement**.
+```text
+https://testnet.binance.vision
+```
 
-## Run the deterministic proof
+It cannot be redirected to mainnet through configuration.
+
+The bounded proof currently supports exact `BUY` actions only and requires a local explicit write gate:
+
+```text
+VALID_UNTIL_TESTNET_WRITE=CONFIRM_TESTNET_WRITE
+```
+
+No real funds are used.
+
+## Important evidence status
+
+Implemented and CI-verified:
+
+```text
+PASS 8/8 core invariants
+PASS 6/6 challenge suite
+PASS MCP 5/5
+PASS MCP observation adapter 4/4
+PASS testnet execution boundary 5/5
+```
+
+Latest full CI after adding the testnet execution boundary:
+
+```text
+GitHub Actions run 34242858075
+head 18e0bd6006134010fca00b4d05667b87703bbb75
+conclusion SUCCESS
+```
+
+The testnet executor tests prove:
+
+- `BLOCK` causes **zero Binance CLI calls**;
+- `ALLOW` requires an explicit local testnet-write confirmation;
+- every execution URL is `testnet.binance.vision`;
+- no `api.binance.com` target is accepted by the implementation;
+- an allowed order is submitted and then queried by the same `clientOrderId` in the test harness.
+
+**A real authenticated Binance Spot Testnet order capture is still PENDING.** Do not claim that a testnet order was actually placed until that capture exists.
+
+## Agent OS + MCP composition
+
+```text
+AI agent host
+   │
+   ├── official Binance Agent OS / Binance tools
+   │      fresh Binance observations + capabilities
+   │
+   └── Valid Until MCP companion
+          valid_until_begin
+          valid_until_revalidate
+          ↓
+        ALLOW | BLOCK
+```
+
+A safe dual-MCP example is included at:
+
+```text
+config/mcp-composition.example.json
+```
+
+The distinction is intentional:
+
+```text
+Binance MCP:      what is true now?
+Valid Until MCP:  is the exact old action still justified now?
+```
+
+The Valid Until MCP never fetches Binance itself and exposes no order, wallet, transfer, funding or x402 tool.
+
+## Run all deterministic assurance
 
 ```bash
 npm run build:web
@@ -190,144 +182,120 @@ npm run test:all
 npm run demo
 ```
 
-Current CI-backed output:
+## Live public-market authenticity proof
 
-```text
-PASS 8/8 — seal, eligibility, receipt-v2 action binding, signature, tamper-detection, drift block, TTL block, exact-action mutation block
-PASS 6/6 — clean allow, state drift, expiry, receipt tamper, policy mismatch, exact-action mutation inside policy cap
-PASS MCP 5/5 — initialize, tool discovery, cross-time drift block, within-cap action mutation block, unknown decision fail-closed
-```
-
-## Six-case red-team suite
-
-The judge-facing evaluation suite is not a happy-path showcase:
-
-1. clean unchanged case → `ALLOW`;
-2. state drift while current checks remain acceptable → `BLOCK`;
-3. expired authorization → `BLOCK`;
-4. receipt tamper → `BLOCK`;
-5. policy mismatch → `BLOCK`;
-6. **exact-action mutation `$50 → $75` inside the same `$100` cap** → `BLOCK` via `action_hash_match`.
-
-Open: https://valid-until-agent-os.vercel.app/evaluations
-
-## Run live read-only Binance capture
-
-Install the official CLI first:
-
-```bash
-curl --proto '=https' --tlsv1.2 -LsSf \
-  https://github.com/binance/binance-cli/releases/latest/download/binance-cli-installer.sh | sh
-```
-
-Then:
+With official `binance-cli` installed:
 
 ```bash
 npm run live -- BTCUSDT
 ```
 
-Optional recheck interval / representative action:
+This path remains non-authenticated/public-data-only and is supporting evidence, not the final differentiation proof.
+
+## Live Binance Spot Testnet execution proof
+
+### 1. Create a Binance CLI testnet profile locally
+
+Do **not** paste credentials into GitHub, chat, screenshots or committed files.
+
+Official Binance CLI supports testnet profiles:
 
 ```bash
-VALID_UNTIL_RECHECK_MS=4000 \
-VALID_UNTIL_ACTION_SIDE=BUY \
-VALID_UNTIL_ACTION_NOTIONAL_USDT=50 \
-npm run live -- BTCUSDT
+binance-cli profile create --name valid-until-testnet --api-key <TESTNET_KEY> --api-secret <TESTNET_SECRET> --env testnet
 ```
 
-Live mode:
+### 2. Run the live testnet path
 
-1. freezes policy before reading the market;
-2. normalizes and binds the exact representative action;
-3. reads Binance public state;
-4. creates an action-bound signed decision receipt v2;
-5. waits for the bounded recheck interval;
-6. reads Binance again;
-7. compares T1 against current policy constraints, the exact T0 action **and the exact T0 premise**;
-8. outputs `ALLOW` or `BLOCK` with exact failed invariants.
+```bash
+VALID_UNTIL_TESTNET_PROFILE=valid-until-testnet \
+VALID_UNTIL_TESTNET_WRITE=CONFIRM_TESTNET_WRITE \
+VALID_UNTIL_ACTION_NOTIONAL_USDT=10 \
+npm run live:testnet -- BTCUSDT
+```
 
-**It never places an order.**
+The command:
 
-## Evidence status
+1. seals policy before T0;
+2. seals the exact `BUY BTCUSDT $10` action;
+3. reads live Binance Spot Testnet market state;
+4. creates receipt v2;
+5. reads a fresh T1 state;
+6. performs deterministic revalidation;
+7. on `BLOCK`, sends no order;
+8. on `ALLOW`, sends one signed MARKET BUY to Binance Spot Testnet;
+9. queries the same `clientOrderId` and emits sanitized order evidence.
 
-Current canonical evidence:
+If the result is `BLOCK`, that is a valid live proof of the fail-closed boundary. Re-run only from a genuinely fresh decision cycle; do not weaken policy merely to force `ALLOW`.
 
-- core deterministic invariants: **8/8 PASS**;
-- deterministic challenge suite: **6/6 PASS**;
-- MCP companion smoke/enforcement: **5/5 PASS**;
-- receipt contract: **v2 policy + snapshot + exact-action bound**;
-- live Binance CLI public-data proof: existing GitHub Actions live run `34225133745` (pre-v2 authenticity proof; a fresh v2 live capture is required before final freeze if the workflow is rerun);
-- TRACE deployed-browser evidence before this latest bounded Winner Intelligence rework: desktop/mobile × normal/reduced-motion **4/4 PASS**;
-- no outcome proof or production financial-safety claim.
+## Four different questions
 
-The Winner Intelligence 003 rework must receive fresh deployed TRACE delta assurance before the final video is frozen.
+| Layer | Question |
+|---|---|
+| Reasoning verifier | Was the model's reasoning supported? |
+| Current-state preflight | Is the action acceptable now? |
+| Permission layer | May the agent use this capability? |
+| **Valid Until** | **Is this exact previously justified action still valid relative to its original premise now?** |
 
-## Core invariants
+That narrower category matters because the current Track A field already contains serious risk engines, preflight systems, policy constitutions, proposal-expiry controls and entry-drift checks.
 
-1. **Policy first.** Constraints are hashed before market data is read.
-2. **Exact-state binding.** The decision receipt is tied to a canonical T0 snapshot hash.
-3. **Exact-action binding.** Receipt v2 signs normalized `symbol + side + notional`; a different in-policy action still fails.
-4. **Short-lived validity.** Every receipt has a bounded validity window.
-5. **Cross-time revalidation.** T1 must remain within the sealed decision contract relative to T0.
-6. **Current-state revalidation.** Spread, movement and liquidity must still satisfy policy.
-7. **Tamper evidence.** Receipt mutation breaks Ed25519 verification.
-8. **Fail closed.** Any required failed invariant produces `BLOCK → REPLAN_REQUIRED`.
-9. **No self-claimed alpha.** Valid Until does not predict returns or claim to make trading profitable.
-
-## Repository layout
+## Repository map
 
 ```text
 AGENTS.md                         host-agent orchestration contract
 skills/valid-until/SKILL.md      portable agent skill
-config/policy.example.json       user-defined frozen constraints
-data/replay/                     deterministic two-snapshot judge case
-src/mcp-server.mjs               read-only Valid Until MCP contract surface
-src/snapshot.mjs                 Binance CLI capture + normalization
-src/policy.mjs                   eligibility + exact-action/cross-time revalidation
-src/receipt.mjs                  Ed25519 action-bound receipt v2
-src/demo.mjs                     deterministic failure-path proof
-src/live.mjs                     live read-only Binance path
-tests/                           core + challenge + MCP smoke tests
-web/                             judge-facing proof UI
-docs/                            integration, demo and submission assets
-product/                         PRD, Winner Intelligence and lifecycle evidence
+config/mcp-composition.example.json
+config/policy.example.json
+src/mcp-server.mjs               deterministic local contract MCP
+src/binance-mcp-observation.mjs  host-supplied MCP observation adapter
+src/snapshot.mjs                 public/testnet Binance CLI snapshots
+src/policy.mjs                   exact-action + cross-time revalidation
+src/receipt.mjs                  Ed25519 receipt v2
+src/testnet-executor.mjs         ALLOW-only Spot Testnet write boundary
+src/live-testnet.mjs             live Spot Testnet orchestration
+src/demo.mjs                     deterministic 35.47 bps proof
+tests/                           core + red-team + MCP + testnet boundary
+web/                             judge surface
+evidence/competition/            current competition research
+product/                         PRD / Winner Intelligence / lifecycle decisions
 ```
-
-## What we deliberately did not add
-
-The current Track A landscape already contains strong projects around wallet breadth, x402, risk scoring, current-state preflight, historical analysis, reasoning verification and multi-agent risk roles. Valid Until stays narrow by design.
-
-This submission does **not** add:
-
-- generic trade signals;
-- a risk score;
-- x402/payment flows;
-- Agentic Wallet write paths;
-- a second LLM critic;
-- live order execution;
-- an MCP that duplicates Binance market/trading tools.
-
-The local MCP companion exists because it is the actual machine interface to the **unique action-bound cross-time contract**, not for integration-count optics.
 
 ## Claim boundaries
 
-- Controlled replay uses synthetic Binance-shaped fixtures and is explicitly labeled.
-- Live mode reads authentic public Binance market data through the official Binance CLI.
-- The project proves **policy commitment, T0 state binding, exact-action binding, tamper detection and fail-closed cross-time revalidation**.
-- The MCP companion proves the contract can be invoked by an agent host; it does not prove authenticated Binance trading interoperability.
-- It does **not** prove profitable trading, predictive alpha, calibrated forecasts, reduced real-world losses, audited security or production readiness.
-- No live trading, funding or protected account action is required for the demo.
+Allowed now:
 
-## Hackathon entry checklist
+- controlled replay is synthetic and labeled;
+- public live market reads are authentic Binance observations;
+- testnet execution boundary is implemented and CI-tested;
+- `BLOCK` is structurally unable to call the testnet executor in the tested boundary;
+- receipt v2 binds policy + T0 state + exact action.
+
+Allowed only after a real capture:
+
+- a real Binance Spot Testnet order was submitted;
+- a real testnet order ID/status was observed.
+
+Not claimed:
+
+- mainnet trading;
+- real-money execution;
+- profitability or alpha;
+- reduced financial losses;
+- production security certification;
+- authenticated remote Binance MCP write interoperability unless separately captured.
+
+## Hackathon checklist
 
 - [ ] Follow `@Binance`
 - [ ] Repost the official announcement
-- [x] Publish public GitHub repository
-- [x] Deploy public judge surface
-- [ ] Fresh deploy + TRACE delta after Winner Intelligence 003
-- [ ] Record final demo only after that delta closes
+- [x] Public GitHub repository
+- [x] Public judge surface
+- [x] Testnet execution boundary implemented + CI green
+- [ ] Real Binance Spot Testnet execution capture
+- [ ] Deploy/TRACE delta after live-proof change
+- [ ] Winning Intelligence final recheck
+- [ ] TRACE 6.75 refreshed final video
 - [ ] Reply / quote-repost with demo + GitHub
-- [ ] Complete the official survey before **2026-09-08 23:59 UTC**
+- [ ] Complete survey before **2026-09-08 23:59 UTC**
 
 ## License
 
