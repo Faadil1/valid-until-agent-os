@@ -24,19 +24,25 @@ async function runCase({ id, viewport, reducedMotion }) {
   const homeResponse = await page.goto(`${base}/`, { waitUntil: 'networkidle' });
   const homeStatus = homeResponse?.status() ?? null;
   const thesisVisible = await page.getByText('Reasoning is not authorization.', { exact: false }).isVisible().catch(() => false);
+  const memoryLineVisible = await page.getByText('A correct decision can expire.', { exact: true }).first().isVisible().catch(() => false);
   const architectureVisible = await page.getByText('Binance Agent OS', { exact: false }).first().isVisible().catch(() => false);
+  const portableSkillVisible = await page.getByText('skills/valid-until/SKILL.md', { exact: false }).first().isVisible().catch(() => false);
   const replayVisible = await page.getByRole('button', { name: /Replay proof/i }).isVisible().catch(() => false);
   const evalLinkVisible = await page.getByRole('link', { name: /6-case red team/i }).isVisible().catch(() => false);
 
   await page.screenshot({ path: path.join(outDir, `${id}-home-before.png`), fullPage: true });
 
   let replayTerminal = false;
+  let currentChecksPassVisible = false;
+  let premiseFailVisible = false;
+  let counterfactualVisible = false;
   if (replayVisible) {
     await page.getByRole('button', { name: /Replay proof/i }).click();
-    // The application keeps the same logical replay duration even when CSS motion is reduced.
-    // Wait for the deterministic terminal state rather than assuming a visual transition duration.
     await page.getByText('NO LONGER VALID', { exact: true }).waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
     replayTerminal = await page.getByText('NO LONGER VALID', { exact: true }).isVisible().catch(() => false);
+    currentChecksPassVisible = await page.getByText('PASS 4/4', { exact: true }).first().isVisible().catch(() => false);
+    premiseFailVisible = await page.getByText(/FAIL 35\.47 > 20 BPS/i).isVisible().catch(() => false);
+    counterfactualVisible = currentChecksPassVisible && premiseFailVisible;
   }
   await page.screenshot({ path: path.join(outDir, `${id}-home-after.png`), fullPage: true });
 
@@ -45,8 +51,8 @@ async function runCase({ id, viewport, reducedMotion }) {
   const evalTitleVisible = await page.getByText(/evaluation|red-team/i).first().isVisible().catch(() => false);
   await page.screenshot({ path: path.join(outDir, `${id}-evaluations.png`), fullPage: true });
 
-  const pass = homeStatus === 200 && evalStatus === 200 && thesisVisible && architectureVisible && replayVisible && evalLinkVisible && replayTerminal && evalTitleVisible && consoleErrors.length === 0;
-  results.push({ id, viewport, reducedMotion, homeStatus, evalStatus, thesisVisible, architectureVisible, replayVisible, evalLinkVisible, replayTerminal, evalTitleVisible, consoleErrors, pass });
+  const pass = homeStatus === 200 && evalStatus === 200 && thesisVisible && memoryLineVisible && architectureVisible && portableSkillVisible && replayVisible && evalLinkVisible && replayTerminal && counterfactualVisible && evalTitleVisible && consoleErrors.length === 0;
+  results.push({ id, viewport, reducedMotion, homeStatus, evalStatus, thesisVisible, memoryLineVisible, architectureVisible, portableSkillVisible, replayVisible, evalLinkVisible, replayTerminal, currentChecksPassVisible, premiseFailVisible, counterfactualVisible, evalTitleVisible, consoleErrors, pass });
   await context.close();
 }
 
@@ -58,13 +64,14 @@ await runCase({ id: 'mobile-reduced-motion', viewport: { width: 390, height: 844
 await browser.close();
 
 const summary = {
-  evidence_version: 'valid-until.trace-gate-6-5-runtime.v1',
+  evidence_version: 'valid-until.trace-gate-6-5-runtime.v2',
   base_url: base,
   captured_at: new Date().toISOString(),
+  signature_assertion: 'CURRENT_CHECKS_PASS__CROSS_TIME_PREMISE_FAILS',
   cases: results,
   pass: results.every((r) => r.pass),
 };
 await fs.writeFile(path.join(outDir, 'runtime-evidence.json'), JSON.stringify(summary, null, 2));
-await fs.writeFile(path.join(outDir, 'README.md'), `# TRACE Gate 6.5 runtime evidence\n\nBase URL: ${base}\n\nCaptured by Playwright in GitHub Actions. Desktop/mobile and reduced-motion paths are exercised against the deployed artifact.\n\nOverall: **${summary.pass ? 'PASS' : 'FAIL'}**\n`);
+await fs.writeFile(path.join(outDir, 'README.md'), `# TRACE Gate 6.5 delta runtime evidence\n\nBase URL: ${base}\n\nCaptured by Playwright in GitHub Actions. Desktop/mobile and reduced-motion paths exercise the deployed artifact and assert the Winner Intelligence signature: current-state checks remain PASS while the sealed T0→T1 premise expires.\n\nOverall: **${summary.pass ? 'PASS' : 'FAIL'}**\n`);
 console.log(JSON.stringify(summary, null, 2));
 if (!summary.pass) process.exit(1);
