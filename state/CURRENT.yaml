@@ -2,7 +2,7 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: HUMAN_WORKFLOW_DISPATCH_REQUIRED
+current_stage: CORRECT_TESTNET_WORKFLOW_DISPATCH_REQUIRED
 current_owner: HUMAN_PROTECTED_TESTNET_WRITE_BOUNDARY
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
@@ -23,12 +23,33 @@ human_secret_boundary:
   status: CONFIRMED_BY_HUMAN_VALUES_NOT_READ_BY_ASSISTANT
   credentials_in_repo_chat_vercel_or_artifacts: false
 
+judge_optimization:
+  status: INTEGRATED_AS_NARRATIVE_AND_QA_EVIDENCE
+  product_scope_change: NONE
+  evidence: product/JUDGE-OPTIMIZATION-EVIDENCE-001.md
+  judge_matrix: docs/JUDGE-MATRIX.md
+  provisional_demo_structure: docs/DEMO-SCRIPT.md
+  principles:
+    - problem_pain_execution_story_demo
+    - problem_legible_within_first_15_seconds
+    - aha_moment_is_NO_LONGER_VALID
+    - technical_details_only_when_they_answer_a_judge_objection
+    - show_end_to_end_behavior_not_architecture_density
+    - prepare_alternative_rejection_QA
+    - do_not_add_features_for_rubric_theatre
+  source_set:
+    - user_provided_winner_pattern_screenshot
+    - https://unstop.com/blog/hackathon-judging-criteria-for-hiring
+    - https://www.masaischool.com/blog/how-to-win-an-ai-hackathon-in-2026-full-guide/
+  final_video_script_frozen: false
+  reason: authenticated_Spot_Testnet_proof_and_TRACE_6_75_still_pending
+
 step_1_to_5_scope:
   requested_stop_after_step: 5
   steps:
     1_secret_installation: COMPLETE
     2_manual_testnet_workflow: COMPLETE_CI_VERIFIED
-    3_real_testnet_capture: WAITING_FOR_MANUAL_WORKFLOW_DISPATCH
+    3_real_testnet_capture: WAITING_FOR_CORRECT_MANUAL_WORKFLOW_DISPATCH
     4_sanitized_proof: PENDING
     5_judge_surface_vercel: PENDING
   after_step_5_stop_before:
@@ -41,7 +62,7 @@ step_1_to_5_scope:
 
 workflow_packaging:
   workflow: .github/workflows/live-testnet-proof.yml
-  workflow_name: live-binance-spot-testnet-proof
+  workflow_name: 'RUN THIS — live-binance-spot-testnet-proof'
   trigger: workflow_dispatch_only
   environment: testnet-proof
   official_cli_auth: environment_variables_only_no_profile_file
@@ -57,6 +78,16 @@ workflow_packaging:
   public_page: web/live-proof.html
   public_route: https://valid-until-agent-os.vercel.app/live-proof
   proof_commit_scope: web/live-testnet-proof.json_only
+
+readonly_workflow_status:
+  workflow: .github/workflows/live-proof.yml
+  current_name: 'ARCHIVE — live-binance-readonly-proof'
+  manual_dispatch_removed: true
+  mistaken_dispatch_run: 34247925054
+  mistaken_dispatch_conclusion: SUCCESS
+  evidence_class: AUTHENTIC_PUBLIC_BINANCE_READ_ONLY_ONLY
+  counts_as_step_3_real_testnet_write_capture: false
+  action_required: launch_the_correct_RUN_THIS_workflow
 
 verified_implementation:
   core_tests: PASS_8_OF_8
@@ -78,7 +109,8 @@ live_testnet_rules:
   - Vercel_receives_sanitized_proof_only
 
 proof_status:
-  real_authenticated_spot_testnet_capture: PENDING
+  prior_readonly_dispatch_run: 34247925054_SUCCESS
+  real_authenticated_spot_testnet_capture: PENDING_CORRECT_WORKFLOW
   order_sent: NOT_YET_KNOWN
   order_id: NOT_YET_KNOWN
   same_order_verified: NOT_YET_KNOWN
@@ -87,17 +119,18 @@ proof_status:
 
 protected_manual_action:
   reason: >-
-    The available GitHub connector can create and inspect workflows but cannot initiate workflow_dispatch.
-    The write workflow remains manual-only by policy; it must not be converted to push-triggered execution.
-  required_click: 'GitHub Actions -> live-binance-spot-testnet-proof -> Run workflow -> main -> Run workflow'
+    The available GitHub connector cannot initiate the first workflow_dispatch and the write workflow must remain manual-only.
+    The previous human dispatch selected the archived read-only workflow, which succeeded but does not satisfy the Spot Testnet write gate.
+  required_click: 'GitHub Actions -> RUN THIS — live-binance-spot-testnet-proof -> Run workflow -> main -> Run workflow'
+  no_inputs_required: true
   secret_values_required_from_human: false
 
 next_valid_handoff:
   from: HUMAN_PROTECTED_TESTNET_WRITE_BOUNDARY
   to: PBPD_RUNTIME_EVIDENCE
-  required_output: REAL_GITHUB_ACTIONS_RUN_ID_FOR_LIVE_BINANCE_SPOT_TESTNET_PROOF
+  required_output: REAL_GITHUB_ACTIONS_RUN_ID_FOR_RUN_THIS_LIVE_BINANCE_SPOT_TESTNET_PROOF
 
 resume_rule: >-
-  After the human dispatches the workflow, immediately inspect the new run. Do not ask for secret values.
-  If BLOCK, preserve zero-write evidence honestly. If ALLOW, verify the same Spot Testnet order was queried back.
-  Publish only sanitized evidence, verify Vercel /live-proof, update CURRENT/HANDOVER, then stop at step 5.
+  After the human dispatches RUN THIS — live-binance-spot-testnet-proof, immediately inspect the new run.
+  Do not ask for secret values. If BLOCK, preserve zero-write evidence honestly. If ALLOW, verify the same Spot Testnet
+  order was queried back. Publish only sanitized evidence, verify Vercel /live-proof, update CURRENT/HANDOVER, then stop at step 5.
