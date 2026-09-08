@@ -19,5 +19,12 @@ jobs:
           node-version: '20'
       - name: Run deterministic invariants and red-team suite
         run: npm run test:all
+      - name: Verify portable Agent OS skill packaging
+        run: |
+          test -f skills/valid-until/SKILL.md
+          grep -q '^name: valid-until$' skills/valid-until/SKILL.md
+          grep -q 'Reasoning is not authorization' skills/valid-until/SKILL.md
+          test -f AGENTS.md
+          grep -q 'NO LONGER VALID' AGENTS.md
       - name: Rebuild judge data and challenge evidence
         run: npm run build:web
