@@ -74,4 +74,4 @@ ok(!orderSource.includes('process.env'), 'Cloudflare function must use context.e
 const routes = JSON.parse(await readFile(new URL('../web/_routes.json', import.meta.url), 'utf8'));
 ok(routes.version === 1 && routes.include.length === 1 && routes.include[0] === '/api/*', 'Cloudflare routes must scope functions to /api/*');
 
-console.log(`PASS Cloudflare Pages Functions ${passed}/11`);
+console.log(`PASS Cloudflare Pages Functions ${passed}/${passed}`);
