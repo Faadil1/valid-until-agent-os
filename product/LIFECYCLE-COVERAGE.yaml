@@ -3,8 +3,8 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: HUMAN_PROTECTED_SUBMISSION
-current_stage: SUBMISSION_READY_AWAITING_HUMAN_SUBMIT
+current_owner: PROJECT_FINISHER_WITH_HOI_PBPD_TRACE
+current_stage: SUBMITTED__POST_MORTEM_PENDING
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -157,21 +157,23 @@ capabilities:
 
   - capability: protected_submission
     owner: human
-    status: MISSING
-    evidence_pointer: null
-    note: final official Submit must be performed and confirmed by human
+    status: SATISFIED
+    evidence_pointer: evidence/submission/HUMAN-SUBMISSION-CONFIRMATION-2026-09-08.md
+    note: human explicitly confirmed all required submission actions completed; this is human-reported confirmation, not an independently verified platform receipt
 
   - capability: post_mortem_and_learning
     owner: Project Finisher with HOI/PBPD/TRACE as applicable
-    status: NOT_APPLICABLE_WITH_REASON
-    not_applicable_reason: official submission has not yet been human-confirmed and no official outcome exists
+    status: MISSING
+    evidence_pointer: null
+    note: now applicable because submission is human-confirmed; official competition outcome remains pending external evidence
 
 missing:
-  - protected_submission
+  - post_mortem_and_learning
 
 unknown: []
 triggered_but_unresolved:
-  - HUMAN_PROTECTED_SUBMISSION
+  - POST_MORTEM_AND_LEARNING
+  - OFFICIAL_COMPETITION_OUTCOME_PENDING_EXTERNAL_RESULT
 
 human_overrides: []
 
@@ -179,6 +181,7 @@ current_evidence:
   primary_judge_url: https://valid-until-agent-os-plum.vercel.app
   cloudflare_runtime_url: https://valid-until-agent-os.pages.dev
   public_repository: https://github.com/Faadil1/valid-until-agent-os
+  public_video: https://youtu.be/EW0VOoaA2CI
   repository_visibility: public
   trace_runtime_run: 34274047494
   trace_runtime_result: SUCCESS
@@ -195,6 +198,10 @@ current_evidence:
   final_package_sha256: 0f43fe320b4521f840eeac325cdfea19e45a04b1bfd6bc163d148bc8325fd7e3
   pbpd_candidate_state: BUILD_CANDIDATE_READY
   project_finisher_state: SUBMISSION_READY
+  protected_submission_state: SATISFIED_HUMAN_CONFIRMED
+  submission_confirmation_artifact: evidence/submission/HUMAN-SUBMISSION-CONFIRMATION-2026-09-08.md
+  submission_confirmation_class: HUMAN_REPORTED_SUBMISSION_CONFIRMATION
+  independently_verified_platform_receipt: false
   cloudflare_signed_read_status: LIVE_SIGNED_READ_VERIFIED
   testnet_order_id: 13634770
   testnet_client_order_id: vu-mtswxiik-ecb6b093
@@ -215,13 +222,12 @@ non_bypass_rules_reaffirmed:
   - no_browser_secret_exposure
   - do_not_rerun_successful_testnet_order
   - no_cloudflare_or_vercel_placement_manipulation_for_venue_bypass
-  - no_automatic_final_submission
 
 next_valid_handoff:
-  from: PROJECT_FINISHER
-  to: HUMAN
-  trigger: SUBMISSION_READY
-  required_output: HUMAN_OFFICIAL_SUBMISSION_CONFIRMATION
+  from: HUMAN_PROTECTED_SUBMISSION
+  to: PROJECT_FINISHER_POST_MORTEM_WITH_HOI_PBPD_TRACE
+  trigger: SUBMITTED
+  required_output: POST_MORTEM_AND_OUTCOME_LEARNING_RECORD
 
 resume_rule: >-
-  All mandatory hackathon lifecycle capabilities through Project Finisher terminal assurance are satisfied. The final human-approved 62-second film and hashed submission package are ready. The only unresolved capability is protected_submission. Do not reopen product, visual, voice or proof scope absent a concrete defect, and do not execute another Binance order. Human must perform the official Submit action and then confirm it before SUBMITTED or post-mortem state is recorded.
+  All mandatory pre-submission capabilities are satisfied and the human has explicitly confirmed submission. The submitted product, README, final film, positioning and proof package are frozen. The next unresolved lifecycle capability is post_mortem_and_learning. Record any win/loss, judging result or evaluator feedback only when externally evidenced; do not infer an outcome from submission itself and do not execute another Binance order.
