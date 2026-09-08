@@ -1,0 +1,132 @@
+project: Valid Until
+project_type: HACKATHON
+profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
+policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
+date: '2026-09-08'
+current_owner: PBPD
+current_stage: ACTIVE_RECONCILIATION_AND_PREVIEW_EVIDENCE
+terminal_completeness_allowed: false
+
+capabilities:
+  - capability: faadil_system_router
+    owner: faadil-agent-system
+    status: SATISFIED
+    evidence_pointer: Faadil1/faadil-agent-system/skills/faadil-system-router/SKILL.md
+    note: lifecycle completeness policy now governs this project
+
+  - capability: opportunity_and_eligibility_intelligence
+    owner: hackathon-opportunity-intelligence
+    status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
+    evidence_pointer: product/WINNER-INTELLIGENCE-PRE-SUBMISSION.md
+    note: official current Track A rules/deadline/deliverables revalidated during reconciliation; historical pre-build HOI artifact did not exist in this repo
+
+  - capability: competitive_intelligence
+    owner: hackathon-opportunity-intelligence
+    status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
+    evidence_pointer: evidence/problem-discovery/COUNCIL.md
+    note: crowded signal/sentiment/risk-agent families and competing pre-trade agent patterns were explicitly challenged before final lock; a dedicated historical HOI artifact was not preserved
+
+  - capability: winning_intelligence
+    owner: hackathon-opportunity-intelligence
+    status: SATISFIED_WITH_OPEN_GAPS
+    evidence_pointer: product/WINNER-INTELLIGENCE-PRE-SUBMISSION.md
+    note: v1.1 current-package assessment executed; sponsor-native necessity PARTIAL and judge-path runtime UNKNOWN until deployment/TRACE
+
+  - capability: project_authorization
+    owner: human / chief-of-staff authority boundary
+    status: SATISFIED
+    evidence_pointer: product/AUTHORIZATION.md
+    note: current continuation authorization recorded; not claimed as historical pre-build artifact
+
+  - capability: problem_worthiness
+    owner: PBPD / deep-problem-intelligence route
+    status: SATISFIED
+    evidence_pointer: evidence/problem-discovery/COUNCIL.md
+    note: independent blind discovery and dissent preserved before solution reveal
+
+  - capability: prototype_killer_and_simpler_alternative_challenge
+    owner: PBPD problem/product challenge route
+    status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
+    evidence_pointer: product/PROTOTYPE-KILLER.md
+    note: actual kill decisions and 20-line-script objection reconstructed truthfully
+
+  - capability: living_PRD
+    owner: PBPD
+    status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
+    evidence_pointer: product/PRD.md
+    note: RETROSPECTIVE_CURRENT_STATE_PRD; future material product changes require version/reconciliation
+
+  - capability: spec_kit_bounded_execution
+    owner: Spec Kit orchestration under PBPD
+    status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
+    evidence_pointer: product/specs/001-execution-validity/
+    note: spec/plan/tasks derived from PRD; authority NONE
+
+  - capability: production_build
+    owner: PBPD
+    status: SATISFIED_WITH_RECONCILIATION_REQUIRED
+    evidence_pointer: state/CURRENT.yaml
+    note: core engine, skill, UI and evaluation suite exist; PBPD post-build PRD-to-build reconciliation still required before candidate handoff
+
+  - capability: evidence_and_evaluation
+    owner: PBPD evidence plane
+    status: SATISFIED
+    evidence_pointer: state/CURRENT.yaml
+    note: core tests PASS 7/7; Challenge Suite PASS 6/6; controlled replay; live Binance CLI proof; CI green
+
+  - capability: trace_design_experience_assurance
+    owner: TRACE
+    status: MISSING_TRIGGERED
+    evidence_pointer: null
+    note: evaluator-facing interface and material design/judge-path risk trigger TRACE; pre-deploy source review and deployed runtime review required
+
+  - capability: post_build_reconciliation
+    owner: PBPD
+    status: MISSING
+    evidence_pointer: null
+    note: PRD MUSTs must be reconciled against actual build/evidence/limitations after TRACE/Winning findings are integrated
+
+  - capability: terminal_assurance
+    owner: Project Finisher
+    status: MISSING_NOT_YET_ELIGIBLE
+    evidence_pointer: null
+    note: cannot run terminal verdict before PBPD candidate handoff and required TRACE/judge-path evidence
+
+  - capability: protected_submission
+    owner: human
+    status: NOT_YET_DUE
+    evidence_pointer: null
+    note: X publication/repost/reply/quote and official survey remain human-protected
+
+  - capability: post_mortem_and_learning
+    owner: Project Finisher with HOI/PBPD/TRACE as applicable
+    status: NOT_APPLICABLE_WITH_REASON
+    not_applicable_reason: project not yet submitted and no official outcome exists
+
+missing:
+  - trace_design_experience_assurance
+  - post_build_reconciliation
+  - terminal_assurance
+
+triggered_but_unresolved:
+  - winning_intelligence_runtime_judge_path_gaps
+  - trace_design_experience_assurance
+
+human_overrides: []
+
+reconstructed_artifacts:
+  - product/PROTOTYPE-KILLER.md
+  - product/PRD.md
+  - product/PRD-CHANGELOG.md
+  - product/specs/001-execution-validity/spec.md
+  - product/specs/001-execution-validity/plan.md
+  - product/specs/001-execution-validity/tasks.md
+
+next_valid_handoff:
+  from: PBPD
+  to: TRACE
+  required_output: PRE_DEPLOYMENT_DESIGN_EXPERIENCE_VERDICT_AND_RUNTIME_EVIDENCE_PLAN
+
+parallel_allowed_work:
+  - deployment may be prepared/executed only as preview/evidence according to deployment policy
+  - no SUBMISSION_READY or PROJECT_COMPLETE claim until missing owners resolve their gates
