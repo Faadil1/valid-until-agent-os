@@ -1,4 +1,4 @@
-name: live-binance-spot-testnet-proof
+name: RUN THIS — live-binance-spot-testnet-proof
 
 on:
   workflow_dispatch:
