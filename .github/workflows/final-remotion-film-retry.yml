@@ -55,28 +55,24 @@ jobs:
         working-directory: video/final-film
         run: npm run capture
 
-      - name: Generate and normalize calm narrative English voiceover
+      - name: Generate and fit calm narrative English voiceover
         shell: bash
         working-directory: video/final-film
         run: |
           set -euo pipefail
           python3 -m pip install --quiet edge-tts
 
-          # Brian is materially less promotional than the prior Guy voice and
-          # reads closer to a restrained documentary narrator. Keep a safe
-          # fallback so packaging never depends on one catalog entry.
-          if edge-tts --list-voices | grep -q 'en-US-BrianNeural'; then
-            VOICE='en-US-BrianNeural'
-          elif edge-tts --list-voices | grep -q 'en-US-AndrewNeural'; then
-            VOICE='en-US-AndrewNeural'
-          else
-            VOICE='en-GB-RyanNeural'
-          fi
+          # The prior promotional voice was rejected by the human reviewer.
+          # Ryan is the already-verified calmer British narrator. Generate at a
+          # natural documentary pace, then make only a small deterministic tempo
+          # correction so the complete narration ends before the 62s visual close.
+          VOICE='en-GB-RyanNeural'
+          TARGET_SECONDS='59.6'
 
           edge-tts \
             --voice "$VOICE" \
-            --rate='-6%' \
-            --pitch='-3Hz' \
+            --rate='+18%' \
+            --pitch='-2Hz' \
             --volume='-2%' \
             --file voiceover.txt \
             --write-media public/voiceover-raw.mp3
@@ -84,8 +80,11 @@ jobs:
           RAW_DURATION=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 public/voiceover-raw.mp3)
           TEMPO=$(python3 - <<PY
           d=float('${RAW_DURATION}')
-          target=60.4
-          print(max(0.85,min(1.18,d/target)))
+          target=float('${TARGET_SECONDS}')
+          tempo=d/target
+          if not 0.5 <= tempo <= 2.0:
+              raise SystemExit(f'unsafe atempo factor: {tempo}')
+          print(f'{tempo:.8f}')
           PY
           )
 
@@ -93,12 +92,18 @@ jobs:
             -filter:a "atempo=${TEMPO},loudnorm=I=-17:TP=-1.8:LRA=12" \
             public/voiceover.mp3
 
+          NORMALIZED_DURATION=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 public/voiceover.mp3)
+          python3 - <<PY
+          d=float('${NORMALIZED_DURATION}')
+          if not 59.0 <= d <= 60.5:
+              raise SystemExit(f'normalized voiceover outside safe film window: {d}')
+          PY
+
           echo "VOICE=${VOICE}"
-          echo "VOICE_PROFILE=CALM_NARRATIVE_RESTRAINED"
+          echo "VOICE_PROFILE=CALM_NARRATIVE_CAPTIVATING"
           echo "RAW_VOICEOVER_SECONDS=${RAW_DURATION}"
           echo "VOICEOVER_TEMPO=${TEMPO}"
-          echo -n "NORMALIZED_VOICEOVER_SECONDS="
-          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 public/voiceover.mp3
+          echo "NORMALIZED_VOICEOVER_SECONDS=${NORMALIZED_DURATION}"
 
       - name: Render 1080p final evidence film
         working-directory: video/final-film
@@ -115,7 +120,7 @@ jobs:
       - name: Upload final film and live capture package
         uses: actions/upload-artifact@v4
         with:
-          name: valid-until-final-remotion-film-narrative-voice
+          name: valid-until-final-remotion-film-narrative-voice-v2
           path: |
             video/final-film/out/valid-until-final.mp4
             video/final-film/out/ffprobe.json
