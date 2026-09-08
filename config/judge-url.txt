@@ -1,1 +1,2 @@
 https://valid-until-agent-os-plum.vercel.app
+# TRACE B+C capture: semantic exact-action evidence row

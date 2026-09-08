@@ -111,3 +111,6 @@ trace_bc_delta:
   first_delta_ci_run: 34272109934
   first_delta_ci: PASS
   runtime_capture_target: https://valid-until-agent-os-plum.vercel.app
+  initial_runtime_capture: 34272405559
+  initial_runtime_result: FAIL_ACTION_HASH_LINE_NOT_INDEPENDENTLY_ADDRESSABLE
+  repair: SEMANTIC_ACTION_HASH_ROW_NO_TEST_CHANGE

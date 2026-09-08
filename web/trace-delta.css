@@ -10,3 +10,5 @@ body{font-size:16px}a{color:inherit}button,a{-webkit-tap-highlight-color:transpa
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .page-index .agent-os-strip{margin:0 0 22px;padding:10px 14px;border:0;border-top:1px solid var(--hair);box-shadow:none}.page-index .skill-path{margin-top:5px;padding-top:5px}.page-index .hero{padding:24px 0 20px}.entry-cta{display:table}.page-index .compare{font-size:11px}
+
+.page-lab #next{font:700 13px/1.5 ui-monospace,monospace;overflow-wrap:normal;word-break:normal}

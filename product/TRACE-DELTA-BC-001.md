@@ -28,3 +28,5 @@ HOLD_PENDING_CI_DEPLOYMENT_AND_RUNTIME_REVIEW. No Winning Intelligence, final Ga
 
 ## First deployed review
 PR 1 merged at 7ad9f5c9d12b3e7c2db6a258c7d8e72c9a21d468 after proof CI 34272109934 passed both jobs. Vercel build status success. Four desktop surfaces inspected on the temporary domain; layout/copy delta served. Follow-up: move architecture strip to full width to shorten hero and update config/judge-url.txt so the existing unmodified runtime capture targets the actual temporary production.
+
+Capture 34272405559: all four contexts reached the signature with no console errors; actionHashVisible alone failed because the action label and hash were embedded in the multi-line seal. Repair wraps that line in its own element, preserving actual data and the existing test unchanged. Lab next-state machine label also uses smaller monospace to avoid a one-letter wrap. Fresh capture required.
