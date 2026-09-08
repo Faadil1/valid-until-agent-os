@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Run deterministic invariants
-        run: npm test
-      - name: Rebuild judge data
+      - name: Run deterministic invariants and red-team suite
+        run: npm run test:all
+      - name: Rebuild judge data and challenge evidence
         run: npm run build:web
