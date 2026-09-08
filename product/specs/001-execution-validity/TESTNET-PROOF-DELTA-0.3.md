@@ -43,21 +43,27 @@ Out of scope:
 10. Raw response is not committed/uploaded publicly; only sanitizer output may be published.
 11. Any restricted-location/Eligibility response terminates before execution and is recorded as a venue blocker, not a Valid Until verdict.
 12. No alternate runner region, VPN, proxy or endpoint may be selected to evade that restriction.
-13. Actual-location access validation may use either official Binance CLI where natively available or native platform HMAC signing directly against the same official Spot Testnet API.
-14. Native access-check tooling may not install system components, require admin rights, print credentials/account payloads or send an order.
+13. Actual-location access validation and local proof may use native platform HTTPS/HMAC directly against the same official Spot Testnet API when the official CLI is not natively available.
+14. Native local tooling may not install system components, require admin rights, print credentials/account payloads or send more than one order.
+15. An uncertain POST transport failure must never trigger a second POST. Recovery is query-only using the exact same `clientOrderId`.
+16. Local raw capture must remain in temporary storage and be deleted after sanitization.
+17. Only a verified `ALLOW → order sent → same clientOrderId queried` artifact may be pushed as successful write proof.
 
 ## Current implementation evidence
 
 - `src/testnet-executor.mjs`
 - `src/live-testnet.mjs`
+- `src/binance-testnet-http.mjs`
+- `src/live-testnet-native.mjs`
 - `.github/workflows/live-testnet-proof.yml`
 - `scripts/sanitize-testnet-proof.mjs`
 - `scripts/check-testnet-access.ps1`
+- `scripts/run-local-testnet-proof.ps1`
 - `web/live-proof.html`
 - testnet executor tests `7/7`
-- packaging CI `34247316936` SUCCESS
+- native HTTP transport tests added to `npm run test:all`
 
-## Runtime attempt 001
+## Runtime attempt 001 — hosted runner
 
 Run `34248954040`:
 - credentials present and masked;
@@ -68,45 +74,55 @@ Run `34248954040`:
 
 Evidence: `evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md`.
 
-## Local tooling discovery
+## Runtime attempt 002 — actual-location signed access
 
-The current Windows machine cannot install WSL because the user has no administrator rights. The official Binance CLI v2.1.1 release does not expose a native Windows asset. Do not try to elevate privileges or install WSL.
+The user executed `scripts/check-testnet-access.ps1` from the actual-location Windows development machine under standard-user PowerShell.
 
-PBPD added `scripts/check-testnet-access.ps1`, which:
-- uses Windows PowerShell / PowerShell native .NET HMAC-SHA256;
-- calls only `https://testnet.binance.vision/api/v3/time` and signed `GET /api/v3/account`;
-- performs no financial write;
-- prompts for credentials locally and does not print them;
-- outputs only a sanitized PASS / eligibility / auth class.
+Sanitized result:
+
+```text
+ACTUAL_LOCATION_TESTNET_ACCESS=PASS
+FINANCIAL_WRITE=FALSE
+```
+
+Evidence: `evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md`.
+
+This resolves venue access for the local proof path. It does not establish an order claim.
 
 ## Next valid runtime branch
 
-### Branch A — actual-location access permitted
+### Branch A — bounded local execution proof
 
-On the user's actual-location machine, with no VPN/proxy:
-1. `git pull` to obtain `scripts/check-testnet-access.ps1`;
-2. run the script from PowerShell;
-3. if it prints `ACTUAL_LOCATION_TESTNET_ACCESS=PASS`, PBPD may adapt the existing v0.3 proof to direct official signed Spot Testnet API transport;
-4. preserve all v0.3 caps and confirmation gates;
-5. sanitize output;
-6. publish safe proof to repo/Vercel;
-7. stop at requested step 5 before TRACE/Winning Intelligence final.
+From the same actual-location Windows machine:
+1. `git pull`;
+2. run `scripts/run-local-testnet-proof.ps1 -Publish`;
+3. enter explicit `CONFIRM_TESTNET_WRITE`;
+4. provide the same Spot Testnet HMAC credentials locally;
+5. the script runs full deterministic assurance first;
+6. T0/T1 are captured from official Spot Testnet;
+7. `BLOCK` performs zero order calls and skips successful-write publication;
+8. `ALLOW` may send one BUY BTCUSDT order for 10 test USDT only;
+9. query the exact same `clientOrderId`;
+10. sanitize into `web/live-testnet-proof.json`;
+11. push only that sanitized file to `main` when verified;
+12. Vercel redeploys the judge surface;
+13. stop at requested step 5 before TRACE/Winning Intelligence final.
 
-### Branch B — actual-location access refused/unavailable
+### Branch B — proof fails before verified order
 
-1. stop write-proof work;
-2. preserve no-bypass rule;
-3. keep controlled cross-time BLOCK + authentic read-only Binance proof;
-4. rerun Winning Intelligence and TRACE against that evidence ceiling;
-5. do not claim a trade.
+1. do not weaken policy or retry an uncertain POST;
+2. preserve any BLOCK as zero-write evidence;
+3. preserve errors without exposing credentials;
+4. no successful write claim until same-order verification exists.
 
 ## Exit criteria
 
 Spec delta is converged when:
 - PRD v0.3 authority/invariants are represented in implementation and tests;
 - the hosted restriction is recorded truthfully;
-- actual-location access checking is possible without admin/system installation;
+- actual-location authenticated access is proven;
+- local proof transport is bounded and no-admin;
 - no bypass path is introduced;
-- PBPD can choose Branch A or B from actual venue evidence without Spec Kit inventing product authority.
+- PBPD can execute the single allowed local proof without Spec Kit inventing product authority.
 
 `SPEC_KIT_DELTA_CONVERGED` does not mean BUILD_CANDIDATE_READY or PROJECT_COMPLETE.
