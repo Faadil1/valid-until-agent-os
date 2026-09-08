@@ -1,0 +1,27 @@
+{
+  "schema": "valid-until.public-testnet-proof.v1",
+  "proof_class": "PENDING_AUTHENTICATED_BINANCE_SPOT_TESTNET_CAPTURE",
+  "production": false,
+  "real_funds": false,
+  "network": "Binance Spot Testnet",
+  "endpoint": "https://testnet.binance.vision",
+  "captured_at": null,
+  "workflow": {
+    "run_id": null,
+    "source_sha": null
+  },
+  "action": null,
+  "decision_contract": {
+    "validity_status": "PENDING",
+    "next_state": "MANUAL_WORKFLOW_DISPATCH_REQUIRED"
+  },
+  "execution": {
+    "order_sent": false,
+    "same_order_verified": false,
+    "block_zero_write": false
+  },
+  "evidence": {
+    "statement": "Authenticated Binance Spot Testnet evidence has not yet been captured. This placeholder is not execution proof.",
+    "boundary": "NON-PRODUCTION TESTNET. NO REAL FUNDS. NOT A PROFITABILITY OR SAFETY CLAIM."
+  }
+}
