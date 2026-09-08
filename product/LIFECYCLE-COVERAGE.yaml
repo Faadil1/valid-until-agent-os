@@ -3,9 +3,16 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: PBPD
-current_stage: TRACE_GATE_6_5_PREVIEW_EVIDENCE_REQUIRED
+current_owner: TRACE
+current_stage: TRACE_GATE_6_75_FINAL_VIDEO_REQUIRED
 terminal_completeness_allowed: false
+
+status_vocabulary:
+  - SATISFIED
+  - NOT_APPLICABLE_WITH_REASON
+  - MISSING
+  - UNKNOWN
+  - RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
 
 capabilities:
   - capability: faadil_system_router
@@ -18,19 +25,19 @@ capabilities:
     owner: hackathon-opportunity-intelligence
     status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
     evidence_pointer: product/WINNER-INTELLIGENCE-PRE-SUBMISSION.md
-    note: official current Track A rules/deadline/deliverables revalidated during reconciliation; historical pre-build HOI artifact did not exist in this repo
+    note: official current Track A rules/deadline/deliverables were revalidated during reconciliation; no claim that a historical pre-build HOI artifact existed here
 
   - capability: competitive_intelligence
     owner: hackathon-opportunity-intelligence
     status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
     evidence_pointer: evidence/problem-discovery/COUNCIL.md
-    note: crowded signal/sentiment/risk-agent families and competing pre-trade agent patterns were explicitly challenged before final lock; a dedicated historical HOI artifact was not preserved
+    note: crowded signal/sentiment/risk-agent families and simpler competing patterns were challenged before final lock; dedicated historical HOI artifact was not preserved
 
   - capability: winning_intelligence
     owner: hackathon-opportunity-intelligence
-    status: SATISFIED_WITH_OPEN_GAPS
+    status: SATISFIED
     evidence_pointer: product/WINNER-INTELLIGENCE-PRE-SUBMISSION.md
-    note: v1.1 current-package assessment executed; sponsor-native necessity and judge-path runtime gaps must be rechecked after TRACE Gate 6.5 runtime evidence
+    note: v1.1 was executed and rechecked against deployed runtime evidence; it preserves final encoded-video and protected-deliverable gaps without claiming submission authority
 
   - capability: project_authorization
     owner: human / chief-of-staff authority boundary
@@ -48,68 +55,92 @@ capabilities:
     owner: PBPD problem/product challenge route
     status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
     evidence_pointer: product/PROTOTYPE-KILLER.md
-    note: actual kill decisions and 20-line-script objection reconstructed truthfully
+    note: actual kill decisions, deterministic baselines and the 20-line-script objection reconstructed truthfully
 
   - capability: living_PRD
     owner: PBPD
     status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
     evidence_pointer: product/PRD.md
-    note: RETROSPECTIVE_CURRENT_STATE_PRD; future material product changes require version/reconciliation
+    note: RETROSPECTIVE_CURRENT_STATE_PRD; material future product changes require version/reconciliation; current evidence-only reconciliation does not backdate the PRD
 
   - capability: spec_kit_bounded_execution
     owner: Spec Kit orchestration under PBPD
     status: RECONSTRUCTED_FROM_CANONICAL_EVIDENCE
     evidence_pointer: product/specs/001-execution-validity/
-    note: spec/plan/tasks derived from PRD; authority NONE
+    note: spec/plan/tasks derived from PRD; authority NONE; current task ledger reconciled through PBPD post-build review
 
   - capability: production_build
     owner: PBPD
-    status: SATISFIED_WITH_RECONCILIATION_REQUIRED
-    evidence_pointer: state/CURRENT.yaml
-    note: core engine, skill, UI and evaluation suite exist; PBPD post-build PRD-to-build reconciliation still required before candidate handoff
+    status: SATISFIED
+    evidence_pointer: product/POST-BUILD-RECONCILIATION.md
+    note: core engine, Agent OS skill, live read-only integration, deployed judge UI and six-case evaluation suite exist within current authorized scope
+
+  - capability: deployment_and_runtime_evidence
+    owner: PBPD + TRACE evidence boundary
+    status: SATISFIED
+    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_EVALUATION_CAPTURE_PASS_001.md
+    note: stable Vercel root/evaluations are HTTP 200; Playwright run 34231934516 exercised desktop/mobile normal/reduced-motion with 4/4 PASS and zero console errors
 
   - capability: evidence_and_evaluation
     owner: PBPD evidence plane
     status: SATISFIED
-    evidence_pointer: state/CURRENT.yaml
-    note: core tests PASS 7/7; Challenge Suite PASS 6/6; controlled replay; live Binance CLI proof; latest TRACE bounded-rework CI run 34230726113 SUCCESS
+    evidence_pointer: product/POST-BUILD-RECONCILIATION.md
+    note: core tests 7/7, Challenge Suite 6/6, controlled replay, live Binance CLI proof, and representative deployed judge-workflow behavior proof are reconciled; outcome/production evidence remain unclaimed
 
-  - capability: trace_design_experience_assurance
+  - capability: trace_gate_6_5_design_experience_assurance
     owner: TRACE
-    status: IN_PROGRESS_GATE_6_5
-    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/CURRENT.yaml
-    note: TRACE_VU_001 and TRACE_VU_002 resolved in source; TRACE_VU_003 deployed desktop/mobile/reduced-motion evaluator capture remains open
+    status: SATISFIED
+    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_5_EVALUATION_CAPTURE_PASS_001.md
+    note: judge readability, domain-native anti-slop, proof path and reduced-motion runtime evidence PASS; TRACE_VU_001/002/003 closed
+
+  - capability: trace_gate_6_75_demo_narrative_evidence_film
+    owner: TRACE
+    status: MISSING
+    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_001.md
+    note: evidence-film contract is frozen but the actual final encoded video does not yet exist; TRACE cannot emit Gate 6.75 PASS until it reviews that artifact
 
   - capability: post_build_reconciliation
     owner: PBPD
+    status: SATISFIED
+    evidence_pointer: product/POST-BUILD-RECONCILIATION.md
+    note: PRD MUST 11/11, SHOULD 4/4 and MUST_NOT 5/5 reconciled to actual build/evidence/limitations; proof classes remain separated
+
+  - capability: pbpd_candidate_handoff
+    owner: PBPD
     status: MISSING
     evidence_pointer: null
-    note: PRD MUSTs must be reconciled against actual build/evidence/limitations after TRACE runtime and Winning Intelligence recheck
+    note: PBPD must not emit BUILD_CANDIDATE_READY while the triggered TRACE Gate 6.75 verdict is missing
 
   - capability: terminal_assurance
     owner: Project Finisher
-    status: MISSING_NOT_YET_ELIGIBLE
+    status: MISSING
     evidence_pointer: null
-    note: cannot run terminal verdict before PBPD candidate handoff and required TRACE/judge-path evidence
+    note: Project Finisher is not yet eligible because PBPD candidate handoff has not been emitted
 
   - capability: protected_submission
     owner: human
-    status: NOT_YET_DUE
+    status: MISSING
     evidence_pointer: null
-    note: X publication/repost/reply/quote and official survey remain human-protected
+    note: final X/repost/reply-or-quote and official survey are required protected human actions and remain incomplete
 
   - capability: post_mortem_and_learning
     owner: Project Finisher with HOI/PBPD/TRACE as applicable
     status: NOT_APPLICABLE_WITH_REASON
-    not_applicable_reason: project not yet submitted and no official outcome exists
+    not_applicable_reason: project has not yet been officially submitted and no official outcome exists
 
 missing:
-  - post_build_reconciliation
+  - trace_gate_6_75_demo_narrative_evidence_film
+  - pbpd_candidate_handoff
   - terminal_assurance
+  - protected_submission
+
+unknown: []
 
 triggered_but_unresolved:
-  - winning_intelligence_runtime_judge_path_recheck
-  - TRACE_VU_003_deployed_runtime_evidence
+  - TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
+  - PBPD_CANDIDATE_HANDOFF_AFTER_TRACE_6_75
+  - PROJECT_FINISHER_AFTER_PBPD_HANDOFF
+  - HUMAN_PROTECTED_SUBMISSION_AFTER_TERMINAL_ASSURANCE
 
 human_overrides: []
 
@@ -121,12 +152,22 @@ reconstructed_artifacts:
   - product/specs/001-execution-validity/plan.md
   - product/specs/001-execution-validity/tasks.md
 
+current_evidence:
+  stable_url: https://valid-until-agent-os.vercel.app
+  production_deployment: dpl_HC9j3Y8nCAfw1PdHNpAhNjrVdo8G
+  trace_gate_6_5_run: 34231934516
+  trace_gate_6_5_artifact: 10058192480
+  trace_gate_6_5_artifact_digest: sha256:4f0ba722100568c2a320ade6eda2ce3ba81e4040026c1c946ee71ccc661b66f1
+  live_binance_run: 34225133745
+  controlled_challenge_suite: PASS_6_OF_6
+  core_tests: PASS_7_OF_7
+
 next_valid_handoff:
-  from: PBPD
-  to: deployment_preview_then_TRACE
-  required_output: DEPLOYED_URL_PLUS_GATE_6_5_RUNTIME_EVIDENCE
+  from: PBPD / human recording boundary
+  to: TRACE
+  required_output: FINAL_ENCODED_58_TO_65_SECOND_DEMO_FOR_GATE_6_75_REVIEW
 
 parallel_allowed_work:
-  - deployment may proceed only as preview/evidence according to deployment policy
-  - packaging work may continue if it does not imply TRACE, PBPD convergence, Project Finisher or human submission has passed
-  - no SUBMISSION_READY or PROJECT_COMPLETE claim until missing owners resolve their gates
+  - final submission copy may be prepared but not published
+  - evidence indexes and handover state may be reconciled
+  - no BUILD_CANDIDATE_READY, SUBMISSION_READY or PROJECT_COMPLETE claim until the missing owners resolve their gates
