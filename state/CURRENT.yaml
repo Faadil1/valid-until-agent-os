@@ -116,3 +116,7 @@ trace_bc_delta:
   owner_retained: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
   financial_write: false
   downstream_progression: FORBIDDEN_THIS_WORKSTREAM
+  first_delta_commit: 7ad9f5c9d12b3e7c2db6a258c7d8e72c9a21d468
+  first_delta_ci_run: 34272109934
+  first_delta_ci: PASS
+  runtime_capture_target: https://valid-until-agent-os-plum.vercel.app

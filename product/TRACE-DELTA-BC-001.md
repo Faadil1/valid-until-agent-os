@@ -25,3 +25,6 @@ Desktop/mobile runtime and final encoded video: pending. Image concepts from the
 
 ## Verdict
 HOLD_PENDING_CI_DEPLOYMENT_AND_RUNTIME_REVIEW. No Winning Intelligence, final Gate 6.75, Project Finisher or submission progression authorized in this workstream.
+
+## First deployed review
+PR 1 merged at 7ad9f5c9d12b3e7c2db6a258c7d8e72c9a21d468 after proof CI 34272109934 passed both jobs. Vercel build status success. Four desktop surfaces inspected on the temporary domain; layout/copy delta served. Follow-up: move architecture strip to full width to shorten hero and update config/judge-url.txt so the existing unmodified runtime capture targets the actual temporary production.
