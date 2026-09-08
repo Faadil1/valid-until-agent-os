@@ -2,8 +2,8 @@ project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
 status: PACKAGING_ACTIVE
-current_stage: WINDOWS_NATIVE_TESTNET_ACCESS_CHECK_READY
-current_owner: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
+current_stage: LOCAL_BOUNDED_TESTNET_WRITE_PROOF_READY
+current_owner: PBPD
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -30,7 +30,8 @@ living_prd:
   base: product/PRD.md
   normative_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
   status: CURRENT
-  local_transport_clarification: NATIVE_WINDOWS_SIGNED_OFFICIAL_API_ALLOWED
+  actual_location_access: PASS
+  local_transport: NATIVE_NODE_HTTPS_HMAC_AGAINST_OFFICIAL_SPOT_TESTNET
 
 spec_kit:
   delta: product/specs/001-execution-validity/TESTNET-PROOF-DELTA-0.3.md
@@ -42,7 +43,7 @@ step_1_to_5_scope:
   steps:
     1_secret_installation: COMPLETE
     2_manual_testnet_workflow: COMPLETE_CI_VERIFIED
-    3_real_testnet_capture: PENDING_ACTUAL_LOCATION_ACCESS_CHECK
+    3_real_testnet_capture: READY_FOR_LOCAL_BOUNDED_WRITE_PROOF
     4_sanitized_public_trade_proof: PENDING_SUCCESSFUL_STEP_3
     5_judge_surface_vercel_write_proof: PENDING_SUCCESSFUL_STEP_4
 
@@ -52,35 +53,35 @@ hosted_write_attempt:
   evidence: evidence/live-testnet/ATTEMPT-001-GITHUB-HOSTED-RESTRICTED.md
   runner: GitHub_hosted_Azure_eastus
   result: FAIL_CLOSED_RESTRICTED_LOCATION_BEFORE_EXECUTION
-  protected_secrets_present: true
-  Binance_CLI: 2.1.1
-  deterministic_tests_passed: true
   order_sent: false
-  public_trade_proof_created: false
 
-local_machine_constraint:
-  operating_system: Windows
-  WSL_installed: false
-  administrator_rights_available: false
-  admin_elevation_or_WSL_installation: NOT_ALLOWED
-  official_binance_cli_native_windows_asset_found_in_v2_1_1_release: false
-  response: USE_NO_INSTALL_NATIVE_POWERSHELL_SIGNED_API_CHECK
-
-actual_location_check:
-  script: scripts/check-testnet-access.ps1
-  installation_required: false
-  admin_required: false
+actual_location_access_attempt:
+  evidence: evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md
+  machine: USER_ACTUAL_LOCATION_WINDOWS_DEVELOPMENT_MACHINE
+  privileges: STANDARD_USER
+  transport: NATIVE_POWERSHELL_HTTPS_HMAC
   endpoint: https://testnet.binance.vision
-  public_time_call: GET_/api/v3/time
-  authenticated_call: SIGNED_GET_/api/v3/account
-  financial_write: false
-  credentials_output: forbidden
-  account_payload_output: forbidden
-  expected_outputs:
+  result: PASS
+  sanitized_output:
     - ACTUAL_LOCATION_TESTNET_ACCESS=PASS
-    - ACTUAL_LOCATION_TESTNET_ACCESS=RESTRICTED_BY_VENUE_ELIGIBILITY
-    - ACTUAL_LOCATION_TESTNET_ACCESS=AUTH_OR_PERMISSION_ERROR
-    - ACTUAL_LOCATION_TESTNET_ACCESS=ERROR
+    - FINANCIAL_WRITE=FALSE
+  order_sent: false
+
+local_write_proof_implementation:
+  native_transport: src/binance-testnet-http.mjs
+  native_runner: src/live-testnet-native.mjs
+  powershell_wrapper: scripts/run-local-testnet-proof.ps1
+  sanitizer: scripts/sanitize-testnet-proof.mjs
+  public_artifact: web/live-testnet-proof.json
+  judge_surface: web/live-proof.html
+  endpoint: https://testnet.binance.vision
+  action: BUY_BTCUSDT_10_TEST_USDT
+  hard_cap_test_usdt: 25
+  maximum_order_posts: 1
+  explicit_confirmation: CONFIRM_TESTNET_WRITE
+  uncertain_post_rule: NEVER_RETRY_POST_QUERY_SAME_CLIENT_ORDER_ID_ONLY
+  raw_capture: LOCAL_TEMP_ONLY_DELETE_AFTER_SANITIZATION
+  publishable_file_only: web/live-testnet-proof.json
 
 safety_decision:
   - no_admin_elevation
@@ -90,7 +91,8 @@ safety_decision:
   - no_mainnet
   - no_alternate_endpoint_used_to_bypass_eligibility
   - no_policy_weakening_to_force_ALLOW
-  - any_future_write_attempt_requires_legitimate_venue_permission_from_actual_execution_location
+  - BLOCK_means_zero_order_write
+  - one_order_maximum_on_ALLOW
 
 verified_implementation:
   core_tests: PASS_8_OF_8
@@ -98,24 +100,27 @@ verified_implementation:
   mcp_companion: PASS_5_OF_5
   mcp_observation_adapter: PASS_4_OF_4
   testnet_execution_boundary: PASS_7_OF_7
-  packaging_ci_run: 34247316936
-  packaging_ci_conclusion: SUCCESS
+  native_testnet_transport_tests: ADDED_TO_TEST_ALL
+  last_known_ci: 34252733486_SUCCESS
+  latest_native_path_ci: PENDING_CURRENT_HEAD_CHECK
 
 proof_status:
   prior_public_readonly_binance: VERIFIED
   controlled_cross_time_block: VERIFIED_35_47_BPS_GT_20
-  hosted_testnet_authenticated_access: BLOCKED_BY_VENUE_ELIGIBILITY
-  actual_location_testnet_access: NOT_YET_CHECKED
+  hosted_testnet_authenticated_access: BLOCKED_BY_HOSTED_RUNNER_ELIGIBILITY
+  actual_location_testnet_access: VERIFIED_PASS
   real_testnet_order_capture: NOT_OBTAINED_NOT_CLAIMED
   public_testnet_write_proof_on_vercel: NOT_OBTAINED_NOT_CLAIMED
 
 next_valid_handoff:
   from: PBPD
-  to: HUMAN_ACTUAL_LOCATION_ELIGIBILITY_BOUNDARY
+  to: HUMAN_LOCAL_EXECUTION_BOUNDARY
   required_output: >-
-    Pull latest main and run scripts/check-testnet-access.ps1 in ordinary PowerShell on the user's actual-location Windows machine,
-    without VPN/proxy and without elevation. The script performs only a signed official Spot Testnet account GET and no order.
-    Return only the sanitized status line. If PASS, PBPD may adapt and run the bounded v0.3 write proof; if restricted, stop the write branch.
+    Pull latest main and run scripts/run-local-testnet-proof.ps1 -Publish from the same actual-location Windows development machine.
+    Type CONFIRM_TESTNET_WRITE only if willing to permit one BUY BTCUSDT Spot Testnet order for 10 test USDT when Valid Until returns ALLOW.
+    The script must run deterministic assurance first, make zero order calls on BLOCK, send at most one order on ALLOW, query the same clientOrderId,
+    sanitize the proof, and push only web/live-testnet-proof.json. Return only the sanitized terminal summary, never credentials.
 
 resume_rule: >-
-  Do not install WSL and do not rerun the GitHub-hosted write workflow. No order exists yet. Step 4 and 5 remain pending.
+  Do not rerun the GitHub-hosted write workflow and do not alter geography, policy, endpoint or caps. After the local script completes,
+  verify GitHub publication and Vercel /live-proof. Stop exactly after requested step 5 before TRACE/Winning Intelligence final.
