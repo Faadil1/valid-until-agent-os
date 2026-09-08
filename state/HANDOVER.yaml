@@ -14,7 +14,7 @@ handover_discipline:
   rule: read_both_files_first_then_resume_exact_gate
   update_after_each_meaningful_gate_or_packaging_step: true
 
-current_stage: TRACE_GATE_6_75_NARRATIVE_VOICE_V2_RENDER_IN_PROGRESS
+current_stage: TRACE_GATE_6_75_NARRATIVE_VOICE_V2_AWAITING_HUMAN_AUDIO_VERDICT
 current_owner: TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
 terminal_completeness_allowed: false
 
@@ -27,7 +27,7 @@ material_scope_state:
   product_scope: FROZEN
   visual_scope: FROZEN
   positioning_scope: FROZEN
-  human_visual_feedback: ACCEPTED_ALL_EXCEPT_VOICE_TONE
+  human_visual_feedback: ACCEPTED_ALL_EXCEPT_PREVIOUS_VOICE_TONE
 
 preserved_verified_execution:
   order_id: 13634770
@@ -50,7 +50,7 @@ trace_gate_6_75:
   contract: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_003.md
   candidate_review: Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_ENCODED_CANDIDATE_REVIEW_001.md
   visual_claim_readability: PASS
-  human_voice_request: CHANGE_TO_NARRATIVE_CAPTIVATING_RESTRAINED
+  human_voice_request: NARRATIVE_CAPTIVATING_RESTRAINED
   gate_pass: false
 
 voice_revision_history:
@@ -67,27 +67,35 @@ voice_revision_history:
     artifact_id: 10078906608
     artifact_digest: sha256:2c8cbfc9c0cd6d59ab7c0c90a787964acd8e30c5411af455643d5cca04777067
     actual_voice: en-GB-RyanNeural
-    raw_audio_seconds: 82.848
     normalized_audio_seconds: 70.224
     video_seconds: 62.058667
-    defect: AUDIO_EXCEEDS_FILM_BY_APPROX_8_SECONDS__DO_NOT_USE_AS_FINAL
+    defect: AUDIO_EXCEEDS_FILM__DO_NOT_USE_AS_FINAL
   revision_v2:
     workflow: .github/workflows/final-remotion-film-retry.yml
     commit: fd66acb01cf3942a7f7fbc2dd58a2e3a05a6bbe8
     run: 34284794981
-    status: IN_PROGRESS
+    result: SUCCESS
+    artifact_name: valid-until-final-remotion-film-narrative-voice-v2
+    artifact_id: 10079108948
+    artifact_digest: sha256:37b36cb284e80659dabdaea51982bcc0e6aacc435e1ac7f7acb61f99f8ee6f8d
     voice: en-GB-RyanNeural
     delivery: CALM_NARRATIVE_CAPTIVATING
     generated_rate: '+18%'
     pitch: '-2Hz'
-    normalized_target_seconds: 59.6
-    hard_acceptance_window_seconds: 59.0-60.5
+    raw_audio_seconds: 66.0
+    tempo_factor: 1.10738255
+    normalized_audio_seconds: 59.616
+    video_seconds: 62.0
+    final_visual_breathing_room_seconds: 2.384
+    resolution: 1920x1080
+    technical_audio_timing: PASS
     visuals_changed: false
     script_changed: false
     product_changed: false
+    human_audio_quality_verdict: PENDING
 
 repair_boundary: >-
-  Repair audio generation, timing or muxing only. Do not modify the approved Remotion visual composition, deployed Valid Until product, policy, historical proof, eligibility behavior or any financial action.
+  The artifact is technically complete. Do not modify product, visuals or narration content. Human should now listen to narrative voice v2. If voice is rejected, revise voice delivery only. If accepted, TRACE may close Gate 6.75.
 
 truth_boundaries:
   - controlled_replay_is_synthetic_and_creates_no_order
@@ -99,14 +107,15 @@ truth_boundaries:
 
 next_valid_handoff:
   from: NARRATIVE_VOICE_V2_RENDER
-  to: HUMAN_AUDIO_PLAYBACK_THEN_TRACE_GATE_6_75_CLOSURE
+  to: HUMAN_AUDIO_PLAYBACK_CONFIRMATION
   required_output: >-
-    Wait for GitHub Actions run 34284794981. On success, confirm normalized narration is 59.0-60.5 seconds and the MP4 remains approximately 62.06 seconds. Download artifact valid-until-final-remotion-film-narrative-voice-v2, give the MP4 to the human, and ask only whether the new voice is acceptable. If accepted, close TRACE Gate 6.75; if not, revise voice delivery only.
+    Listen to artifact 10079108948 / valid-until-final-remotion-film-narrative-voice-v2. The complete voiceover is 59.616 seconds inside a 62.0-second film. Return KEEP VOICE or CHANGE VOICE. All visuals and claims are already accepted and frozen.
 
 then:
+  - TRACE_GATE_6_75_CLOSURE_IF_VOICE_ACCEPTED
   - PBPD_CANDIDATE_HANDOFF
   - PROJECT_FINISHER
   - HUMAN_PROTECTED_SUBMISSION
 
 resume_rule: >-
-  Visuals and product are frozen and human-accepted. Do not use narrative voice revision v1 as final because its 70.224-second audio exceeds the 62.06-second video. Revision v2 is the only active candidate. It preserves the same narration and visuals while fitting the calmer Ryan narration inside the film. No new Binance order is permitted.
+  Narrative voice v2 is the only active candidate. It is technically valid and complete. Human audio-quality confirmation is the sole unresolved item before TRACE Gate 6.75 closure. No new Binance order is permitted.
