@@ -14,7 +14,7 @@ handover_discipline:
   rule: read_both_files_first_then_resume_exact_gate
   update_after_each_meaningful_gate_or_packaging_step: true
 
-current_stage: POST_SUBMISSION_FREEZE__AWAITING_OUTCOME_OR_POST_MORTEM
+current_stage: POST_SUBMISSION_FREEZE__RUNTIME_ROUTING_CORRECTED__AWAITING_OUTCOME_OR_POST_MORTEM
 current_owner: PROJECT_FINISHER_WITH_HOI_PBPD_TRACE_AS_APPLICABLE
 project_finisher_state: SUBMISSION_READY_PRE_SUBMISSION__NOW_HUMAN_CONFIRMED_SUBMITTED
 terminal_completeness_allowed: false
@@ -27,8 +27,21 @@ submission_state:
   evidence_class: HUMAN_REPORTED_SUBMISSION_CONFIRMATION
   independently_verified_platform_receipt: false
   public_repository: https://github.com/Faadil1/valid-until-agent-os
-  live_demo: https://valid-until-agent-os-plum.vercel.app
+  live_demo_submitted_on_form: https://valid-until-agent-os-plum.vercel.app
+  current_working_judge_runtime: https://valid-until-agent-os.pages.dev
   public_video: https://youtu.be/EW0VOoaA2CI
+  form_url_post_submission_edit_confirmed: false
+
+post_submission_runtime_correction:
+  status: APPLIED
+  trigger: CONCRETE_RUNTIME_DEFECT_DISCOVERED_AFTER_SUBMISSION
+  evidence_pointer: evidence/runtime/POST-SUBMISSION-RUNTIME-ROUTING-CORRECTION-2026-09-08.md
+  primary_working_runtime: https://valid-until-agent-os.pages.dev
+  secondary_runtime: https://valid-until-agent-os-plum.vercel.app
+  readme_links_rerouted: true
+  product_scope_changed: false
+  proof_scope_changed: false
+  new_execution_evidence_created: false
 
 material_scope_state:
   living_prd_version: '0.4'
@@ -44,7 +57,7 @@ material_scope_state:
   visual_scope: FROZEN
   positioning_scope: FROZEN
   voice_scope: FROZEN
-  submitted_artifact_scope: FROZEN
+  submitted_artifact_scope: FROZEN_EXCEPT_CONCRETE_RUNTIME_ROUTING_CORRECTION
 
 preserved_verified_execution:
   order_id: 13634770
@@ -57,8 +70,8 @@ preserved_verified_execution:
   rerun_without_new_authorization: FORBIDDEN
 
 judge_runtime:
-  primary_url: https://valid-until-agent-os-plum.vercel.app
-  cloudflare_mirror: https://valid-until-agent-os.pages.dev
+  primary_url: https://valid-until-agent-os.pages.dev
+  secondary_vercel_url: https://valid-until-agent-os-plum.vercel.app
   public_repository: https://github.com/Faadil1/valid-until-agent-os
   repository_visibility: public
   trace_runtime_run: 34274047494
@@ -125,11 +138,14 @@ truth_boundaries:
   - no_production_readiness_claim
   - no_public_unrestricted_write_route
   - human_reported_submission_is_not_verified_platform_receipt
+  - submitted_form_live_url_not_claimed_edited_after_submission
 
 remaining_lifecycle:
   protected_submission:
     owner: HUMAN
     status: SATISFIED_HUMAN_CONFIRMED
+  post_submission_runtime_routing_correction:
+    status: SATISFIED
   post_mortem:
     owner: PROJECT_FINISHER_WITH_HOI_PBPD_TRACE
     status: NOW_APPLICABLE_PENDING
@@ -141,7 +157,7 @@ next_valid_handoff:
   to: PROJECT_FINISHER_POST_MORTEM_WITH_HOI_PBPD_TRACE
   trigger: SUBMITTED
   required_output: >-
-    Preserve the submitted artifact as frozen, create a truthful post-mortem / learning record, and later record official competition outcome or evaluator feedback when available. Do not infer a win/loss before external evidence exists.
+    Preserve the submitted product as frozen, keep Cloudflare Pages as the current primary working evaluator runtime, create a truthful post-mortem / learning record, and later record official competition outcome or evaluator feedback when available. Do not infer a win/loss before external evidence exists.
 
 resume_rule: >-
-  Valid Until is human-confirmed SUBMITTED. The protected submission gate is satisfied. Product, README, film, voice, positioning and proof package are now frozen as submitted truth. Do not reopen them absent an official competition request or concrete defect, and do not execute another Binance order. The next valid work is post-mortem / outcome learning; any future result must be recorded only when externally evidenced.
+  Valid Until is human-confirmed SUBMITTED. After submission, a concrete runtime-routing defect was discovered: the Vercel deployment does not provide the working live path while the already-existing Cloudflare Pages deployment does. The README and canonical state now point evaluator traffic to Cloudflare as primary and preserve Vercel as secondary. This is a truthful routing correction, not a product/proof expansion. Do not execute another Binance order. If the official submission platform permits editing the live-demo URL, that remains a protected human action and should be recorded only after human confirmation.
