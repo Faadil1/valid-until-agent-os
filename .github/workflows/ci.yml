@@ -32,3 +32,29 @@ jobs:
           test -f src/binance-mcp-observation.mjs
       - name: Rebuild judge data and challenge evidence
         run: npm run build:web
+
+  windows-powershell-parse:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse Windows PowerShell proof scripts with Windows PowerShell 5.1
+        shell: powershell
+        run: |
+          $files = @(
+            'scripts\check-testnet-access.ps1',
+            'scripts\run-local-testnet-proof.ps1'
+          )
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile(
+              (Resolve-Path $file),
+              [ref]$tokens,
+              [ref]$errors
+            )
+            if ($errors.Count -gt 0) {
+              $errors | ForEach-Object { Write-Error ("{0}: {1}" -f $file, $_.Message) }
+              exit 1
+            }
+            Write-Host ("POWERSHELL_PARSE_PASS={0}" -f $file)
+          }
