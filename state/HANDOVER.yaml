@@ -40,6 +40,12 @@ completed:
     run_id: 34252867490
     conclusion: SUCCESS
     head: f00d9e24c48d234cd72b554908c3beeb01e88c94
+  windows_powershell_parser_ci:
+    run_id: 34253539001
+    conclusion: SUCCESS
+    validates:
+      - scripts/check-testnet-access.ps1
+      - scripts/run-local-testnet-proof.ps1
 
 hosted_write_attempt:
   run_id: 34248954040
@@ -50,6 +56,25 @@ hosted_write_attempt:
   venue_response: RESTRICTED_LOCATION_ELIGIBILITY
   order_sent: false
   interpretation: HOSTED_RUNNER_LOCATION_BLOCKER_NOT_PRODUCT_BLOCK
+
+local_access_attempt:
+  evidence: evidence/live-testnet/ATTEMPT-002-LOCAL-ACCESS-PASS.md
+  result: PASS
+  endpoint: https://testnet.binance.vision
+  financial_write: false
+
+local_write_attempt_003:
+  evidence: evidence/live-testnet/ATTEMPT-003-LOCAL-POWERSHELL-PARSER-FAIL.md
+  result: FAILURE_BEFORE_EXECUTION
+  failure_stage: WINDOWS_POWERSHELL_PARSE
+  root_cause: UTF8_WITHOUT_BOM_NON_ASCII_PUNCTUATION_RISK_ON_WINDOWS_POWERSHELL_5_1
+  order_sent: false
+  decision_cycle_started: false
+  public_proof_created: false
+  remediation:
+    wrapper_ascii_only: true
+    raw_json_written_utf8_without_bom: true
+    parser_gate_added_to_ci: true
 
 local_machine:
   platform: Windows_PowerShell
@@ -82,6 +107,7 @@ current_evidence:
   testnet_execution_boundary: PASS_7_OF_7
   native_transport_tests: PASS_IN_TEST_ALL
   actual_location_access: PASS
+  powershell_wrapper_parse: PASS_IN_WINDOWS_POWERSHELL_5_1_CI
   successful_testnet_order: NOT_YET_OBTAINED
   same_order_verification: NOT_YET_OBTAINED
   public_write_proof: NOT_YET_OBTAINED
@@ -99,7 +125,7 @@ non_bypass_boundary:
 human_requested_step_1_to_5_scope:
   step_1_secret_installation: COMPLETE
   step_2_manual_workflow_packaging: COMPLETE
-  step_3_real_testnet_capture: READY_FOR_LOCAL_EXECUTION
+  step_3_real_testnet_capture: READY_FOR_LOCAL_EXECUTION_RETRY_AFTER_PARSER_FIX
   step_4_sanitized_public_trade_proof: PENDING_STEP_3
   step_5_vercel_public_trade_proof: PENDING_STEP_4
   requested_stop_after_step_5: true
@@ -127,6 +153,6 @@ acceptable_block_result:
   - PUBLICATION=SKIPPED_NO_VERIFIED_ALLOW_WRITE
 
 resume_rule: >-
-  First read CURRENT/HANDOVER. The access gate is already PASS and must not be repeated unless credentials change. Do not rerun GitHub-hosted write workflow.
-  The next action is the bounded local proof from the same actual-location machine. After the user returns the sanitized terminal summary, verify the pushed public artifact and Vercel /live-proof.
-  Stop exactly after step 5 before TRACE delta, Winning Intelligence final, video freeze or Project Finisher.
+  First read CURRENT/HANDOVER. The access gate is already PASS and must not be repeated unless credentials change. The previous local proof attempt failed at parsing before any decision cycle or order.
+  Do not rerun GitHub-hosted write workflow. Pull the ASCII-safe wrapper and rerun the bounded local proof from the same actual-location machine.
+  After the user returns the sanitized terminal summary, verify the pushed public artifact and Vercel /live-proof. Stop exactly after step 5 before TRACE delta, Winning Intelligence final, video freeze or Project Finisher.
