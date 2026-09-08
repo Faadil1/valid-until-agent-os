@@ -13,8 +13,8 @@ handover_discipline:
   chat_memory_is_not_authority: true
   rule: read_both_files_first_then_resume_exact_gate
 
-current_stage: LIVE_PROOF_LAB_V0_4_CLOUDFLARE_FALLBACK_READY_FOR_PROJECT_IMPORT
-current_owner: HUMAN_CLOUDFLARE_PROJECT_SETUP
+current_stage: V0_4_RUNTIME_VERIFIED_AWAITING_PBPD_RECONCILIATION
+current_owner: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
 terminal_completeness_allowed: false
 
 material_scope_state:
@@ -24,7 +24,7 @@ material_scope_state:
   living_prd_addendum: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
   spec_kit_delta: product/specs/001-execution-validity/LIVE-PROOF-LAB-DELTA-0.4.md
   code_status: COMPLETE_CI_VERIFIED
-  runtime_status: DUAL_PATH_VERCEL_RATE_LIMITED_CLOUDFLARE_READY_FOR_IMPORT
+  runtime_status: DUAL_RUNTIME_VERIFIED_VERCEL_FAIL_CLOSED_CLOUDFLARE_SIGNED_READ_VERIFIED
   cloudflare_delta_scope: DEPLOYMENT_RESILIENCE_ONLY
 
 preserved_verified_execution:
@@ -45,11 +45,20 @@ v0_4_frontend:
 
 vercel_path:
   project_id: prj_G4gsIiXTRxOTLhXf8ZMqqVDRJSYs
-  stable_domain: https://valid-until-agent-os.vercel.app
+  production_url: https://valid-until-agent-os-plum.vercel.app
+  deployment_commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
+  deployment_status: READY
   production_secrets: HUMAN_CONFIRMED_CONFIGURED_VALUES_NOT_READ_BY_ASSISTANT
-  blocker: HOBBY_BUILD_RATE_LIMIT
-  current_lab_route_last_verified: 404
-  action: WAIT_WITHOUT_DEPLOYMENT_SPAM
+  static_routes_http_200:
+    - '/'
+    - '/lab'
+    - '/live-proof'
+    - '/evaluations'
+  live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
+  signed_read_status: VENUE_ELIGIBILITY_UNAVAILABLE
+  signed_read_diagnostic_patch: 76eee8ace6f344145cf90d2369fe9fb2595b788e
+  bypass_attempted: false
+  new_order_created: false
 
 cloudflare_path:
   account: HUMAN_CONFIRMED_READY
@@ -77,7 +86,22 @@ cloudflare_path:
     - BINANCE_TESTNET_API_KEY
     - BINANCE_TESTNET_API_SECRET
   secret_values_in_chat: forbidden
-  deployment_status: NOT_YET_IMPORTED
+  production_url: https://valid-until-agent-os.pages.dev
+  deployment_status: VERIFIED
+  static_routes_http_200: true
+  live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
+  signed_read_status: LIVE_SIGNED_READ_VERIFIED
+  same_order_verified: true
+
+runtime_evidence:
+  verified_at_utc: '2026-09-08T19:12:00Z'
+  canonical_order_id: 13634770
+  canonical_client_order_id: vu-mtswxiik-ecb6b093
+  cloudflare_same_order_verified: true
+  vercel_fail_closed_diagnosed: true
+  no_secret_values_read_or_returned: true
+  no_financial_write_invoked: true
+  historical_testnet_trade_rerun: false
 
 assurance:
   cloudflare_full_ci_run: 34259529684
@@ -111,26 +135,17 @@ security_boundary:
   venue_eligibility_bypass: forbidden
 
 next_valid_handoff:
-  from: PBPD_DEPLOYMENT_RESILIENCE_PREP
-  to: HUMAN_CLOUDFLARE_PROJECT_SETUP
-  required_output: CLOUDFLARE_PAGES_PROJECT_IMPORTED_AND_PRODUCTION_SECRETS_CONFIGURED_WITHOUT_DISCLOSURE
+  from: V0_4_RUNTIME_VERIFICATION_AND_REPAIR
+  to: PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED
+  required_output: RECONCILE_VERIFIED_RUNTIME_EVIDENCE_WITH_CANONICAL_PRODUCT_STATE
 
 then:
-  - obtain production pages.dev URL
-  - verify HTTP 200 for /, /lab, /live-proof, /evaluations
-  - verify /api/live-market returns LIVE or explicit fail-closed venue state
-  - verify /api/order-status returns LIVE_SIGNED_READ_VERIFIED or explicit fail-closed venue/auth state
-  - record Cloudflare runtime evidence
-  - choose competition primary URL based on verified runtime reliability
-  - PBPD reconciliation
-  - TRACE delta
-  - Winning Intelligence final recheck
-  - TRACE Gate 6.75 final video
-  - PBPD candidate handoff
-  - Project Finisher
-  - protected human submission
+  - PBPD runtime evidence reconciliation only
+  - do not advance to TRACE before PBPD reconciliation closes
+  - do not advance to Winning Intelligence before PBPD reconciliation closes
+  - do not advance to video or submission before the prescribed lifecycle gates
 
 resume_rule: >-
-  Cloudflare fallback is fully packaged and CI-green. The only next action is human Cloudflare Pages project import and Production Secret setup.
-  Do not create a new Binance order. Do not use VPN/proxy or manipulate Cloudflare placement to bypass venue eligibility. Once a pages.dev URL exists,
-  verify all six judge/runtime surfaces before claiming the mirror live.
+  V0.4 runtime verification is complete. Vercel Production is READY and all four static routes are served; Binance refuses Vercel venue eligibility and both API routes now expose explicit fail-closed diagnostics.
+  Cloudflare mirror remains live and its signed GET re-verifies the preserved canonical order with same_order_verified true. No POST or order creation was invoked and the historical Testnet trade was not rerun.
+  Resume only at PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED.

@@ -3,8 +3,8 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: HUMAN_CLOUDFLARE_PROJECT_SETUP
-current_stage: LIVE_PROOF_LAB_V0_4_CLOUDFLARE_FALLBACK_READY_FOR_PROJECT_IMPORT
+current_owner: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
+current_stage: V0_4_RUNTIME_VERIFIED_AWAITING_PBPD_RECONCILIATION
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -104,9 +104,9 @@ capabilities:
 
   - capability: live_proof_lab_v0_4_vercel_runtime_deployment
     owner: Vercel platform + PBPD
-    status: MISSING
-    evidence_pointer: null
-    note: Vercel Hobby build-rate-limit currently prevents full v0.4 deployment; no deployment-spam bypass permitted
+    status: SATISFIED
+    evidence_pointer: state/HANDOVER.yaml
+    note: Production READY on commit 76eee8ace6f344145cf90d2369fe9fb2595b788e; four static routes verified and API reads fail closed explicitly on Binance venue eligibility
 
   - capability: cloudflare_pages_fallback_adapter
     owner: PBPD deployment resilience
@@ -122,15 +122,15 @@ capabilities:
 
   - capability: cloudflare_pages_project_import_and_secret_configuration
     owner: human
-    status: MISSING
-    evidence_pointer: docs/CLOUDFLARE-PAGES-FALLBACK.md
-    note: Cloudflare account is human-confirmed ready; Pages project import and Production Secrets still required
+    status: SATISFIED
+    evidence_pointer: state/HANDOVER.yaml
+    note: pages.dev runtime is live; signed known-order GET succeeds, demonstrating required production secret configuration without exposing values
 
   - capability: live_proof_lab_v0_4_verified_runtime
     owner: PBPD runtime evidence
-    status: MISSING
-    evidence_pointer: null
-    note: must verify all static and API surfaces on at least one current v0.4 production runtime before reconciliation
+    status: SATISFIED
+    evidence_pointer: state/HANDOVER.yaml
+    note: Vercel static surfaces verified with explicit venue fail-closed APIs; Cloudflare mirror signed read verified canonical order 13634770 / vu-mtswxiik-ecb6b093 with same_order_verified true
 
   - capability: pbpd_runtime_evidence_reconciliation_after_v0_4
     owner: PBPD
@@ -173,9 +173,6 @@ capabilities:
     not_applicable_reason: project has not yet been officially submitted and no official outcome exists
 
 missing:
-  - live_proof_lab_v0_4_vercel_runtime_deployment
-  - cloudflare_pages_project_import_and_secret_configuration
-  - live_proof_lab_v0_4_verified_runtime
   - pbpd_runtime_evidence_reconciliation_after_v0_4
   - trace_delta_after_live_testnet_and_v0_4_scope
   - winning_intelligence_final_recheck
@@ -187,9 +184,6 @@ missing:
 unknown: []
 
 triggered_but_unresolved:
-  - HUMAN_CLOUDFLARE_PAGES_PROJECT_IMPORT_AND_PRODUCTION_SECRETS
-  - V0_4_RUNTIME_VERIFICATION_ON_CLOUDFLARE_OR_VERCEL
-  - VERCEL_DEPLOYMENT_AFTER_HOBBY_BUILD_RATE_LIMIT_RESET
   - PBPD_RUNTIME_EVIDENCE_RECONCILIATION_AFTER_V0_4
   - TRACE_DELTA_AFTER_LIVE_TESTNET_AND_LIVE_PROOF_LAB_SCOPE
   - WINNING_INTELLIGENCE_FINAL_RECHECK
@@ -201,23 +195,24 @@ triggered_but_unresolved:
 human_overrides: []
 
 current_evidence:
-  historical_vercel_url: https://valid-until-agent-os.vercel.app
+  vercel_runtime_url: https://valid-until-agent-os-plum.vercel.app
+  vercel_runtime_commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
+  vercel_static_routes_http_200: true
+  vercel_live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
+  vercel_signed_read_status: VENUE_ELIGIBILITY_UNAVAILABLE
+  cloudflare_pages_runtime_url: https://valid-until-agent-os.pages.dev
+  cloudflare_live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
+  cloudflare_signed_read_status: LIVE_SIGNED_READ_VERIFIED
   testnet_order_id: 13634770
   testnet_client_order_id: vu-mtswxiik-ecb6b093
   testnet_order_status: FILLED
   same_order_verified: true
   production: false
   real_funds: false
-  v0_4_vercel_ci_run: 34256450643
-  v0_4_vercel_ci_result: SUCCESS
-  v0_4_vercel_secrets: HUMAN_CONFIRMED_PRODUCTION_VALUES_PRESENT_VALUES_NOT_READ_BY_ASSISTANT
-  v0_4_vercel_runtime: BLOCKED_BY_HOBBY_BUILD_RATE_LIMIT
-  cloudflare_account: HUMAN_CONFIRMED_READY
-  cloudflare_fallback_ci_run: 34259529684
-  cloudflare_fallback_ci_result: SUCCESS
-  cloudflare_fallback_ci_head: c76b6f6520b59ca62b6156bfdd4db6354b96b131
-  cloudflare_pages_functions_tests: PASS_12_OF_12
-  cloudflare_pages_runtime_url: PENDING_HUMAN_PROJECT_IMPORT
+  secrets_exposed: false
+  financial_write_invoked_during_runtime_verification: false
+  canonical_trade_rerun: false
+  v0_4_runtime_verification_result: SATISFIED
 
 non_bypass_rules_reaffirmed:
   - no_cloud_region_hopping
@@ -231,11 +226,11 @@ non_bypass_rules_reaffirmed:
   - no_cloudflare_placement_manipulation_for_venue_bypass
 
 next_valid_handoff:
-  from: PBPD_DEPLOYMENT_RESILIENCE_PREP
-  to: HUMAN_CLOUDFLARE_PROJECT_SETUP
-  required_output: CLOUDFLARE_PAGES_PROJECT_IMPORTED_AND_PRODUCTION_SECRETS_CONFIGURED_WITHOUT_DISCLOSURE
+  from: V0_4_RUNTIME_VERIFICATION_AND_REPAIR
+  to: PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED
+  required_output: RECONCILE_VERIFIED_RUNTIME_EVIDENCE_WITH_LIVING_PRODUCT_STATE
 
 resume_rule: >-
-  Cloudflare fallback adapter is CI-green and the Cloudflare account is ready. Import the GitHub repo into Pages using main,
-  npm run build:web and output directory web, then add both Binance Spot Testnet credentials as Production Secrets.
-  Do not create a new testnet order. Once a pages.dev production URL exists, verify all six judge/runtime routes and record evidence.
+  Runtime v0.4 verification is satisfied. Vercel fails closed explicitly because Binance Testnet rejects the server location, while Cloudflare re-verifies the preserved canonical order by signed GET.
+  No secret values were exposed, no POST/order creation was invoked and the historical Testnet trade was not rerun.
+  Stop here and resume only at PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED; do not skip directly to TRACE, Winning Intelligence, video or submission.

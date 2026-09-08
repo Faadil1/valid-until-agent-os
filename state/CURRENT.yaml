@@ -1,9 +1,9 @@
 project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
-status: PACKAGING_ACTIVE
-current_stage: LIVE_PROOF_LAB_V0_4_CLOUDFLARE_FALLBACK_READY_FOR_PROJECT_IMPORT
-current_owner: HUMAN_CLOUDFLARE_PROJECT_SETUP
+status: RUNTIME_VERIFICATION_COMPLETE_AWAITING_RECONCILIATION
+current_stage: V0_4_RUNTIME_VERIFIED_AWAITING_PBPD_RECONCILIATION
+current_owner: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -33,7 +33,7 @@ living_prd:
   base: product/PRD.md
   v0_3_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
   v0_4_addendum: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
-  status: IMPLEMENTED_CODE_PENDING_RUNTIME_DEPLOYMENT
+  status: IMPLEMENTED_RUNTIME_VERIFIED
   cloudflare_fallback_interpretation: DEPLOYMENT_RESILIENCE_ONLY_NO_NEW_PRODUCT_SCOPE
 
 preserved_verified_execution:
@@ -63,11 +63,26 @@ v0_4_product_surface:
 
 v0_4_vercel:
   project_id: prj_G4gsIiXTRxOTLhXf8ZMqqVDRJSYs
-  stable_domain: https://valid-until-agent-os.vercel.app
+  production_domain_verified: https://valid-until-agent-os-plum.vercel.app
+  deployment_commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
+  deployment_status: READY
   production_secrets: HUMAN_CONFIRMED_BOTH_PRESENT_VALUES_NOT_READ_BY_ASSISTANT
-  runtime_status: BLOCKED_BY_HOBBY_BUILD_RATE_LIMIT
-  lab_route_last_verified_status: 404_NOT_DEPLOYED_YET
-  do_not_create_commits_only_to_poll_rate_limit: true
+  static_routes_http_200:
+    - '/'
+    - '/lab'
+    - '/live-proof'
+    - '/evaluations'
+  live_market:
+    http: 503
+    status: VENUE_ELIGIBILITY_UNAVAILABLE
+    diagnosed: true
+    bypass_attempted: false
+  signed_known_order_refresh:
+    http: 503
+    status: VENUE_ELIGIBILITY_UNAVAILABLE
+    diagnosed: true
+    new_order_created: false
+  runtime_status: VERIFIED_FAIL_CLOSED_ON_BINANCE_VENUE_ELIGIBILITY
 
 cloudflare_fallback:
   purpose: COMPETITION_RUNTIME_RESILIENCE_MIRROR
@@ -99,7 +114,27 @@ cloudflare_fallback:
     - BINANCE_TESTNET_API_KEY
     - BINANCE_TESTNET_API_SECRET
   secret_values_in_chat: FORBIDDEN
-  runtime_status: READY_FOR_HUMAN_PROJECT_IMPORT_NOT_YET_DEPLOYED
+  runtime_url: https://valid-until-agent-os.pages.dev
+  runtime_status: VERIFIED_MIRROR
+  live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
+  signed_known_order_refresh_status: LIVE_SIGNED_READ_VERIFIED
+  same_order_verified: true
+
+runtime_verification:
+  verified_at_utc: '2026-09-08T19:12:00Z'
+  no_browser_secret_exposure_observed: true
+  no_secret_logging_observed: true
+  no_post_or_order_creation_invoked: true
+  canonical_testnet_trade_rerun: false
+  vercel_result: VERIFIED_FAIL_CLOSED
+  cloudflare_result: VERIFIED_SIGNED_READ
+  canonical_order_id: 13634770
+  canonical_client_order_id: vu-mtswxiik-ecb6b093
+  cloudflare_same_order_verified: true
+  patch:
+    commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
+    scope: VERCEL_SIGNED_READ_VENUE_DIAGNOSTIC_ONLY
+    shared_cloudflare_function_code_changed: false
 
 cloudflare_assurance:
   full_ci_run: 34259529684
@@ -134,14 +169,12 @@ security_invariants:
   - cloudflare_signed_read_must_fail_closed_on_venue_eligibility
 
 next_valid_handoff:
-  from: PBPD_DEPLOYMENT_RESILIENCE_PREP
-  to: HUMAN_CLOUDFLARE_PROJECT_SETUP
-  required_output: >-
-    Import Faadil1/valid-until-agent-os into Cloudflare Pages with production branch main,
-    build command npm run build:web, output directory web and repository root. Then add
-    BINANCE_TESTNET_API_KEY and BINANCE_TESTNET_API_SECRET as Production Secrets without sharing values in chat.
+  from: V0_4_RUNTIME_VERIFICATION_AND_REPAIR
+  to: PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED
+  required_output: RECONCILE_VERCEL_FAIL_CLOSED_AND_CLOUDFLARE_VERIFIED_SIGNED_READ_WITHOUT_EXPANDING_SCOPE
 
 resume_rule: >-
-  Cloudflare fallback code is CI-green and ready for import. Vercel remains rate-limited. Do not rerun the authenticated testnet order.
-  Once Cloudflare provides a production pages.dev URL and the two Production Secrets are configured, verify /, /lab, /live-proof,
-  /evaluations, /api/live-market and /api/order-status, then record runtime evidence and resume PBPD reconciliation.
+  Runtime v0.4 is verified. Vercel serves all four static judge surfaces and fails closed explicitly on Binance venue eligibility for both live-market and signed-order reads.
+  Cloudflare mirror remains live; its signed read re-verifies canonical order 13634770 / vu-mtswxiik-ecb6b093 with same_order_verified true.
+  Do not create a new Binance order, do not rerun the historical trade, and do not proceed to TRACE, Winning Intelligence, video or submission.
+  Resume only at PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED.
