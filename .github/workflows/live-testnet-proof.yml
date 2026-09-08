@@ -1,0 +1,145 @@
+name: live-binance-spot-testnet-proof
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: valid-until-spot-testnet-proof
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    name: bounded Spot Testnet execution proof
+    runs-on: ubuntu-latest
+    environment: testnet-proof
+    timeout-minutes: 10
+    env:
+      BINANCE_API_KEY: ${{ secrets.BINANCE_TESTNET_API_KEY }}
+      BINANCE_SECRET_KEY: ${{ secrets.BINANCE_TESTNET_API_SECRET }}
+      BINANCE_API_ENV: testnet
+      BINANCE_SPOT_BASE_PATH: https://testnet.binance.vision
+      VALID_UNTIL_TESTNET_WRITE: CONFIRM_TESTNET_WRITE
+      VALID_UNTIL_ACTION_SIDE: BUY
+      VALID_UNTIL_ACTION_NOTIONAL_USDT: '10'
+      VALID_UNTIL_RECHECK_MS: '750'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Verify protected secret presence without disclosure
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${BINANCE_API_KEY:-}"
+          test -n "${BINANCE_SECRET_KEY:-}"
+          test "$BINANCE_API_ENV" = "testnet"
+          test "$BINANCE_SPOT_BASE_PATH" = "https://testnet.binance.vision"
+          echo "Protected testnet credentials are present; values were not printed."
+
+      - name: Run deterministic assurance before write boundary
+        run: npm run test:all
+
+      - name: Install official Binance CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --proto '=https' --tlsv1.2 -LsSf \
+            https://github.com/binance/binance-cli/releases/latest/download/binance-cli-installer.sh \
+            | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+
+      - name: Verify CLI and authenticated Spot Testnet account access
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v binance-cli
+          binance-cli --version
+          binance-cli request GET https://testnet.binance.vision/api/v3/account --signed > "$RUNNER_TEMP/account-check.json"
+          test -s "$RUNNER_TEMP/account-check.json"
+          rm -f "$RUNNER_TEMP/account-check.json"
+          echo "Authenticated Binance Spot Testnet account check: PASS"
+
+      - name: Run up to three fresh Valid Until decision cycles
+        id: capture
+        shell: bash
+        run: |
+          set -euo pipefail
+          final_raw="$RUNNER_TEMP/live-testnet-raw.json"
+          for attempt in 1 2 3; do
+            cycle="$RUNNER_TEMP/live-testnet-cycle-${attempt}.json"
+            VALID_UNTIL_PROOF_CYCLE="$attempt" node src/live-testnet.mjs BTCUSDT > "$cycle"
+            status="$(node -e 'const fs=require("fs");const p=JSON.parse(fs.readFileSync(process.argv[1],"utf8"));process.stdout.write(String(p.validity_result?.status||"UNKNOWN"));' "$cycle")"
+            cp "$cycle" "$final_raw"
+            echo "Decision cycle ${attempt}: ${status}"
+            echo "cycle=$attempt" >> "$GITHUB_OUTPUT"
+            if [ "$status" = "ALLOW" ]; then
+              break
+            fi
+            if [ "$attempt" -lt 3 ]; then sleep 2; fi
+          done
+          test -s "$final_raw"
+          echo "raw_path=$final_raw" >> "$GITHUB_OUTPUT"
+
+      - name: Sanitize public evidence
+        shell: bash
+        env:
+          VALID_UNTIL_PROOF_CYCLE: ${{ steps.capture.outputs.cycle }}
+        run: |
+          set -euo pipefail
+          node scripts/sanitize-testnet-proof.mjs \
+            "${{ steps.capture.outputs.raw_path }}" \
+            web/live-testnet-proof.json
+
+          if grep -Fq "$BINANCE_API_KEY" web/live-testnet-proof.json; then
+            echo "::error::API key unexpectedly present in public proof"
+            exit 1
+          fi
+          if grep -Fq "$BINANCE_SECRET_KEY" web/live-testnet-proof.json; then
+            echo "::error::API secret unexpectedly present in public proof"
+            exit 1
+          fi
+
+          node - <<'NODE'
+          const fs=require('fs');
+          const p=JSON.parse(fs.readFileSync('web/live-testnet-proof.json','utf8'));
+          console.log(JSON.stringify({
+            proof_class:p.proof_class,
+            validity:p.decision_contract?.validity_status,
+            order_sent:p.execution?.order_sent,
+            same_order_verified:p.execution?.same_order_verified,
+            run_id:p.workflow?.run_id,
+            network:p.network
+          },null,2));
+          NODE
+
+      - name: Upload sanitized proof artifact only
+        uses: actions/upload-artifact@v4
+        with:
+          name: valid-until-sanitized-spot-testnet-proof-${{ github.run_id }}
+          path: web/live-testnet-proof.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish sanitized proof to main for Vercel
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "valid-until-proof-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -- web/live-testnet-proof.json
+          if git diff --cached --quiet; then
+            echo "Sanitized proof unchanged; nothing to publish."
+            exit 0
+          fi
+          git commit -m "evidence: publish sanitized Binance Spot Testnet proof [skip ci]"
+          git push origin HEAD:main
