@@ -33,12 +33,25 @@ submission_state:
   form_url_post_submission_edit_confirmed: false
 
 post_submission_runtime_correction:
-  status: APPLIED
+  status: APPLIED_WITH_VERCEL_JUDGE_ROUTE_RECOVERY_SHIM
   trigger: CONCRETE_RUNTIME_DEFECT_DISCOVERED_AFTER_SUBMISSION
   evidence_pointer: evidence/runtime/POST-SUBMISSION-RUNTIME-ROUTING-CORRECTION-2026-09-08.md
   primary_working_runtime: https://valid-until-agent-os.pages.dev
-  secondary_runtime: https://valid-until-agent-os-plum.vercel.app
+  submitted_vercel_runtime: https://valid-until-agent-os-plum.vercel.app
   readme_links_rerouted: true
+  youtube_links_rerouted: true
+  x_links_rerouted: true
+  vercel_redirect_commit: 383ba32e880ed1a7b51dfb18110dd2d5d41c8892
+  vercel_deployment_status_commit: f3af142dbe9c320f16332b7b4c90257d933d8340
+  vercel_deployment_status: SUCCESS_REPORTED_BY_GITHUB_VERCEL_CONTEXT
+  redirected_judge_routes:
+    - /
+    - /lab
+    - /evaluations
+    - /live-proof
+  api_proxy_added: false
+  geographic_bypass_added: false
+  external_redirect_smoke: HUMAN_OR_DIRECT_RUNTIME_VERIFY_PENDING
   product_scope_changed: false
   proof_scope_changed: false
   new_execution_evidence_created: false
@@ -71,7 +84,9 @@ preserved_verified_execution:
 
 judge_runtime:
   primary_url: https://valid-until-agent-os.pages.dev
-  secondary_vercel_url: https://valid-until-agent-os-plum.vercel.app
+  submitted_vercel_url: https://valid-until-agent-os-plum.vercel.app
+  vercel_judge_pages_expected_behavior: TEMPORARY_REDIRECT_TO_PRIMARY_CLOUDFLARE_RUNTIME
+  vercel_api_behavior: PRESERVED_FAIL_CLOSED_NO_PROXY
   public_repository: https://github.com/Faadil1/valid-until-agent-os
   repository_visibility: public
   trace_runtime_run: 34274047494
@@ -139,13 +154,15 @@ truth_boundaries:
   - no_public_unrestricted_write_route
   - human_reported_submission_is_not_verified_platform_receipt
   - submitted_form_live_url_not_claimed_edited_after_submission
+  - vercel_judge_route_shim_is_not_a_binance_api_proxy
+  - no_geo_bypass_was_added
 
 remaining_lifecycle:
   protected_submission:
     owner: HUMAN
     status: SATISFIED_HUMAN_CONFIRMED
   post_submission_runtime_routing_correction:
-    status: SATISFIED
+    status: SATISFIED_WITH_VERCEL_RECOVERY_SHIM_DEPLOYED
   post_mortem:
     owner: PROJECT_FINISHER_WITH_HOI_PBPD_TRACE
     status: NOW_APPLICABLE_PENDING
@@ -157,7 +174,7 @@ next_valid_handoff:
   to: PROJECT_FINISHER_POST_MORTEM_WITH_HOI_PBPD_TRACE
   trigger: SUBMITTED
   required_output: >-
-    Preserve the submitted product as frozen, keep Cloudflare Pages as the current primary working evaluator runtime, create a truthful post-mortem / learning record, and later record official competition outcome or evaluator feedback when available. Do not infer a win/loss before external evidence exists.
+    Preserve the submitted product as frozen, keep Cloudflare Pages as the primary working evaluator runtime, retain the narrow Vercel judge-route redirect shim for the immutable submitted URL, create a truthful post-mortem / learning record, and later record official competition outcome or evaluator feedback when available. Do not infer a win/loss before external evidence exists.
 
 resume_rule: >-
-  Valid Until is human-confirmed SUBMITTED. After submission, a concrete runtime-routing defect was discovered: the Vercel deployment does not provide the working live path while the already-existing Cloudflare Pages deployment does. The README and canonical state now point evaluator traffic to Cloudflare as primary and preserve Vercel as secondary. This is a truthful routing correction, not a product/proof expansion. Do not execute another Binance order. If the official submission platform permits editing the live-demo URL, that remains a protected human action and should be recorded only after human confirmation.
+  Valid Until is human-confirmed SUBMITTED. After submission, a concrete runtime-routing defect was discovered: Vercel could not provide the working live proof path while the already-existing Cloudflare Pages deployment could. README, YouTube and X now point directly to Cloudflare. Because the immutable submission form still points to Vercel, vercel.json now temporarily redirects only the evaluator-facing routes /, /lab, /evaluations and /live-proof to Cloudflare. Vercel API routes are intentionally not proxied and remain fail-closed, so the no-geo-bypass boundary is preserved. GitHub reports the Vercel deployment as completed successfully; direct redirect smoke remains to be confirmed. Do not execute another Binance order or reopen product, film, positioning or proof scope.
