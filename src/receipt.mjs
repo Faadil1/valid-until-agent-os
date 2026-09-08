@@ -1,5 +1,5 @@
 import { generateKeyPairSync, sign, verify, randomUUID } from 'node:crypto';
-import { canonicalize } from './canonical.mjs';
+import { canonicalize, sha256 } from './canonical.mjs';
 
 export function createDemoSigner() {
   const { publicKey, privateKey } = generateKeyPairSync('ed25519');
@@ -10,13 +10,17 @@ export function publicKeyPem(publicKey) {
   return publicKey.export({ type: 'spki', format: 'pem' }).toString();
 }
 
-export function issueReceipt({ policy, policyHash, snapshot, snapshotHash, evaluation, signer }) {
+export function issueReceipt({ policy, policyHash, snapshot, snapshotHash, evaluation, signer, proposedAction }) {
+  if (!proposedAction) throw new Error('proposedAction is required for receipt v2');
+  const action = structuredClone(proposedAction);
   const unsigned = {
-    receipt_version: 'valid-until.receipt.v1',
+    receipt_version: 'valid-until.receipt.v2',
     decision_id: randomUUID(),
     policy_id: policy.policy_id,
     policy_hash: policyHash,
     snapshot_hash: snapshotHash,
+    action_hash: sha256(action),
+    action,
     symbol: policy.symbol,
     status: evaluation.pass ? 'ELIGIBLE' : 'BLOCKED',
     evaluated_at_ms: snapshot.server_time_ms,
