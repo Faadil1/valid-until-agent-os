@@ -6,8 +6,19 @@ canonical_thesis: Reasoning is not authorization.
 secondary_thesis: A correct decision can expire.
 judge_line: The authorization was still valid. The premise was not.
 
-current_stage: LIVE_BINANCE_SPOT_TESTNET_CAPTURE_REQUIRED
-current_owner: HUMAN_EXECUTION_BOUNDARY
+handover_discipline:
+  source_of_truth: GitHub_repository_state
+  canonical_current: state/CURRENT.yaml
+  canonical_handover: state/HANDOVER.yaml
+  rule: >-
+    Update CURRENT and HANDOVER after every material lifecycle change: gate, owner, blocker,
+    proof, scope, claim boundary, deployment state, competition finding, or next handoff.
+    A future conversation should be able to take the lead by reading these files first.
+  chat_memory_is_not_authority: true
+  backdating_or_falsified_history: forbidden
+
+current_stage: GITHUB_TESTNET_SECRET_INSTALLATION_REQUIRED
+current_owner: HUMAN_SECRET_BOUNDARY
 terminal_completeness_allowed: false
 
 human_direction:
@@ -16,10 +27,23 @@ human_direction:
     Final differentiation proof should not stop at read-only authenticity.
     Add live Binance Spot Testnet execution evidence, without real funds or mainnet trading.
 
+latest_operational_decision:
+  id: HUMAN_GITHUB_ACTIONS_SECRET_ROUTE_001
+  decision: >-
+    Prefer GitHub Actions for the real Spot Testnet capture instead of requiring local WSL execution.
+    Store testnet credentials only in a protected GitHub Environment and expose only sanitized evidence
+    to Vercel/public artifacts.
+  target_environment: testnet-proof
+  required_environment_secrets:
+    - BINANCE_TESTNET_API_KEY
+    - BINANCE_TESTNET_API_SECRET
+  current_secret_status: NOT_YET_CONFIRMED
+  vercel_secret_access: FORBIDDEN
+
 product_contract:
-  human_role: define/accept policy and retain protected external authority
+  human_role: define/accept policy, install protected secrets, and retain protected external authority
   agent_role: interpret intent and propose an exact action; never self-authorize
-  binance_role: provide live observations/capability surface
+  binance_role: provide live observations/capability surface and official Spot Testnet execution venue
   valid_until_role: bind sealed policy + T0 state + exact action and revalidate at T1
   receipt_contract: valid-until.receipt.v2
   terminal_states: [ALLOW, BLOCK]
@@ -56,7 +80,8 @@ agent_os_composition:
     Valid Until MCP answers whether the exact old action remains justified.
 
 live_testnet_path:
-  status: IMPLEMENTED_NOT_YET_AUTHENTICATED_CAPTURED
+  implementation_status: IMPLEMENTED_AND_CI_TESTED
+  authenticated_capture_status: PENDING
   official_environment: https://testnet.binance.vision
   market_capture: src/snapshot.mjs::captureWithBinanceSpotTestnet
   executor: src/testnet-executor.mjs
@@ -64,14 +89,44 @@ live_testnet_path:
   command: npm run live:testnet -- BTCUSDT
   supported_action: BUY_with_quote_notional_usdt
   write_confirmation: VALID_UNTIL_TESTNET_WRITE=CONFIRM_TESTNET_WRITE
-  profile_variable: VALID_UNTIL_TESTNET_PROFILE
   allow_behavior: one signed MARKET BUY then query same clientOrderId
   block_behavior: zero executor calls
   target_override_to_mainnet: impossible_by_current_executor_contract
 
+planned_github_actions_capture:
+  environment: testnet-proof
+  workflow_trigger: manual_only
+  credentials:
+    api_key: secrets.BINANCE_TESTNET_API_KEY
+    api_secret: secrets.BINANCE_TESTNET_API_SECRET
+  runner_profile: ephemeral
+  secret_echo: forbidden
+  xtrace_or_shell_trace: forbidden
+  endpoint: hardcoded_testnet_only
+  sanitized_public_output_target: web/live-testnet-proof.json
+  public_output_may_include:
+    - network
+    - captured_at
+    - symbol
+    - normalized_action
+    - valid_until_result
+    - testnet_orderId
+    - testnet_clientOrderId
+    - testnet_status
+    - same_order_verified
+    - evidence_hashes
+  public_output_must_never_include:
+    - api_key
+    - api_secret
+    - authorization_headers
+    - raw_profile_file
+    - account_credentials
+  vercel_role: render sanitized proof only after successful evidence capture
+
 security_and_scope:
-  - use only personal development machine for credentials/execution
-  - no API secret in repository/chat/log/screenshot
+  - no API secret in repository/chat/log/screenshot/artifact
+  - protected GitHub Environment secrets are allowed for the manual testnet workflow
+  - Vercel receives no Binance credential
   - no mainnet Binance order
   - no real funds
   - no geographic bypass
@@ -79,6 +134,7 @@ security_and_scope:
   - no x402
   - do not weaken policy to manufacture ALLOW
   - a BLOCK live run is legitimate evidence and requires fresh replan
+  - GitHub secret installation does not itself prove an execution occurred
 
 claim_boundaries:
   implemented_claims:
@@ -88,8 +144,10 @@ claim_boundaries:
     - testnet target hardcoded
     - full CI green
   pending_claims:
+    - GitHub testnet-proof environment contains both required secrets
     - real authenticated Binance Spot Testnet order placed
     - real testnet orderId/clientOrderId/status observed
+    - sanitized testnet proof published to judge surface
   forbidden_claims:
     - mainnet live trade
     - real-money trade
@@ -112,6 +170,8 @@ lifecycle_effect:
   previous_trace_6_75: PAUSED
   reason: material live-proof scope change after previous TRACE state
   required_sequence:
+    - human_installs_testnet_environment_secrets
+    - pbpd_adds_manual_testnet_workflow_and_sanitizer
     - real_testnet_capture
     - pbpd_claim_and_prd_reconciliation
     - deploy_judge_delta
@@ -123,12 +183,21 @@ lifecycle_effect:
     - human_protected_submission
 
 next_action_for_human:
-  - create/select Binance CLI testnet profile locally
-  - never paste the key/secret into chat
-  - run the bounded live:testnet command with explicit confirmation variable
-  - return only sanitized output/result if help interpreting is needed
+  - create GitHub Environment named testnet-proof if it does not exist
+  - add BINANCE_TESTNET_API_KEY as an Environment secret
+  - add BINANCE_TESTNET_API_SECRET as an Environment secret
+  - do not paste either value into chat
+  - confirm only that both secrets are present
+
+next_handoff_after_human_secret_confirmation:
+  from: HUMAN_SECRET_BOUNDARY
+  to: PBPD
+  required_output: >-
+    Add manual live-testnet-proof GitHub Actions workflow, create ephemeral binance-cli testnet profile,
+    execute bounded Valid Until Spot Testnet proof, sanitize the result, and expose only safe evidence to Vercel.
 
 resume_rule: >-
-  Do not return to final video recording yet. First obtain or fail-close the real authenticated Spot Testnet capture.
-  If the run returns BLOCK, preserve it honestly and start a fresh decision cycle. If it returns ALLOW, capture the
-  sanitized testnet order response and verification response. Mainnet execution remains outside this Track A proof.
+  A new conversation must read state/CURRENT.yaml and state/HANDOVER.yaml first. Do not return to video recording,
+  Project Finisher or protected submission. First confirm the GitHub testnet-proof Environment contains both required
+  secrets without exposing their values. Then PBPD owns the manual Actions workflow and authenticated Spot Testnet capture.
+  Preserve BLOCK honestly; if ALLOW occurs, retain only sanitized order/verification evidence. Mainnet remains forbidden.
