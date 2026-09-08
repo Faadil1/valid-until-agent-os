@@ -4,7 +4,7 @@ profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
 current_owner: PBPD
-current_stage: ACTIVE_RECONCILIATION_AND_PREVIEW_EVIDENCE
+current_stage: TRACE_GATE_6_5_PREVIEW_EVIDENCE_REQUIRED
 terminal_completeness_allowed: false
 
 capabilities:
@@ -12,7 +12,7 @@ capabilities:
     owner: faadil-agent-system
     status: SATISFIED
     evidence_pointer: Faadil1/faadil-agent-system/skills/faadil-system-router/SKILL.md
-    note: lifecycle completeness policy now governs this project
+    note: lifecycle completeness policy governs this project
 
   - capability: opportunity_and_eligibility_intelligence
     owner: hackathon-opportunity-intelligence
@@ -30,7 +30,7 @@ capabilities:
     owner: hackathon-opportunity-intelligence
     status: SATISFIED_WITH_OPEN_GAPS
     evidence_pointer: product/WINNER-INTELLIGENCE-PRE-SUBMISSION.md
-    note: v1.1 current-package assessment executed; sponsor-native necessity PARTIAL and judge-path runtime UNKNOWN until deployment/TRACE
+    note: v1.1 current-package assessment executed; sponsor-native necessity and judge-path runtime gaps must be rechecked after TRACE Gate 6.5 runtime evidence
 
   - capability: project_authorization
     owner: human / chief-of-staff authority boundary
@@ -72,19 +72,19 @@ capabilities:
     owner: PBPD evidence plane
     status: SATISFIED
     evidence_pointer: state/CURRENT.yaml
-    note: core tests PASS 7/7; Challenge Suite PASS 6/6; controlled replay; live Binance CLI proof; CI green
+    note: core tests PASS 7/7; Challenge Suite PASS 6/6; controlled replay; live Binance CLI proof; latest TRACE bounded-rework CI run 34230726113 SUCCESS
 
   - capability: trace_design_experience_assurance
     owner: TRACE
-    status: MISSING_TRIGGERED
-    evidence_pointer: null
-    note: evaluator-facing interface and material design/judge-path risk trigger TRACE; pre-deploy source review and deployed runtime review required
+    status: IN_PROGRESS_GATE_6_5
+    evidence_pointer: Faadil1/trace-design-workflow/state/projects/valid-until/CURRENT.yaml
+    note: TRACE_VU_001 and TRACE_VU_002 resolved in source; TRACE_VU_003 deployed desktop/mobile/reduced-motion evaluator capture remains open
 
   - capability: post_build_reconciliation
     owner: PBPD
     status: MISSING
     evidence_pointer: null
-    note: PRD MUSTs must be reconciled against actual build/evidence/limitations after TRACE/Winning findings are integrated
+    note: PRD MUSTs must be reconciled against actual build/evidence/limitations after TRACE runtime and Winning Intelligence recheck
 
   - capability: terminal_assurance
     owner: Project Finisher
@@ -104,13 +104,12 @@ capabilities:
     not_applicable_reason: project not yet submitted and no official outcome exists
 
 missing:
-  - trace_design_experience_assurance
   - post_build_reconciliation
   - terminal_assurance
 
 triggered_but_unresolved:
-  - winning_intelligence_runtime_judge_path_gaps
-  - trace_design_experience_assurance
+  - winning_intelligence_runtime_judge_path_recheck
+  - TRACE_VU_003_deployed_runtime_evidence
 
 human_overrides: []
 
@@ -124,9 +123,10 @@ reconstructed_artifacts:
 
 next_valid_handoff:
   from: PBPD
-  to: TRACE
-  required_output: PRE_DEPLOYMENT_DESIGN_EXPERIENCE_VERDICT_AND_RUNTIME_EVIDENCE_PLAN
+  to: deployment_preview_then_TRACE
+  required_output: DEPLOYED_URL_PLUS_GATE_6_5_RUNTIME_EVIDENCE
 
 parallel_allowed_work:
-  - deployment may be prepared/executed only as preview/evidence according to deployment policy
+  - deployment may proceed only as preview/evidence according to deployment policy
+  - packaging work may continue if it does not imply TRACE, PBPD convergence, Project Finisher or human submission has passed
   - no SUBMISSION_READY or PROJECT_COMPLETE claim until missing owners resolve their gates
