@@ -36,11 +36,19 @@ proof_status:
   live_artifact_digest: 'sha256:51b23c621e487be68c81138bd3a24e6c264e4fb00a0c315b88addf8080e6b370'
   public_repo: PUBLISHED_FAADIL1_VALID_UNTIL_AGENT_OS
   ci_invariants: PASS
+  judge_ui: INTERACTIVE_EXECUTION_VALIDITY_REPLAY_V2
+  judge_ui_ci_run: 34226222624
+  judge_ui_ci: PASS
   deployment: NOT_YET_DEPLOYED
   submission: NOT_YET_SUBMITTED
+experience_positioning:
+  contrast: 'Most agents ask: Should I trade? Valid Until asks: Is this exact action still valid?'
+  hero_interaction: 'Replay proof animates 0 -> 35.47 bps across a 20 bps validity boundary and ends NO LONGER VALID.'
+  live_proof_role: 'Supporting authenticity proof, visually separated from the controlled hero replay.'
+  design_direction: 'Editorial execution-instrument aesthetic; warm paper, acid validity band, orange failure state; no generic dark AI dashboard.'
 next_actions:
-  - deploy judge web view
-  - verify deployed judge path and mobile readability
-  - record 45-75 second demo using controlled VALID -> NO LONGER VALID replay
+  - deploy upgraded judge web view
+  - verify deployed judge path, interaction and mobile readability
+  - record 45-75 second demo using the interactive VALID -> NO LONGER VALID replay
   - include live Binance proof run as supporting evidence
   - publish X submission and complete survey
