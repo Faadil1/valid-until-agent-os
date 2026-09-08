@@ -13,10 +13,10 @@ Human
 AI agent host
   interprets intent + proposes exact action
         ↓
-Binance Agent OS / official Binance skill
+Binance Agent OS / official Binance skill or remote MCP
   supplies fresh Binance observations + capability surface
         ↓
-Valid Until skill / MCP companion
+Valid Until skill / local MCP companion
   binds policy + T0 state + exact action
   revalidates against T1
         ↓
@@ -33,7 +33,7 @@ When the user asks for a Binance action or an evaluation that could lead to an a
 
 1. Read `skills/valid-until/SKILL.md`.
 2. Keep the user's policy/limits explicit and immutable inside the authorization cycle.
-3. Use the official Binance Agent OS / Binance Skills toolchain for market observations.
+3. Use the official Binance Agent OS / Binance Skills toolchain or official Binance remote MCP for read-only market observations.
 4. Keep reasoning/proposal separate from deterministic authorization.
 5. Propose an exact normalized action: `symbol + BUY/SELL + notional_usdt`.
 6. Create the decision contract through `valid_until_begin` or the equivalent local evidence path.
@@ -99,6 +99,38 @@ Output:
 - `BLOCK` + `REPLAN_REQUIRED`, with exact failed checks.
 
 The companion deliberately has **no Binance network client and no financial write capability**. Binance Agent OS remains the source of Binance observations/capabilities.
+
+## Dual-MCP composition
+
+A safe example is checked in at:
+
+```text
+config/mcp-composition.example.json
+```
+
+It describes two separate tool surfaces:
+
+```text
+official Binance Agent OS MCP
+    ↓ read-only host observation
+what is true now?
+
+Valid Until local MCP
+    ↓ action-bound cross-time contract
+is the exact old action still justified?
+```
+
+The official remote endpoint is:
+
+```text
+https://agent.binance.com/mcp/agentic
+```
+
+The example file does **not** authenticate automatically, does not alter a user's MCP settings and does not request trading scope.
+
+When the host has read-only Binance market evidence, pass the relevant market objects through `normalizeBinanceMcpObservation()` from `src/binance-mcp-observation.mjs`. The adapter performs no network request and fails closed when required market evidence is missing or malformed.
+
+Authenticated remote-MCP evidence must be labeled `PENDING` until an actual supported host completes OAuth and records a real read. The existing Binance CLI evidence is authentic Agent OS/Skills evidence, but it is not a substitute claim for remote-MCP authentication.
 
 ## Suggested agent prompt
 
