@@ -3,5 +3,27 @@
   "buildCommand": "npm run build:web",
   "outputDirectory": "web",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "https://valid-until-agent-os.pages.dev/",
+      "permanent": false
+    },
+    {
+      "source": "/lab",
+      "destination": "https://valid-until-agent-os.pages.dev/lab",
+      "permanent": false
+    },
+    {
+      "source": "/evaluations",
+      "destination": "https://valid-until-agent-os.pages.dev/evaluations",
+      "permanent": false
+    },
+    {
+      "source": "/live-proof",
+      "destination": "https://valid-until-agent-os.pages.dev/live-proof",
+      "permanent": false
+    }
+  ]
 }
