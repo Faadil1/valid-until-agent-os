@@ -1,9 +1,9 @@
 project: Valid Until
 hackathon: Binance Agent OS Mini Hackathon
 track: A
-status: RUNTIME_VERIFICATION_COMPLETE_AWAITING_RECONCILIATION
-current_stage: V0_4_RUNTIME_VERIFIED_AWAITING_PBPD_RECONCILIATION
-current_owner: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
+status: PBPD_RUNTIME_RECONCILIATION_COMPLETE
+current_stage: PBPD_RUNTIME_EVIDENCE_RECONCILED_AWAITING_TRACE_DELTA
+current_owner: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
 terminal_completeness_allowed: false
 deadline_utc: '2026-09-08T23:59:00Z'
 canonical_thesis: Reasoning is not authorization.
@@ -20,9 +20,7 @@ state_discipline:
 human_authorization:
   source: product/AUTHORIZATION.md
   latest_direction: product/HUMAN-DIRECTION-LIVE-PROOF-LAB-002.md
-  spot_testnet_write_authorized: true
-  vercel_sensitive_testnet_credentials_authorized: true
-  cloudflare_sensitive_testnet_credentials_authorized: true
+  bounded_spot_testnet_write_authorized_and_consumed: true
   public_unrestricted_write_button_authorized: false
   mainnet_write_authorized: false
   real_funds_authorized: false
@@ -33,148 +31,79 @@ living_prd:
   base: product/PRD.md
   v0_3_addendum: product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md
   v0_4_addendum: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
-  status: IMPLEMENTED_RUNTIME_VERIFIED
-  cloudflare_fallback_interpretation: DEPLOYMENT_RESILIENCE_ONLY_NO_NEW_PRODUCT_SCOPE
+  changelog: product/PRD-CHANGELOG.md
+  status: ACCEPTANCE_SATISFIED_RUNTIME_RECONCILED
 
 preserved_verified_execution:
   proof_commit: 21ab8508e078595fa964c73521bb7f78c2f2a37a
+  proof_file: web/live-testnet-proof.json
+  proof_blob_sha: e6c85b3119a88699046bd8af83aee09d9f7184b8
   order_id: 13634770
   client_order_id: vu-mtswxiik-ecb6b093
   status: FILLED
   same_order_verified: true
   network: Binance Spot Testnet
+  production: false
   real_funds: false
   rerun_without_new_authorization: FORBIDDEN
 
-v0_4_product_surface:
-  routes:
-    home: '/'
-    live_lab: '/lab'
-    verified_execution: '/live-proof'
-    evaluations: '/evaluations'
-  server_endpoints:
-    live_market: '/api/live-market'
-    signed_known_order_refresh: '/api/order-status'
-  evidence_classes:
-    - LIVE
-    - CONTROLLED
-    - VERIFIED_EXECUTION
-  financial_write_from_public_runtime: false
+v0_4_runtime:
+  vercel:
+    url: https://valid-until-agent-os-plum.vercel.app
+    deployment_commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
+    status: READY
+    static_routes_http_200: true
+    live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
+    signed_read_status: VENUE_ELIGIBILITY_UNAVAILABLE
+    interpretation: VERIFIED_FAIL_CLOSED_ON_EXTERNAL_VENUE_ELIGIBILITY
+  cloudflare:
+    url: https://valid-until-agent-os.pages.dev
+    status: VERIFIED_MIRROR
+    live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
+    signed_read_status: LIVE_SIGNED_READ_VERIFIED
+    canonical_order_identity_verified: true
+    same_order_verified: true
+  runtime_verification_handoff_commit: 0f9ec86b2fce6dc300a6dba5b52f93b1b3fb4f73
+  runtime_verification_ci_run: 34267650642
+  runtime_verification_ci_result: SUCCESS
+  financial_write_during_runtime_verification: false
+  historical_trade_rerun: false
 
-v0_4_vercel:
-  project_id: prj_G4gsIiXTRxOTLhXf8ZMqqVDRJSYs
-  production_domain_verified: https://valid-until-agent-os-plum.vercel.app
-  deployment_commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
-  deployment_status: READY
-  production_secrets: HUMAN_CONFIRMED_BOTH_PRESENT_VALUES_NOT_READ_BY_ASSISTANT
-  static_routes_http_200:
-    - '/'
-    - '/lab'
-    - '/live-proof'
-    - '/evaluations'
-  live_market:
-    http: 503
-    status: VENUE_ELIGIBILITY_UNAVAILABLE
-    diagnosed: true
-    bypass_attempted: false
-  signed_known_order_refresh:
-    http: 503
-    status: VENUE_ELIGIBILITY_UNAVAILABLE
-    diagnosed: true
-    new_order_created: false
-  runtime_status: VERIFIED_FAIL_CLOSED_ON_BINANCE_VENUE_ELIGIBILITY
-
-cloudflare_fallback:
-  purpose: COMPETITION_RUNTIME_RESILIENCE_MIRROR
-  account_status: HUMAN_CONFIRMED_ACCOUNT_READY
-  guide: docs/CLOUDFLARE-PAGES-FALLBACK.md
-  github_repo: Faadil1/valid-until-agent-os
-  production_branch: main
-  framework_preset: None
-  root_directory: repository_root
-  build_command: npm run build:web
-  build_output_directory: web
-  desired_project_name: valid-until-agent-os
-  function_routes:
-    live_market:
-      file: functions/api/live-market.js
-      route: '/api/live-market'
-      auth: NONE
-      write: false
-    signed_known_order_refresh:
-      file: functions/api/order-status.js
-      route: '/api/order-status'
-      auth: CLOUDFLARE_CONTEXT_ENV_SECRETS_ONLY
-      fixed_order_id: 13634770
-      fixed_client_order_id: vu-mtswxiik-ecb6b093
-      write: false
-  routes_manifest: web/_routes.json
-  functions_invocation_scope: '/api/*'
-  required_production_secrets:
-    - BINANCE_TESTNET_API_KEY
-    - BINANCE_TESTNET_API_SECRET
-  secret_values_in_chat: FORBIDDEN
-  runtime_url: https://valid-until-agent-os.pages.dev
-  runtime_status: VERIFIED_MIRROR
-  live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
-  signed_known_order_refresh_status: LIVE_SIGNED_READ_VERIFIED
-  same_order_verified: true
-
-runtime_verification:
-  verified_at_utc: '2026-09-08T19:12:00Z'
-  no_browser_secret_exposure_observed: true
-  no_secret_logging_observed: true
-  no_post_or_order_creation_invoked: true
-  canonical_testnet_trade_rerun: false
-  vercel_result: VERIFIED_FAIL_CLOSED
-  cloudflare_result: VERIFIED_SIGNED_READ
-  canonical_order_id: 13634770
-  canonical_client_order_id: vu-mtswxiik-ecb6b093
-  cloudflare_same_order_verified: true
-  patch:
-    commit: 76eee8ace6f344145cf90d2369fe9fb2595b788e
-    scope: VERCEL_SIGNED_READ_VENUE_DIAGNOSTIC_ONLY
-    shared_cloudflare_function_code_changed: false
-
-cloudflare_assurance:
-  full_ci_run: 34259529684
-  conclusion: SUCCESS
-  head: c76b6f6520b59ca62b6156bfdd4db6354b96b131
-  cloudflare_pages_function_tests: PASS_12_OF_12
-  webcrypto_hmac_matches_node_hmac: PASS
-  missing_secrets_fail_closed: PASS
-  non_get_rejected: PASS
-  no_process_env_in_functions: PASS
-  no_binance_post_in_signed_read: PASS
-  static_routes_excluded_from_function_invocation: PASS
-  windows_powershell_parse: PASS
-  first_packaging_gate_attempt:
-    run: 34259373604
-    conclusion: FAILURE_CI_ASSERTION_ONLY
-    cause: gate_expected_literal_context_env_while_code_destructured_equivalent_env
-    financial_write: false
-    remediation: aligned_code_and_gate_then_reran_successfully
+pbpd_runtime_reconciliation:
+  artifact: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
+  post_build_artifact: product/POST-BUILD-RECONCILIATION.md
+  verdict: COMPLETE
+  v0_4_acceptance: PASS
+  scope_expansion: NONE
+  prd_version_increment_required: false
+  build_candidate_ready: false
+  reason_build_candidate_not_ready: TRACE_DELTA_WINNING_INTELLIGENCE_FINAL_TRACE_6_75_AND_DOWNSTREAM_GATES_REMAIN
 
 security_invariants:
   - no_browser_secret_exposure
   - no_public_prefixed_binance_secrets
   - no_raw_account_payload_to_browser
   - no_secret_logging
-  - hardcoded_official_spot_testnet_for_authenticated_calls
+  - official_spot_testnet_only_for_authenticated_financial_proof
   - no_mainnet
+  - no_real_funds
   - no_geo_bypass
   - no_public_unrestricted_write_button
-  - no_new_execution_claim_from_signed_read_refresh
+  - signed_read_is_not_new_execution
+  - venue_eligibility_failure_is_not_valid_until_block
   - do_not_rerun_successful_testnet_order
-  - cloudflare_signed_read_must_fail_closed_on_venue_eligibility
 
 next_valid_handoff:
-  from: V0_4_RUNTIME_VERIFICATION_AND_REPAIR
-  to: PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED
-  required_output: RECONCILE_VERCEL_FAIL_CLOSED_AND_CLOUDFLARE_VERIFIED_SIGNED_READ_WITHOUT_EXPANDING_SCOPE
+  from: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
+  to: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE_REQUIRED
+  required_output: TRACE_VERDICT_ON_CURRENT_V0_3_EXECUTION_PROOF_AND_V0_4_RUNTIME_DELTA
+
+then:
+  - Winning Intelligence final recheck
+  - TRACE Gate 6.75 final encoded video review
+  - PBPD candidate handoff
+  - Project Finisher independent terminal assurance
+  - protected human submission
 
 resume_rule: >-
-  Runtime v0.4 is verified. Vercel serves all four static judge surfaces and fails closed explicitly on Binance venue eligibility for both live-market and signed-order reads.
-  Cloudflare mirror remains live; its signed read re-verifies canonical order 13634770 / vu-mtswxiik-ecb6b093 with same_order_verified true.
-  Do not create a new Binance order, do not rerun the historical trade, and do not proceed to TRACE, Winning Intelligence, video or submission.
-  Resume only at PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED.
+  PBPD runtime evidence reconciliation is complete and PRD v0.4 acceptance is PASS. The historical authenticated Spot Testnet proof is preserved unchanged; no new order occurred during runtime verification. Vercel is a truthful venue-fail-closed runtime and Cloudflare re-verifies the fixed historical order by signed GET. Resume only at the required TRACE delta. Do not skip to Winning Intelligence, Gate 6.75, candidate handoff, Project Finisher or submission.

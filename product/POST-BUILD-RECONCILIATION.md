@@ -1,227 +1,150 @@
-# Valid Until — PBPD Post-Build Reconciliation
+# Valid Until — PBPD Post-Build + Runtime Reconciliation
 
 Date: `2026-09-08`  
 Owner: `PBPD`  
-Status: `POST_BUILD_RECONCILIATION_COMPLETE__TRACE_GATE_6_75_PENDING`  
-Product source: `product/PRD.md` (`0.1-retrospective`)  
-Authority source: `product/AUTHORIZATION.md`
+Status: `POST_BUILD_AND_RUNTIME_RECONCILIATION_COMPLETE__TRACE_DELTA_REQUIRED`  
+Current living product: `product/PRD.md` v0.2 + `product/PRD-0.3-LIVE-TESTNET-EVIDENCE-DELTA.md` + `product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md`  
+Runtime reconciliation: `product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md`
 
 ## Purpose
 
-Reconcile the retrospective living PRD against the actual current build, deployed judge experience, proof classes, known limitations, and specialist findings.
+Reconcile the current v0.4 product, implementation, verified runtime, proof classes and limitations against the living PRD without rewriting history or expanding authority.
 
-This document does **not** claim the PRD existed before implementation. It does not authorize submission and does not replace TRACE, Winning Intelligence, Project Finisher, or human protected-action authority.
+Earlier revisions of this file described the submission as read-only. That statement was true before the human-authorized v0.3 Spot Testnet evidence delta. It is superseded for the bounded Testnet proof by v0.3 and for the multi-page runtime by v0.4.
 
 ## Current product identity
 
-Canonical thesis:
-
 > **Reasoning is not authorization.**
 
-Current separation of responsibility:
+> **A correct decision can expire.**
 
 ```text
 human policy / intent
-→ AI agent interprets and proposes
-→ Binance Agent OS supplies fresh Binance observations + capabilities
-→ Valid Until deterministically revalidates the exact action
-→ ALLOW / BLOCK
-→ BLOCK = NO LONGER VALID + fresh reasoning required
+→ AI agent interprets and proposes exact action
+→ Binance Agent OS / official Binance capability supplies observations
+→ Valid Until seals policy + T0 + exact action
+→ T1 deterministic revalidation
+→ ACTION_REMAINS_VALID or REPLAN_REQUIRED
+→ optional protected execution only where separately authorized
 ```
 
-Current scope remains read-only. No live order execution, funding, account secret, or geographic bypass is implemented or authorized.
+## Active normative reconciliation
 
-## PRD MUST reconciliation
-
-| PRD requirement | Actual implementation / evidence | Proof class | Verdict |
-|---|---|---|---|
-| MUST-01 — policy sealed before market-state eligibility | `sealPolicy()` validates, canonicalizes and hashes the policy before snapshot eligibility; SKILL workflow requires policy-first | TECHNICAL_PROOF | PASS |
-| MUST-02 — receipt binds exact policy + snapshot identity | receipt contains policy hash + exact snapshot hash; core test and deployed `demo.json` expose both | TECHNICAL_PROOF | PASS |
-| MUST-03 — receipt integrity independently verifiable | Ed25519 receipt verification; tamper mutation fails core test; EVAL-04 blocks receipt tamper | TECHNICAL_PROOF | PASS |
-| MUST-04 — revalidate freshness + current market invariants | `revalidate()` checks receipt age, drift, spread, 1m movement, bid/ask depth | TECHNICAL_PROOF | PASS |
-| MUST-05 — exact action symbol/notional vs sealed policy | `evaluateProposedAction()` checks symbol, finite non-negative notional, max notional; EVAL-06 blocks $1,000 vs sealed $100 | TECHNICAL_PROOF | PASS |
-| MUST-06 — any failed required invariant → BLOCK | revalidation terminal is `ALLOW` only when every check passes and receipt was initially eligible; canonical suite validates five distinct BLOCK classes | TECHNICAL_PROOF | PASS |
-| MUST-07 — BLOCK requires fresh reasoning; no in-cycle policy weakening | SKILL contract explicitly requires fresh reasoning after BLOCK and forbids self-healing by weakening policy; deterministic engine has no policy-mutation recovery path | TECHNICAL_CONTRACT + BEHAVIOR_CONSTRAINT | PASS |
-| MUST-08 — controlled replay labeled synthetic | deployed hero carries `CONTROLLED REPLAY · NO MONEY MOVES`; footer and evidence source state controlled fixture | BEHAVIOR_PROOF | PASS |
-| MUST-09 — live Binance proof remains read-only + truthful | live proof uses official Binance CLI public market data; no API key/order/account; run `34225133745` | TECHNICAL_PROOF | PASS |
-| MUST-10 — judge Challenge Suite exposes clean ALLOW + multiple failure classes | deployed `/evaluations`; `/challenges.json` reports `6/6`; one ALLOW + five BLOCK classes | TECHNICAL_PROOF + BEHAVIOR_PROOF | PASS |
-| MUST-11 — no production/profitability/safety overclaim | README, SKILL, deployed footer and TRACE truth review preserve claim boundaries | BEHAVIOR_PROOF | PASS |
-
-`MUST_PASS = 11/11`
-
-## SHOULD reconciliation
-
-| Requirement | Evidence | Verdict |
+| Requirement band | Current verdict | Evidence / interpretation |
 |---|---|---|
-| SHOULD-01 — exact failed invariant + threshold | hero shows `MID DRIFT 35.47 BPS > 20 BPS`; evaluation cases expose failed check names | PASS |
-| SHOULD-02 — reduced-motion behavior | TRACE runtime run `34231934516`: desktop + mobile `reducedMotion: reduce` both PASS, no console errors | PASS |
-| SHOULD-03 — Agent OS role legible early | TRACE bounded rework added above-fold architecture strip; runtime verifies `Binance Agent OS` visible in all four contexts | PASS |
-| SHOULD-04 — evidence pointers preserved | site proof band, state files, GitHub Actions runs/artifact IDs/digests recorded | PASS |
+| v0.2 MUST-01..08, MUST-10..12 | PASS | receipt v2, exact-action hash, deterministic revalidation, controlled replay, challenge suite, MCP, bounded claims |
+| v0.2 MUST-09 read-only Binance evidence | PASS_AS_PRESERVED_EVIDENCE_CLASS | public-market/read-only proof remains present; v0.3 adds a separately authorized higher proof class |
+| v0.3 MUST-13..21 | PASS | official Spot Testnet only; one bounded order; hard cap; same clientOrderId verification; sanitized publication; no bypass |
+| v0.4 MUST-22..32 | PASS | four judge routes, evidence classes, server-only secrets, fixed known-order signed GET, sanitized responses, no write route, one-click proof navigation |
+| v0.2 MUST_NOT-01 | SUPERSEDED_BY_AUTHORIZED_V0_3_DELTA | bounded non-production Spot Testnet write was explicitly authorized and captured once |
+| v0.2 MUST_NOT-02..06 | PASS | no public-market secret requirement, no model override, no signature=freshness conflation, no production overclaim, no sponsor-breadth writes |
+| v0.3 MUST_NOT-07..10 | PASS | no geo bypass, no mainnet, no alternate-endpoint evasion, no false order claim |
+| v0.4 MUST_NOT-11..15 | PASS | no browser secrets, no arbitrary write inputs, no public write button, signed GET != execution, evidence classes remain distinct |
 
-`SHOULD_PASS = 4/4`
+## v0.3 verified execution reconciliation
 
-## MUST_NOT reconciliation
+The authorized route A proof was obtained and remains canonical:
 
-| Forbidden behavior | Current state | Verdict |
-|---|---|---|
-| MUST_NOT-01 — live order placement | execution adapter intentionally absent; submission read-only | PASS |
-| MUST_NOT-02 — request/store account secrets | public Binance data path needs no API key; no secret requested for demo | PASS |
-| MUST_NOT-03 — model prose overrides deterministic BLOCK | SKILL authority contract separates proposal from terminal validity result | PASS |
-| MUST_NOT-04 — signature validity treated as fresh-state validity | hero explicitly demonstrates intact receipt + stale premise → BLOCK | PASS |
-| MUST_NOT-05 — demo/CI/live read-only proof promoted to production evidence | proof classes remain separated; production evidence explicitly absent | PASS |
+- Binance Spot Testnet only;
+- BUY BTCUSDT 10 test USDT;
+- Valid Until result `ALLOW / ACTION_REMAINS_VALID`;
+- orderId `13634770`;
+- clientOrderId `vu-mtswxiik-ecb6b093`;
+- status `FILLED`;
+- same order queried back: `true`;
+- no real funds;
+- public sanitized receipt: `web/live-testnet-proof.json`;
+- public proof SHA256: `a318c6a6d8d56cd5ab66ee5beedf3baac32dc33885a963b64fbfe814ccad6b76`.
 
-`MUST_NOT_PASS = 5/5`
+The canonical proof file is unchanged since proof commit `21ab8508e078595fa964c73521bb7f78c2f2a37a`; its Git blob SHA remains `e6c85b3119a88699046bd8af83aee09d9f7184b8`.
 
-## Spec Kit reconciliation
+## v0.4 runtime reconciliation
 
-Derived execution artifacts remain coherent with the living PRD:
+### Vercel Production
 
-- `product/specs/001-execution-validity/spec.md` — exact-action validity boundary preserved;
-- `product/specs/001-execution-validity/plan.md` — bounded architecture preserved;
-- `product/specs/001-execution-validity/tasks.md` — technical/deployment/runtime tasks reconciled to current state.
+URL: `https://valid-until-agent-os-plum.vercel.app`
 
-No Spec Kit artifact changed product authority or replaced the PRD.
+- deployment commit: `76eee8ace6f344145cf90d2369fe9fb2595b788e`;
+- status: READY;
+- `/`, `/lab`, `/live-proof`, `/evaluations`: HTTP 200;
+- `/api/live-market`: `VENUE_ELIGIBILITY_UNAVAILABLE`;
+- `/api/order-status`: `VENUE_ELIGIBILITY_UNAVAILABLE`;
+- diagnostic behavior is explicit and fail-closed;
+- no geographic bypass or new order attempted.
 
-## Winning Intelligence reconciliation
+### Cloudflare mirror
 
-Current recheck: `product/WINNER-INTELLIGENCE-PRE-SUBMISSION.md`.
+URL: `https://valid-until-agent-os.pages.dev`
 
-Resolved after deployment:
-- sponsor-native necessity → `SUPPORTED` for the concrete Track A implementation;
-- deployed narrative legibility → `SUPPORTED_RUNTIME__FINAL_VIDEO_PENDING`;
-- deployed judge path → `SUPPORTED_RUNTIME__FINAL_VIDEO_PENDING`;
-- mobile and reduced-motion runtime gaps → closed.
+- static judge surfaces remain live;
+- `/api/live-market`: `VENUE_ELIGIBILITY_UNAVAILABLE`;
+- `/api/order-status`: `LIVE_SIGNED_READ_VERIFIED`;
+- order identity: `13634770` / `vu-mtswxiik-ecb6b093`;
+- `same_order_verified: true`;
+- signed GET created no new order.
 
-Still open:
-- final encoded video path has not yet been reviewed;
-- protected human deliverables remain incomplete;
-- unknown unpublished scoring dimensions remain `UNKNOWN` rather than invented.
+### Final runtime assurance
 
-Winning Intelligence retains authority `NONE`.
+GitHub Actions `proof` run `34267650642` on handoff commit `0f9ec86...` = SUCCESS.
 
-## TRACE reconciliation
+The v0.4 acceptance contract is satisfied. Detailed reasoning is in `product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md`.
 
-TRACE Gate 6.5 = **PASS**.
-
-Canonical TRACE evidence:
-- production URL: `https://valid-until-agent-os.vercel.app`;
-- production deployment: `dpl_HC9j3Y8nCAfw1PdHNpAhNjrVdo8G`;
-- source head validated at Gate 6.5: `f6184bf7b7c8e2b93fc712f48fe0d0b081c7e3f3`;
-- runtime run: `34231934516`;
-- runtime artifact: `10058192480`;
-- artifact digest: `sha256:4f0ba722100568c2a320ade6eda2ce3ba81e4040026c1c946ee71ccc661b66f1`;
-- desktop normal motion: PASS;
-- mobile normal motion: PASS;
-- desktop reduced motion: PASS;
-- mobile reduced motion: PASS;
-- console errors: NONE.
-
-TRACE Gate 6.75 is **IN_PROGRESS** because the final encoded video has not yet been produced/reviewed. Its contract is frozen in:
-
-`Faadil1/trace-design-workflow/state/projects/valid-until/GATE_6_75_DEMO_NARRATIVE_001.md`
-
-PBPD must not reinterpret Gate 6.5 PASS as Gate 6.75 PASS.
-
-## Proof-class reconciliation
+## Proof classes
 
 ### TECHNICAL_PROOF — OBTAINED
 
-- core deterministic invariants: `7/7 PASS`;
-- challenge suite: `6/6 PASS`;
-- controlled stale-state transition: `ELIGIBLE → 35.47 bps > 20 bps → BLOCK`;
-- live official Binance CLI read-only path;
-- Vercel routes `/`, `/evaluations`, `/demo.json`, `/challenges.json` operational;
-- deployed browser runtime evidence.
+Core deterministic, challenge, MCP, execution-boundary, native Testnet transport, real bounded Testnet execution and dual-runtime read/fail-closed evidence are all present.
 
-### BEHAVIOR_PROOF — OBTAINED FOR REPRESENTATIVE JUDGE WORKFLOW
+### BEHAVIOR_PROOF — OBTAINED FOR JUDGE WORKFLOW
 
-A representative evaluator can:
-
-```text
-open deployed product
-→ understand thesis / Agent OS role
-→ click Replay proof
-→ observe NO LONGER VALID
-→ navigate to six-case red-team surface
-→ inspect expected terminal outcomes
-```
-
-This was exercised in real Chromium at desktop/mobile and normal/reduced-motion settings.
-
-Boundary: this is **judge-workflow behavior evidence**, not customer adoption or production financial-operator behavior.
+A representative evaluator can understand the thesis, replay the controlled stale-premise failure, inspect the verified Testnet execution receipt and review the six-case red team.
 
 ### OUTCOME_PROOF — NOT OBTAINED / NOT CLAIMED
 
-No measured comparison shows reduced real financial loss, improved fill quality, ROI, or operator productivity.
+No measured reduction in financial loss, fill improvement, ROI or operator productivity.
 
-### PRODUCTION_EVIDENCE — NOT OBTAINED / NOT REQUIRED FOR CURRENT HACKATHON BOUNDARY
+### PRODUCTION_EVIDENCE — NOT OBTAINED / NOT CLAIMED
 
-The public deployment is production-hosted as a judge artifact, but that does **not** make the financial control mechanism production-proven. There is no live execution adapter, funded account workflow, long-duration production reliability study, or production operator evidence.
-
-Hard semantics remain:
+Production-hosted judge pages and a non-production Testnet trade do not establish production financial-control readiness.
 
 ```text
-TECHNICAL_PROOF != BEHAVIOR_PROOF
-BEHAVIOR_PROOF != OUTCOME_PROOF
-OUTCOME_PROOF != PRODUCTION_EVIDENCE
 DEPLOYED_WEB_DEMO != PRODUCTION_FINANCIAL_CONTROL
+TESTNET_EXECUTION != REAL_FUNDS_EXECUTION
+SIGNED_GET != NEW_ORDER
+VENUE_ELIGIBILITY_FAILURE != VALID_UNTIL_BLOCK
 ```
 
-## Product Reality / Prototype Killer recheck
+## Product Reality / Prototype Killer
 
-The principal killing objection remains intentionally visible:
+The simpler-alternative objection remains valid: individual checks can be implemented as deterministic code. The product claim is the reusable action-decision contract across time: frozen policy + exact T0 state + exact action + short validity + T1 revalidation + repeatable failure taxonomy at the agent reasoning→execution boundary.
 
-> Could this just be a small deterministic pre-trade script?
-
-Current answer remains bounded:
-- individual checks are simple and should stay deterministic;
-- product value is not the novelty of any one `if` statement;
-- the product contract binds fuzzy agent interpretation, frozen user policy, exact proposed action, state identity, freshness, repeatable failure taxonomy, and fail-closed authorization at the Agent OS reasoning→action boundary;
-- no real-user adoption/outcome evidence yet proves this becomes a standalone durable product rather than infrastructure pattern.
-
-Therefore:
-- `HACKATHON_PRODUCT_FIT = SUPPORTED`;
-- `PRODUCTION_MARKET_FIT = UNVERIFIED`;
-- Prototype Killer is not reopened, but its production-adoption assumption remains unresolved truthfully.
-
-## Deployment reconciliation
-
-An initial Vercel deployment was `READY` but returned 404 at `/` and `/evaluations`. PBPD did **not** treat platform status as product evidence.
-
-Repair:
-- `vercel.json` changed from root-to-`web/` rewrites to `buildCommand: npm run build:web` + `outputDirectory: web` + `cleanUrls: true`;
-- root and evaluation routes then returned HTTP 200;
-- TRACE runtime evidence ran only after the stable alias was operational.
-
-Classification: `IMPLEMENTATION / EVIDENCE ROUTING REPAIR`, not a material product-intent change. No PRD version increment is required.
+`HACKATHON_PRODUCT_FIT = SUPPORTED`  
+`PRODUCTION_MARKET_FIT = UNVERIFIED`
 
 ## Current limitations
 
-- no live order execution adapter;
-- no funded account path;
-- no real operator/customer study;
-- no measured outcome / loss-reduction evidence;
-- no production reliability evidence;
-- final encoded submission video still pending TRACE Gate 6.75;
-- external X/survey actions remain human-protected.
+- no mainnet or real-funds execution;
+- no public write route;
+- no production persistence/reliability study;
+- no real customer/operator study;
+- no outcome proof;
+- public live-market reads are currently venue-refused from both judge runtimes;
+- Vercel signed read is venue-refused;
+- Cloudflare signed read succeeds only for the fixed preserved historical order;
+- TRACE delta on v0.3 + v0.4 remains open;
+- final Winning Intelligence recheck remains open;
+- final encoded video still requires TRACE Gate 6.75;
+- PBPD candidate handoff, Project Finisher and protected human submission remain open.
 
 ## PBPD reconciliation verdict
 
 ```text
-PRD_MUST = PASS_11_OF_11
-PRD_SHOULD = PASS_4_OF_4
-PRD_MUST_NOT = PASS_5_OF_5
-SPEC_KIT_RECONCILIATION = PASS
-WINNING_INTELLIGENCE_RUNTIME_RECHECK = COMPLETE_WITH_FINAL_VIDEO_GAP
-TRACE_GATE_6_5 = PASS
-TRACE_GATE_6_75 = IN_PROGRESS
-TECHNICAL_PROOF = OBTAINED
-BEHAVIOR_PROOF = OBTAINED_FOR_REPRESENTATIVE_JUDGE_WORKFLOW
-OUTCOME_PROOF = NOT_OBTAINED_NOT_CLAIMED
-PRODUCTION_EVIDENCE = NOT_OBTAINED_NOT_CLAIMED
-PBPD_POST_BUILD_RECONCILIATION = COMPLETE
+CURRENT_PRD_VERSION = 0.4
+V0_4_ACCEPTANCE = PASS
+PBPD_RUNTIME_EVIDENCE_RECONCILIATION = COMPLETE
+PRD_VERSION_INCREMENT = NOT_REQUIRED
 BUILD_CANDIDATE_READY = NOT_YET_EMITTED
-PROJECT_FINISHER_ELIGIBLE = FALSE_UNTIL_TRIGGERED_TRACE_GATE_6_75_RESOLVES
+TRACE_DELTA = REQUIRED_NEXT
 TERMINAL_COMPLETENESS_ALLOWED = FALSE
 ```
 
@@ -229,12 +152,7 @@ TERMINAL_COMPLETENESS_ALLOWED = FALSE
 
 ```text
 PBPD
-→ TRACE Gate 6.75 / human recording boundary
-→ actual final 58–65s encoded demo
-→ TRACE reviews film truth/readability
-→ PBPD emits candidate handoff if no new product conflict
-→ Project Finisher independent terminal assurance
-→ human protected submission
+→ TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE_REQUIRED
 ```
 
-No other subsystem may substitute for the missing Gate 6.75 verdict.
+TRACE must review the new proof/runtime delta before Winning Intelligence final recheck, Gate 6.75, candidate handoff, Project Finisher or submission.

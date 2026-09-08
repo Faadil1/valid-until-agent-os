@@ -3,8 +3,8 @@ project_type: HACKATHON
 profile: Faadil1/faadil-agent-system/project-profiles/hackathon.yaml
 policy: Faadil1/faadil-agent-system/PROJECT-LIFECYCLE-COMPLETENESS-POLICY.yaml
 date: '2026-09-08'
-current_owner: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
-current_stage: V0_4_RUNTIME_VERIFIED_AWAITING_PBPD_RECONCILIATION
+current_owner: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE
+current_stage: PBPD_RUNTIME_EVIDENCE_RECONCILED_AWAITING_TRACE_DELTA
 terminal_completeness_allowed: false
 
 status_vocabulary:
@@ -29,7 +29,7 @@ capabilities:
     owner: hackathon-opportunity-intelligence
     status: SATISFIED
     evidence_pointer: product/WINNER-INTELLIGENCE-RERUN-004-X-API.md
-    note: final recheck remains required after the current v0.4 runtime delta closes
+    note: final recheck remains required after the current TRACE delta
 
   - capability: project_authorization
     owner: human / chief-of-staff authority boundary
@@ -50,13 +50,13 @@ capabilities:
     owner: PBPD
     status: SATISFIED
     evidence_pointer: product/PRD-0.4-LIVE-PROOF-LAB-DELTA.md
-    note: current living definition is v0.2 base + v0.3 testnet delta + v0.4 Live Proof Lab delta
+    note: current living definition is product/PRD.md v0.2 + v0.3 + v0.4; changelog reconciled
 
   - capability: spec_kit
     owner: Spec Kit orchestration under PBPD
     status: SATISFIED
-    evidence_pointer: product/specs/001-execution-validity/LIVE-PROOF-LAB-DELTA-0.4.md
-    note: authority NONE
+    evidence_pointer: product/specs/001-execution-validity/tasks.md
+    note: authority NONE; tasks reconciled through PBPD v0.4 runtime gate
 
   - capability: production_build_core
     owner: PBPD
@@ -67,12 +67,13 @@ capabilities:
     owner: PBPD + human local execution boundary
     status: SATISFIED
     evidence_pointer: evidence/live-testnet/ATTEMPT-004-LOCAL-ALLOW-ORDER-VERIFIED-PUBLISHED.md
-    note: ALLOW -> one BUY BTCUSDT 10 test USDT -> FILLED -> same clientOrderId queried successfully
+    note: one bounded ALLOW -> BUY BTCUSDT 10 test USDT -> order 13634770 -> same clientOrderId verified; rerun forbidden without new authorization
 
   - capability: sanitized_public_testnet_write_proof
     owner: PBPD evidence plane
     status: SATISFIED
     evidence_pointer: web/live-testnet-proof.json
+    note: canonical proof blob preserved unchanged
 
   - capability: judge_optimization_evidence
     owner: PBPD / Winning Intelligence / TRACE input
@@ -88,54 +89,36 @@ capabilities:
     owner: PBPD
     status: SATISFIED
     evidence_pointer: web/lab.html
-    note: code includes /, /lab, /live-proof, /evaluations and explicit LIVE / CONTROLLED / VERIFIED EXECUTION classes
 
-  - capability: live_proof_lab_v0_4_vercel_server_read_layer
+  - capability: live_proof_lab_v0_4_server_read_layers
     owner: PBPD
     status: SATISFIED
     evidence_pointer: api/order-status.mjs
-    note: public market GET + fixed known-order signed GET; no write route
+    note: Vercel + Cloudflare fixed known-order signed read; no public write route
 
-  - capability: live_proof_lab_v0_4_vercel_secret_configuration
-    owner: human
-    status: SATISFIED
-    evidence_pointer: docs/VERCEL-LIVE-PROOF-LAB-ENV.md
-    note: human confirmed both required Production values are configured; assistant did not read or receive values
-
-  - capability: live_proof_lab_v0_4_vercel_runtime_deployment
-    owner: Vercel platform + PBPD
-    status: SATISFIED
-    evidence_pointer: state/HANDOVER.yaml
-    note: Production READY on commit 76eee8ace6f344145cf90d2369fe9fb2595b788e; four static routes verified and API reads fail closed explicitly on Binance venue eligibility
-
-  - capability: cloudflare_pages_fallback_adapter
-    owner: PBPD deployment resilience
-    status: SATISFIED
-    evidence_pointer: docs/CLOUDFLARE-PAGES-FALLBACK.md
-    note: Cloudflare Pages adapter uses root /functions file routing, context.env secrets, Web Crypto HMAC, /api-only routes and no write endpoint
-
-  - capability: cloudflare_pages_fallback_assurance
-    owner: PBPD evidence plane
-    status: SATISFIED
-    evidence_pointer: .github/workflows/ci.yml
-    note: CI run 34259529684 SUCCESS at c76b6f6520b59ca62b6156bfdd4db6354b96b131; Cloudflare function tests PASS 12/12
-
-  - capability: cloudflare_pages_project_import_and_secret_configuration
+  - capability: live_proof_lab_v0_4_secret_configuration
     owner: human
     status: SATISFIED
     evidence_pointer: state/HANDOVER.yaml
-    note: pages.dev runtime is live; signed known-order GET succeeds, demonstrating required production secret configuration without exposing values
+    note: server-side credentials configured without disclosure; Cloudflare signed read proves runtime configuration
+
+  - capability: live_proof_lab_v0_4_runtime_deployment
+    owner: PBPD + deployment platforms
+    status: SATISFIED
+    evidence_pointer: state/HANDOVER.yaml
+    note: Vercel READY with four static routes and explicit venue fail-closed APIs; Cloudflare verified mirror
 
   - capability: live_proof_lab_v0_4_verified_runtime
     owner: PBPD runtime evidence
     status: SATISFIED
     evidence_pointer: state/HANDOVER.yaml
-    note: Vercel static surfaces verified with explicit venue fail-closed APIs; Cloudflare mirror signed read verified canonical order 13634770 / vu-mtswxiik-ecb6b093 with same_order_verified true
+    note: Cloudflare signed GET re-verifies canonical historical order; no runtime financial write
 
   - capability: pbpd_runtime_evidence_reconciliation_after_v0_4
     owner: PBPD
-    status: MISSING
-    evidence_pointer: null
+    status: SATISFIED
+    evidence_pointer: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
+    note: v0.4 acceptance PASS; no PRD increment required; next gate TRACE delta
 
   - capability: trace_delta_after_live_testnet_and_v0_4_scope
     owner: TRACE
@@ -173,7 +156,6 @@ capabilities:
     not_applicable_reason: project has not yet been officially submitted and no official outcome exists
 
 missing:
-  - pbpd_runtime_evidence_reconciliation_after_v0_4
   - trace_delta_after_live_testnet_and_v0_4_scope
   - winning_intelligence_final_recheck
   - trace_gate_6_75_demo_narrative_evidence_film
@@ -184,7 +166,6 @@ missing:
 unknown: []
 
 triggered_but_unresolved:
-  - PBPD_RUNTIME_EVIDENCE_RECONCILIATION_AFTER_V0_4
   - TRACE_DELTA_AFTER_LIVE_TESTNET_AND_LIVE_PROOF_LAB_SCOPE
   - WINNING_INTELLIGENCE_FINAL_RECHECK
   - TRACE_GATE_6_75_FINAL_ENCODED_VIDEO_REVIEW
@@ -200,7 +181,7 @@ current_evidence:
   vercel_static_routes_http_200: true
   vercel_live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
   vercel_signed_read_status: VENUE_ELIGIBILITY_UNAVAILABLE
-  cloudflare_pages_runtime_url: https://valid-until-agent-os.pages.dev
+  cloudflare_runtime_url: https://valid-until-agent-os.pages.dev
   cloudflare_live_market_status: VENUE_ELIGIBILITY_UNAVAILABLE
   cloudflare_signed_read_status: LIVE_SIGNED_READ_VERIFIED
   testnet_order_id: 13634770
@@ -209,28 +190,29 @@ current_evidence:
   same_order_verified: true
   production: false
   real_funds: false
-  secrets_exposed: false
   financial_write_invoked_during_runtime_verification: false
   canonical_trade_rerun: false
-  v0_4_runtime_verification_result: SATISFIED
+  runtime_handoff_commit: 0f9ec86b2fce6dc300a6dba5b52f93b1b3fb4f73
+  runtime_handoff_ci_run: 34267650642
+  pbpd_runtime_reconciliation: product/PBPD-RUNTIME-EVIDENCE-RECONCILIATION-V0.4.md
+  v0_4_acceptance: PASS
 
 non_bypass_rules_reaffirmed:
   - no_cloud_region_hopping
   - no_VPN_or_proxy
   - no_mainnet
+  - no_real_funds
   - no_false_trade_claim
   - no_profitability_or_production_safety_claim
   - no_public_unrestricted_write_button
   - no_browser_secret_exposure
   - do_not_rerun_successful_testnet_order
-  - no_cloudflare_placement_manipulation_for_venue_bypass
+  - no_cloudflare_or_vercel_placement_manipulation_for_venue_bypass
 
 next_valid_handoff:
-  from: V0_4_RUNTIME_VERIFICATION_AND_REPAIR
-  to: PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED
-  required_output: RECONCILE_VERIFIED_RUNTIME_EVIDENCE_WITH_LIVING_PRODUCT_STATE
+  from: PBPD_RUNTIME_EVIDENCE_RECONCILIATION
+  to: TRACE_DELTA_AFTER_LIVE_TESTNET_AND_V0_4_SCOPE_REQUIRED
+  required_output: TRACE_VERDICT_ON_CURRENT_V0_3_EXECUTION_PROOF_AND_V0_4_RUNTIME_DELTA
 
 resume_rule: >-
-  Runtime v0.4 verification is satisfied. Vercel fails closed explicitly because Binance Testnet rejects the server location, while Cloudflare re-verifies the preserved canonical order by signed GET.
-  No secret values were exposed, no POST/order creation was invoked and the historical Testnet trade was not rerun.
-  Stop here and resume only at PBPD_RUNTIME_EVIDENCE_RECONCILIATION_REQUIRED; do not skip directly to TRACE, Winning Intelligence, video or submission.
+  PBPD runtime reconciliation is complete. PRD v0.4 acceptance is PASS and the historical bounded Testnet proof remains unchanged. Vercel is truthfully fail-closed on venue eligibility; Cloudflare re-verifies the fixed historical order via signed GET. Resume at TRACE delta only. Do not skip to Winning Intelligence, Gate 6.75, candidate handoff, Project Finisher or protected submission.
