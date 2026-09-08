@@ -11,6 +11,7 @@ why_now: >-
   AI confirmation loops, multi-timeframe trade-readiness tools, and trading bots.
   Valid Until differentiates on execution integrity rather than prediction.
 architecture:
+  agent_role: interpret intent and propose action; never self-authorize execution
   policy_commitment: SHA-256 canonical policy hash created before market read
   market_source: official binance-cli against public Binance market-data-only endpoints
   receipt: Ed25519 signed decision receipt bound to policy hash + snapshot hash + validity window
@@ -21,25 +22,43 @@ verified:
   - npm test => PASS 7/7
   - controlled replay => initial ELIGIBLE
   - controlled replay => final BLOCK at 35.47 bps drift vs 20 bps policy
+  - official Binance CLI v2.1.1 installed and verified in GitHub Actions
+  - live BTCUSDT public Binance capture => GitHub Actions run 34225133745 SUCCESS
+  - live proof artifact => id 10055364283
+  - live proof artifact digest => sha256:51b23c621e487be68c81138bd3a24e6c264e4fb00a0c315b88addf8080e6b370
+  - live result => BLOCK, fail-closed on real market state
   - public GitHub repo => Faadil1/valid-until-agent-os
+live_proof_interpretation: >-
+  The real capture is supporting proof of the Binance-native read-only path and
+  deterministic fail-closed enforcement. The captured market was already ineligible
+  at T0 because top-5 ask depth was below the demo threshold, and receipt age also
+  exceeded the strict 5-second threshold at revalidation. Therefore the controlled
+  replay, not this live capture, remains the canonical VALID -> NO LONGER VALID hero case.
 claim_boundaries:
   - no profitable-trading claim
   - no predictive-alpha claim
   - controlled replay is synthetic and labelled
-  - live proof must use official Binance CLI before submission
+  - live proof is authentic public Binance market data, not a trade
   - Ed25519 is supporting proof, not the headline value proposition
+  - no API key, account credential, order placement or funding action was used
 assistant_completed:
   - starter repository package
   - deterministic engine
   - signed receipt flow
   - negative-path replay
   - judge-facing static UI
+  - Track A agent SKILL.md
+  - Binance official skill/toolchain alignment
+  - public proof CI
+  - live Binance read-only proof workflow
+  - live proof artifact verification
   - demo script
   - X submission draft
   - canonical Valid Until naming across product and technical namespace
   - public GitHub repository population
 human_required:
-  - execute live Binance CLI proof on personal development environment
+  - import/deploy repository on Vercel if not already linked
+  - record final demo video
   - publish X post
   - complete Binance survey
-next_gate: LIVE_AGENT_OS_PROOF_REQUIRED
+next_gate: DEPLOYMENT_AND_SUBMISSION_PACKAGING
